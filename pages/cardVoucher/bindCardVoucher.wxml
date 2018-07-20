@@ -1,0 +1,51 @@
+<!--pages/cardVoucher/bindCardVoucher.wxml-->
+<view class='container'>
+    <view class="userWrap relative bt bb">
+        <view class='storeNavWrap'>
+            <text class='cardStore  {{page == "0" ? "navCur":"" }}' data-index='0' bindtap='changeNav'>绑线下券</text>
+            <text class='sellStore  {{page == "1" ? "navCur":"" }}' data-index='1' bindtap='changeNav'>绑线下卡</text>
+        </view>
+    </view>
+    <form bindsubmit="bindFn" bindreset="formReset">
+        <!--  绑线下券-start  -->
+        <view wx:if='{{page == "0"}}' class='inptWrap'>
+            <view class='userWrap bb relative'>
+                <input class='inpt' name="cardNo" placeholder='请输入券号' placeholder-class="phStyle"  value='{{cardNo}}'></input>
+            </view>
+            <view class='userWrap bb relative'>
+                <input class='inpt' name="cardPsw" placeholder='请输入券密码' placeholder-class="phStyle" value='{{cardPsw}}'></input>
+            </view>
+            <view class='userWrap bb relative mt44'>
+                <text class='gray8d'>邀请码</text>
+            </view>
+            <view class='userWrap bb relative'>
+                <input class='inpt' name="inviteCode" placeholder='请输入邀请码（选填）' placeholder-class="phStyle" value='{{inviteCode}}'></input>
+            </view>
+        </view>
+        <!--  绑线下券-end  -->
+        <!--  绑线下卡-start  -->
+        <view wx:if='{{page == "1"}}' class='inptWrap'>
+            <view class='userWrap bb relative'>
+                <input class='inpt' name="cardNo" placeholder='请输入卡号' placeholder-class="phStyle" value='{{cardNo}}'></input>
+            </view>
+            <view class='userWrap bb relative'>
+                <input class='inpt' name="cardPsw" placeholder='请输入卡密码' placeholder-class="phStyle" value='{{cardPsw}}'></input>
+            </view>
+            <view class='userWrap bb relative mt44'>
+                <text class='gray8d'>邀请码</text>
+            </view>
+            <view class='userWrap bb relative'>
+                <input class='inpt' name="inviteCode" placeholder='请输入邀请码（选填）' placeholder-class="phStyle" value='{{inviteCode}}'></input>
+            </view>
+            <view class='hintInfo'>
+                <text class='hintTxt'>1.已绑定的会员卡暂不支持解除绑定。</text>
+                <text class='hintTxt'>2.部分线下卡不支持绑定，详询影城工作人员。</text>
+            </view>
+        </view>
+        <!--  绑线下卡-end  -->
+        <view class='fixedBtm bindBtnWrap'>
+            <button class='gradientBtn bindBtn' hover-class='gradientBtn_hover' form-type='submit'>绑定</button>
+        </view>
+    </form>
+</view>
+

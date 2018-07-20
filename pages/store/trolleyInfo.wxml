@@ -1,0 +1,47 @@
+<!--stroe:trolleyInfo.wxml-->
+<!-- 引用模板 -->
+<import src="../../template/temp.wxml" /> 
+<!-- 使用模板 -->
+<template is="toast" data="{{...toastItem}}"/>
+<view class="container">
+    <view wx:if="{{typeLen> 0}}" class="userWrap clearfix">
+        <view class='fr plr24' bindtap='clickEmptyBtn'>清空</view>
+    </view>
+    <view class='sellList'>
+        <view wx:if="{{typeLen == 0}}" class='container whiteBg mt200 relative'>
+            <view class='noCardIcon emptyCart'></view>
+            <view class='noCardDis'>购物车还是空的！</view>
+            <!-- 底部按钮 -->
+            <view class="btmWrap">
+                <view class="selTicket">
+                    <button hover-class="gradientBtn_hover" class="selectBtn gradientBtn" bindtap="goToMall">去购物</button>
+                </view>
+            </view>
+        </view>
+        <view wx:else>
+            <block wx:for="{{goodsList}}" wx:for-item="goods" wx:for-index="sellIndex">
+                <view class='flex sellWrapper'  wx:if="{{goods.count > 0}}">
+                    <view class='imgBox' bindtap='sellDetailFn' data-index="{{sellIndex}}"><image class='sellImg' src='{{goods.goodsImgNew}}'></image></view>
+                    <view class='flex_auto relative'>
+                        <view class='sellTitle' bindtap='sellDetailFn' data-index="{{sellIndex}}">{{goods.goodsName}}</view>
+                        <view class='sellDes'>{{goods.goodsViewFocus}}</view>
+                        <view><text class='f34 rad'>¥ {{goods.goodsPrice}}</text><text wx:if="{{goods.price > goods.goodsPrice}}" class='pl20 gray8d f24 lint_through'>¥ {{goods.price}}</text></view>
+                        <!-- <view class='trolley' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='addFn'></view> -->
+                        <view class='selSells'>
+                            <text class='reduceSell' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='reduceFn'>-</text>
+                            <text class='selText'>{{goods.count}}</text>
+                            <text class='reduceSell' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='addFn'>+</text>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <view class="btmWrap">
+        <view class="selTicket">合计<text class='pl20'>共</text><text class='rad'> ¥ {{discountAmount}}</text>
+            <button hover-class="gradientBtn_hover" class="account selectBtn gradientBtn" bindtap="accountFn">去结算</button>
+        </view>
+        </view>
+        
+    </view>
+    </view>
+    
+</view>

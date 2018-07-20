@@ -1,0 +1,7 @@
+/*  */
+page{background-color: #fff;}
+/* .container{height:100%;background:#fff;} */
+.qrcode{display:block;width:700rpx;height:700rpx;margin:260rpx auto 0;}
+.barcodeWrap{width:466px;margin:400rpx 0 0 -70rpx;-webkit-transform: rotate(90deg);transform: rotate(90deg);}
+.barcode{width:520px;height:170px;}
+/* .tc{text-align: center;margin-top:10rpx;font-size: 48rpx;} */

@@ -1,0 +1,30 @@
+/* pages/orderInfoList/orderInfoList.wxss */
+@import '../../style/layout.wxss';
+page{background-color:#fff;}
+.filmInfo{padding:30rpx 24rpx;}
+.filmImg{margin-right:20rpx;}
+.filmImg, .fImage{width:120rpx;height:170rpx;border:none;border-radius:10rpx;}
+.fTitle{font-size:30rpx;line-height:1;}
+.info{margin-top:18rpx;line-height:1;font-size:26rpx;color:#8d8d8d;}
+/*.hall{display:inline-block;}*/
+.seat{display:inline-block;margin-left:20rpx;}
+.codes{padding:30rpx 24rpx;font-size:26rpx;color:#f56448;background:#f8f8f8;}
+.tc{text-align: center;}
+.c2{display:inline-block;margin-right:38rpx;}
+/* .c1{display:inline-block;margin-left:38rpx;} */
+.hint{padding:0 24rpx;height:84rpx;line-height:84rpx;/*border-bottom:1rpx solid #e4e4e4;background-color:#fff;*/font-size:26rpx;color:#8d8d8d;}
+.sellsInfo{padding:20rpx 24rpx;color:#8d8d8d;background-color:#fff;line-height:44rpx;font-size:26rpx; }
+.li{padding:0 24rpx;line-height:54rpx;color:#8d8d8d;font-size:26rpx;}
+.liTit{width:190rpx;}
+.liNum{text-align:right;}
+.btmWrap{height:100rpx;}
+.selTicket{padding:15rpx 0;border-top:1rpx solid #e4e4e4;background:#fff;position:fixed;bottom:0;left:0;right:0;}
+.selectBtn{width:642rpx;height:68rpx;line-height:68rpx;border:none;border-radius:34rpx;font-size:32rpx;}
+.qrWrap{margin:30rpx auto;width:202rpx;height:202rpx;padding:8rpx;background:#fff;}
+.qrcode{display:block;width:202rpx;height:202rpx;margin:0 auto;}
+.barcodeWrap{width:430rpx;margin:30rpx auto 0;}
+.barcode{width:430rpx;height:104rpx;}
+.black33{color:#333;}
+/* 蒙层背景 */
+.msk{position:fixed;left:0;bottom:0;right:0;top:0;z-index: 99;background:rgba(0,0,0, .5);}
+.loadingGif{width:100rpx;height:100rpx;position:fixed;left:50%;top:50%;margin-top:-50rpx;margin-left:-50rpx;}

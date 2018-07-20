@@ -1,0 +1,19 @@
+/* pages/orderInfoList/orderRefund.wxss */
+@import 'orderInfoList.wxss';
+page{background:#f1f1f1;}
+.orderNumInfo{padding:20rpx 24rpx;font-size:26rpx;color:#8d8d8d;}
+.refundInfo{padding:30rpx 60rpx 0 60rpx;position:relative;}
+.leftBorder{display:block;width:0;height:140rpx;border-right:2rpx solid #e1e1e1;position:absolute;left:33rpx;top:36rpx;}
+.green{color:#6ed1b4;}
+.infoLi{padding-bottom:60rpx; position:relative;}
+.liTitle{font-size:26rpx;}
+.liP{margin-top:22rpx;line-height:40rpx;font-size:24rpx;color:#8d8d8d;}
+.grayI{display:block;width:16rpx;height:16rpx;border-radius:8rpx;background-color:#e1e1e1;position: absolute;left:-32rpx;top:6rpx;}
+.grayI::after{content:'';display: block;width:8rpx;height:8rpx;border-radius:4rpx;background-color:#999;position:absolute;left:4rpx;top:4rpx;}
+.greenI, .radI{display: block;width:22rpx;height:22rpx;border-radius:10rpx;position: absolute;left:-37rpx;top:2rpx;}
+.greenI{background-color:#b6e8d9;}
+.radI{background-color:#f9aaa1;}
+.greenI::after, .radI::after{content:'';display: block;width:10rpx;height:10rpx;border-radius:5rpx;position: absolute;left:6rpx;top:6rpx;}
+.greenI::after{background-color:#6ed1b4}
+.radI::after{background-color:#f35643;}
+.sellIs{padding: 10rpx 24rpx;font-size: 26rpx;}

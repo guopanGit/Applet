@@ -1,0 +1,10 @@
+<!--stroe:buyCardSuc.wxml-->
+<view class="container">
+    <view class='buySucIcon'></view>
+    <view class='buySucPara'>购买成功</view>
+    <view class="btmWrap">
+            <view class="selTicket">
+                <button hover-class="gradientBtn_hover" class="selectBtn gradientBtn" bindtap="viewMyCards">查看会员卡</button>
+            </view>
+        </view>
+</view>

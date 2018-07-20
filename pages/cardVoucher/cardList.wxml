@@ -1,0 +1,77 @@
+<!--pages/confirmOrder/chooseCard.wxml-->
+<!--  卡列表为空时  -->
+<view wx:if="{{cardLen == 0}}" class='container whiteBg bt'>
+    <view class='noCardIcon'></view>
+    <view class='noCardDis'>您还未拥有会员卡！</view>
+    <view class="bayCardBtn gradientBtn" hover-class='gradientBtn_hover' bindtap='bayCardLink'>立即购卡</view>
+</view>
+<!--  卡列表不为空时  -->
+<view wx:else class='container bt'>
+    <!-- <view class='noUseCard'>不使用会员卡<text class='radioObj'></text></view> -->
+    <view>
+        <view class='cardList'>
+            <block wx:for="{{cardlist}}" wx:for-index="cardIndex" wx:for-item="card">
+                <!-- 储值卡 -->
+                <view wx:if="{{card.cardType == 1}}" class="card cyellowBg">
+                    <view class='tc'>
+                        <!-- <text class='fr f24 yelC'><text class='dJiao'></text> 详情</text> -->
+                        <view class="ellipsis cardTitle">{{card.cardName}}</view>
+                        <view class='cardtag  yellowT'>储值卡</view>
+                    </view>
+                    
+                    <view class='aboutMoney'>{{card.cardComments}}<text class='f30'>元</text></view>
+                    <view wx:if='{{card.limitTime == ""}}' class='deadline yelC'>有效期至：永久有效</view>
+                    <view wx:else class='deadline yelC'>有效期至{{card.limitTime}}</view>
+                    <view class='cardDetials' data-index='{{cardIndex}}' bindtap="cardDetailsFn"><text class='dJiao'></text> 详情</view>
+                    <!-- <view wx:if="{{card.isRecharge == 0}}" class='recharge'>立即充值</view> -->
+                </view>
+                <!--  权益卡  -->
+                <view wx:elif="{{card.cardType == 2}}" class="card cgrayBg">
+                    <view class='tc' data-index='{{cardIndex}}' bindtap="cardDetailsFn">
+                        <!-- <text class='fr f24 grayC'><text class='dJiao'></text>详情</text> -->
+                        <view class="cardTitle ellipsis">{{card.cardName}}</view>
+                        <view class='cardtag  grayT'>权益卡</view>
+                    </view>
+                    
+                    <view class='aboutMoney'><text class='f30 zhe'>折</text></view>
+                    <view wx:if='{{card.limitTime == ""}}' class='deadline grayC'>有效期至：永久有效</view>
+                    <view wx:else class='deadline yelC'>有效期至{{card.limitTime}}</view>
+                    <view class='cardDetials' data-index='{{cardIndex}}' bindtap="cardDetailsFn"><text class='dJiao'></text> 详情</view>
+                </view>
+                <!-- 来自绑定的卡 -->
+                <view wx:if="{{card.cardType == '10' || card.cardType == '11'}}" class="card cpinkBg" bindtap='selectCardFn' data-cardcode='{{card.cardCode}}'>
+                    <view class='cardTitle' data-index='{{cardIndex}}' catchtap="cardDetailsFn">
+                        <!-- <text class='fr f24 pinkC'><text class='dJiao'></text>详情</text> -->
+                        <text>实体卡</text>
+                        <view class='cardtag  pinkT'>{{card.cardTypeName}}</view>
+                    </view>
+                    
+                    <view class='aboutMoney'>{{card.cardComments}}<text class='f30'>元</text></view>
+                    <!-- <view class='deadline pinkC'>卡号24227162712616</view>  -->
+                    <view wx:if="{{card.limitTime == ''}}" class='deadline pinkC'>有效期至：永久有效</view> 
+                    <view wx:else class='deadline pinkC'>有效期至{{card.limitTime}}</view>
+                    <!-- <view wx:if="{{card.sub == 1}}"  class='selectedOne'></view>  -->
+                    <view class='cardDetials' data-index='{{cardIndex}}' bindtap="cardDetailsFn"><text class='dJiao'></text> 详情</view>
+                </view>
+            </block>
+        </view>
+        <view class='loadOver' wx:if="{{loadOver}}">扯到底了</view>
+    </view>
+    <!--  mask  -->
+    <view class='maskLayer' wx:if="{{detailsflag}}" bindtap="hideDetailsFn"></view>
+    <!--  card details window  -->
+    <view class='deailWin' wx:if="{{detailsflag}}" animation="{{animationData}}" bindtap="hideDetailsFn">
+        <view class='ditailWrapper'>
+            <view class='detailTitle tc'>{{popInfo.cardName}}</view>
+            <view class='p24'>
+                <view class='detailP'>卡类型：{{popInfo.cardTypeName}}</view>
+                <view class='detailP mt24' wx:if="{{popInfo.cardType == 1}}">卡额度：￥{{popInfo.cardComments}}</view>
+                <view class='detailP mt24' wx:if="{{popInfo.cardDesc == null || popInfo.cardDesc == ''}}">卡说明：无</view>
+                <view class='detailP mt24' wx:else>卡说明：{{popInfo.cardDesc}}</view>
+                <view class='detailP mt24'>卡有效期：{{popInfo.limitTime}}</view>
+                <view class='detailP mt24'><text class="rad">本卡为原价基础上优惠折扣</text></view>
+            </view>
+        </view>
+    </view>
+</view>
+

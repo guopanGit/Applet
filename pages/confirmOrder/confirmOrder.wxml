@@ -1,0 +1,120 @@
+<!--pages/confirmOrder/confirmOrder.wxml-->
+<!-- 引用模板 -->
+<import src="../../template/temp.wxml" /> 
+<!-- 使用模板 -->
+<template is="toast" data="{{...toastItem}}"/>
+
+<view class="container">
+    <view class="bodyBg remainedTime">
+        <text class="timeIcon"></text>剩余支付时间 {{orderTimeOut}}
+    </view>
+    <view class="filmInfo">
+        <view class="filmName">{{msg.filmName}}</view>
+        <view class="mt30 info">{{msg.cinemaName}}</view>
+        <view class="info">
+            <text class="rad">{{msg.showTime}}</text><text class="pl20">{{msg.filmCount}}</text>
+        </view>
+        <view class="info">
+            <text>{{msg.hallName}}</text>
+            <text class="pl20 in_block">{{msg.seatInfo}}</text>
+        </view>
+    </view>
+    <view wx:if="{{msg.goods.length > 0}}" class="sells">
+        <!-- <view class="sell">夏日特爽饮品 X 2</view>
+        <view class="sell mt20">大爆＋大可乐套餐 X 2</view> -->
+        <block wx:for="{{msg.goods}}" wx:for-item="good">
+            <view class="sell {{index > 0 ? 'mt20':''}}">{{good.goodsName}} X {{good.amount}}</view>
+        </block>
+    </view>
+    <view class="border"></view>
+    <view class="phoneNum"><text class="gray8d fr">{{msg.orderMobile}}</text>购票手机号</view>
+    <view wx:if="{{msg.confirmFlag == '1'}}">
+        <view wx:if="{{msg.prefType == '0'}}">
+            <view class="phoneNum phoneNum1"><text class="gray8d fr">未使用</text><text>会员卡</text></view>
+            <view class="phoneNum phoneNum1"><text class="gray8d fr">未使用</text><text>优惠券</text></view>
+        </view>
+        <view wx:elif="{{msg.prefType == '1'}}">
+            <view class="phoneNum phoneNum1"><text class="gray8d fr">已用{{msg.prefName}}</text><text>会员卡</text></view> 
+            <view class="phoneNum phoneNum1"><text class="gray8d fr">未使用</text><text>优惠券</text></view>
+        </view>
+        <view wx:elif="{{msg.prefType == '2'}}">
+            <view class="phoneNum phoneNum1"><text class="gray8d fr">未使用</text><text>会员卡</text></view> 
+            <view class="phoneNum phoneNum1"><text class="gray8d fr">已用{{msg.prefName}}</text><text>优惠券</text></view>
+        </view>
+        <view class="phoneNum phoneNum1"><text class="gray8d fr">{{msg.orderTime}}</text>下单时间</view>
+        <view class="phoneNum phoneNum1"><text class="gray8d fr">{{msg.orderNo}}</text>订单编号</view>
+        <view class="phoneNum phoneNum1"><text class="cRad fr">¥{{msg.payPrice}}</text>总计</view>
+        <view class="waitPayBox">
+        <view class="waitPay fixedBtm bt  p24">
+            <view class='flex'>
+                <button class='saleBtn gradientBtn01' hover-class='gradientBtn01_hover' disabled='{{!dbClickFlag}}' bindtap= "cancleOrderFn">取消订单</button>
+                <button class='saleBtn gradientBtn02' hover-class='gradientBtn02_hover' disabled='{{!dbClickFlag}}' bindtap="confirmToPay">确认支付</button>
+            </view>
+        </view>
+  </view>
+    </view>
+    <view wx:else>
+        <!-- 未选会员卡样式如下  -->
+        <view wx:if="{{bindType != 0}}" class="phoneNum jiao_icon" bindtap='chooseCard'><text class="gray8d fr">未使用</text><text>会员卡</text></view>
+        <!-- 已选会员卡的样式如下 -->
+        <view wx:if="{{bindType == 0}}" class="phoneNum jiao_icon" bindtap='chooseCard'><text wx:if="{{discounTMoney == 0 && discounGMoney==0}}" class="cRad fr">无优惠</text><text class="cRad fr" wx:if="{{discounGMoney!=0 || discounTMoney!=0}}">-￥{{totalTGmoney}}</text><text class='cRad'>{{perCardName}}</text></view> 
+        <view wx:if="{{bindType != 1}}" class="phoneNum jiao_icon" bindtap='chooseCoupon'><text class="gray8d fr">未使用</text><text>优惠券</text>  <text class='tagsN radBg'>可用{{vocherNum}}张</text></view>
+        <view wx:if="{{bindType == 1}}" class="phoneNum jiao_icon" bindtap='chooseCoupon'><text class="cRad fr" >-￥{{totalTGmoney}}</text><text class='cRad'>{{preVoucherName}}</text></view>
+        <!-- <view class='noRefount'>不支持退票</view> -->
+        <view class="confirmWrap">
+            <view class="confirmInfo fixedBtm">
+                <view wx:if="{{detailsflag}}" class="ticketInfo clearfix" bindtap="hideDetails">
+                    <view class="fr seekInfo hideInfo"><text class="f28">实付</text><text class="pl20 rad f34">¥{{msg.resultPrice}}</text></view>
+                    <text>影票服务费合计{{msg.ServiceCharge}}元</text>
+                </view>
+                <view wx:else class="ticketInfo clearfix" bindtap="accountDetails">
+                    <view class="fr seekInfo"><text class="f28">实付</text><text class="pl20 rad f34">¥{{msg.resultPrice}}</text></view>
+                    <text>影票服务费合计{{msg.ServiceCharge}}元</text>
+                </view>
+                <view class="btnWrap">
+                    <button class="login-btn" disabled='{{!dbClickFlag}}' hover-class="session_hover" bindtap="confirmToPay">确认支付</button>
+                </view>
+            </view>
+        </view>
+        <view class='maskLayer' wx:if="{{detailsflag}}" bindtap="hideDetails"></view>
+        <view class="accDetails" wx:if="{{detailsflag}}" animation="{{animationData}}" bindtap="hideDetails">
+            <view class='ditailWrapper'>
+                <view class='detailTitle'>结算明细</view>
+                <view class='p24'>
+                    <view class="detailP">影票服务费合计{{msg.ServiceCharge}}元</view>
+                    <view class='detailP mt24'><text class="gray8d fr">¥{{msg.ticketPrice}}X{{msg.filmNum}}</text>影票门市价</view>
+                    <view class='detailP mt24' wx:if="{{msg.favorPrice > 0}}"><text class='cRad fr'>-¥{{msg.favorPrice }}</text>特惠折扣</view>  
+                    
+                    <view wx:if="{{bindType == 0 && discounTMoney > 0}}" class='detailP mt24'><text class='cRad fr'>-¥{{discounTMoney}}</text>会员卡折扣</view>
+                    <view wx:elif="{{bindType == 1 && discounTMoney > 0}}" class='detailP mt24'><text class='cRad fr'>-¥{{discounTMoney}}</text>优惠券折扣</view>
+                    <view  wx:if="{{msg.ticketActual}}" class='detailP mt24'><text class='gray8d fr'>¥{{msg.ticketActual}} </text>影票实付</view>
+                </view>
+                <view class='p24 bt'  wx:if="{{msg.goods.length > 0}}">
+                    <block wx:for="{{msg.goods}}" wx:for-item="good">
+                        <view class='detailP {{index>0 ? "mt24" : ""}}'><text class="gray8d fr">¥{{good.goodsPrice}}X{{good.amount}}</text>{{good.goodsName}}<text class='gray8d'>(门市价¥{{good.storefrontPrice}})</text></view>
+                    </block>
+                    <!-- 新B端有一个字段favorPrice是针对票和卖品一起的特惠折扣价，所以，卖品这里的特惠价就不再显示了 -->
+                    <!-- <view class='detailP mt24'><text class='cRad fr'>-¥{{discountGMoney}}</text>特惠折扣</view> -->
+                    <view class='detailP mt24' wx:if="{{bindType == 0 && discounGMoney > 0}}"><text class='cRad fr'>-¥{{discounGMoney}}</text>会员卡折扣</view>
+                    <view wx:elif="{{bindType == 1&& discounGMoney > 0}}" class='detailP mt24'><text class='cRad fr'>-¥{{discounGMoney}}</text>优惠券折扣</view>
+                    <view class='detailP mt24' wx:if="{{msg.goodsActual != 0}}"><text class='gray8d fr'>¥{{msg.goodsActual}}</text>卖品实付</view>
+                </view>  
+            </view>
+        </view>
+    </view>
+</view>
+
+<modal hidden="{{hideWin}}" no-cancel="{{nocancel}}" confirm-text="知道了" bindconfirm="confirm">为了您的账户安全，请重新登录</modal>
+<!-- <modal hidden="{{hideWin1}}" no-cancel="{{nocancel}}" confirm-text="确定" bindconfirm="confirm1">支付超时，请重新选座</modal> -->
+
+<!--  mask  -->
+<view class='maskLayer {{pswFlag? "layer": ""}}' wx:if="{{pswFlag}}" bindtap="hideDetailsFn"></view>
+<!--  set pay psw window  -->
+<view class='inptPsw' wx:if="{{pswFlag}}">
+    <view class='closePswFn' bindtap='hideDetailsFn'></view>
+    <view class='setPswTitle mb30'>请输入支付密码</view>
+    <form bindsubmit="setPswFn" bindreset="formReset">
+        <input class='setPswTxt' name="setnewPsw" type='password' placeholder='' value='{{psw}}'  />
+        <button class='setPswBtn gradientBtn' hover-class="gradientBtn_hover"  disabled='{{buttonClicked}}' form-type='submit'>确定</button>
+    </form>
+</view>

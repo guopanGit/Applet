@@ -1,0 +1,147 @@
+<!--stroe:index.wxml-->
+<!-- 引用模板 -->
+ <import src="../../template/temp.wxml" /> 
+<!-- 使用模板 -->
+ <template is="toast" data="{{...toastItem}}" /> 
+
+<view class="container">
+    <view class="userWrap relative">
+        <text class="address" bindtap="changeCinema">{{cinemaName}}</text>
+        <view class='storeNavWrap'>
+            <text class='sellStore  {{page == "1" ? "navCur":"" }}' data-index='1' bindtap='changeNav'>卖品</text>
+            <text class='cardStore  {{(page == "0") ? "navCur":"" }}' data-index='0' bindtap='changeNav'>会员卡 </text>
+        </view>
+        <view wx:if='{{page == "1"}}' class='trolley totalNum' bindtap='goToTrolley'><text class='numbers' wx:if="{{trolleyTotalNum > 0}}">{{trolleyTotalNum}}</text></view>
+    </view>
+    <!-- card list  -->
+    <view class='cardStoreList clearfix' data-index='0' wx:if='{{page == "0"}}'>
+        <view wx:if="{{cardNum == 0}}" class='container whiteBg mt200'>
+            <view class='noCardIcon'></view>
+            <view class='noCardDis'>暂无会员卡信息，敬请期待！</view>
+        </view>
+        <view wx:else>
+            <block wx:for="{{cardList}}" wx:for-item="card" wx:for-index="cardIndex">
+                <view class='storeCard'>
+                    <!-- 储值卡 -->
+                    <view wx:if="{{card.cardType == 1}}" class='cardImg img_02'> 
+                        <view class='cardMoney'>{{card.value}}元</view>
+                        <view class="cardTys tr">
+                          <view class="f20 white ellipsis cardTitle2">{{card.cardName}}</view>
+                          <view class="f14 mt7 white">储值卡</view>
+                        </view>
+                    </view>
+                    <!-- 权益卡 -->
+                    <view wx:elif="{{card.cardType == 2}}" class='cardImg img_01'>
+                        <view class='cardMoney zhe1'>折</view>
+                        <view class="cardTys tr">
+                          <view class="f20 white ellipsis cardTitle1">{{card.cardName}}</view>
+                          <view class="f14 mt7 white">权益卡</view>
+                        </view>
+                    </view>
+                    <view class='relative'>
+                        <view class='cardTitle ellipsis'>{{card.cardName}}</view>
+                        <view class="h28">
+                          <view class="tagsN orangeBg tags1" wx:if="{{card.openMinus!='' && card.openMinus > 0}}">开卡立减{{card.openMinus/100}}</view>
+                        </view>
+                        <view class='cardPrice'>¥{{card.cardPrice}}</view>
+                        <view class='getBtn' data-index='{{cardIndex}}' data-cardcode='{{card.cardCode}}' bindtap='byCardFn'>购买</view>
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+    <!-- sells list  -->
+    <view class='sellList' data-index='1' wx:if='{{page == "1"}}'>
+        <view wx:if="{{goodsNum == 0}}" class='container whiteBg mt200'>
+            <view class='noCardIcon noGoods'></view>
+            <view class='noCardDis'>暂无卖品信息，敬请期待！</view>
+        </view>
+        <view wx:else>
+            <block wx:for="{{goodsList}}" wx:for-item="goods" wx:for-index="sellIndex">
+                <view class='flex sellWrapper'>
+                    <view class='imgBox' bindtap='sellDetailFn' data-index="{{sellIndex}}"><image class='sellImg' src='{{goods.goodsImgNew}}'></image></view>
+                    <view class='flex_auto relative'>
+                        <view class='sellTitle' bindtap='sellDetailFn' data-index="{{sellIndex}}">{{goods.sellName}}</view>
+                        <view class='sellDes'>{{goods.goodsViewFocus}}</view>
+                        <view class='h28'  wx:if="{{goods.sellEventPrice != 0}}">
+                            <text class='tagsN radBg mr20'>活动特价</text>
+                            <text class='f34 rad'>¥ {{goods.sellEventPrice}}</text>
+                            <text wx:if="{{goods.sellEventPrice < goods.price}}" class='pl20 gray8d f24 lint_through'>¥ {{goods.price}}</text>
+                        </view>
+                        <view class="h28" wx:else>
+                            <text class='f34 rad'>¥ {{goods.goodsPrice}}</text>
+                            <text wx:if="{{goods.price > goods.goodsPrice}}" class='pl20 gray8d f24 lint_through'>¥ {{goods.price}}</text>
+                        </view>
+                        <view wx:if="{{goods.selNum <= 0}}" class='trolley' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='addFn'></view>
+                        <view wx:else class='selSells'>
+                            <text class='reduceSell' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='reduceFn'>-</text>
+                            <text class='selText'>{{goods.selNum}}</text>
+                            <text class='reduceSell' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='addFn'>+</text>
+                        </view>
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+    <!--  mask  -->
+    <view class='maskLayer' wx:if="{{cardDetailFlag || sellDetailFlag}}" bindtap="hideDetailsFn"></view>
+    <!--  card details  -->
+    <view class='deailWin' wx:if="{{cardDetailFlag}}" animation="{{animationData}}">
+        <view class='ditailWrapper'>
+            <view class='detailTitle'>{{popInfo.cardName}}<text class="fr rad">¥{{popInfo.cardPrice}}</text></view>
+            <view class='p24'>
+            <view  wx:if="{{popInfo.openMinus!='' && popInfo.openMinus > 0}}" class="mb24">
+              <view class="tagsN orangeBg tags1">促销活动</view>
+              <text class="lj">开卡立减{{popInfo.openMinus/100}}</text>
+            </view>
+                
+                <view class='detailP'>卡类型：{{popInfo.cardTypeName}}</view>
+                <view class='detailP mt24' wx:if="{{popInfo.cardType == 1}}">卡额度：{{popInfo.value}}</view> 
+                <view class='detailP mt24' wx:if="{{popInfo.cardDesc == null || popInfo.cardDesc == ''}}">卡说明：无</view>
+                <view class='detailP mt24' wx:else>卡说明：{{popInfo.cardDesc}}</view>
+                <view class='detailP mt24' wx:if="{{popInfo.deadLine == null || popInfo.deadLine == ''}}">卡有效期：永久有效</view>
+                <view class='detailP mt24' wx:else>卡有效期：{{popInfo.deadLine}}</view>
+                <view class='detailP mt24'><text class="rad">本卡为原价基础上优惠折扣</text></view>
+            </view>
+            <view class='checkAgree bt'><text class='checkIcon {{checkflag? "checkedIcon" : ""}}' bindtap='checkFn'></text>我已阅读并同意<text>《购卡协议》</text></view>
+            <view class='bindBtnWrap'>
+                <button data-cardCode='{{popInfo.cardCode}}' data-applyId='{{popInfo.applyId}}' data-promotionId='{{popInfo.promotionId}}' class='gradientBtn bindBtn' hover-class='gradientBtn_hover' bindtap='byeCardAtOnce'>立即购买</button>
+            </view>
+        </view>
+    </view>
+    <!--  sell details  -->
+    <view class='deailWin' wx:if="{{sellDetailFlag}}" animation="{{animationData}}">
+        <view class='ditailWrapper pt24'>
+            <text class='close' bindtap="hideDetailsFn"></text>
+            <view class='flex'>
+                <image class='selImg' src='{{sellPopInfo.goodsImgNew}}'></image>
+                <view class='flex_auto pl20'>
+                    <view class='popSellTitle'>{{sellPopInfo.sellName}}</view>
+                    <view class='sellPrice'  wx:if="{{sellPopInfo.sellEventPrice != 0}}">
+                         <text class='tagsN radBg in_block'>活动特价</text> 
+                        <text class='favourablePrice'>￥{{sellPopInfo.sellEventPrice}}</text>                        
+                        <text wx:if="{{sellPopInfo.price > sellPopInfo.sellEventPrice}}" class='pl20 gray8d f24 lint_through'>￥{{sellPopInfo.price}}</text>
+                    </view>
+                    <view class='sellPrice' wx:else>
+                        <text class='favourablePrice'>￥{{sellPopInfo.goodsPrice}}</text>                        
+                        <text wx:if="{{sellPopInfo.price > sellPopInfo.goodsPrice}}" class='pl20 gray8d f24 lint_through'>￥{{sellPopInfo.price}}</text>
+                    </view>
+                </view>
+            </view>
+            <view wx:if="{{sellPopInfo.sellEventPrice != 0}}" class='secTit  rad'>活动特价，每人限享{{sellPopInfo.limitedSell}}份</view>
+            <view class='secTit'>{{sellPopInfo.goodsViewFocus}}</view>
+            <view class='flex plr24'>
+                <view class='saleInfo flex_auto'></view>
+                <view class='tr flex_auto'>
+                    <text class='reduceSell' data-goodscode="{{sellPopInfo.goodsCode}}" bindtap='reduceFn'>-</text>
+                    <text class='selText'>{{sellPopInfo.selNum}}</text>
+                    <text class='reduceSell' data-goodscode="{{sellPopInfo.goodsCode}}" bindtap='addFn'>+</text>
+                </view>
+            </view>
+            <view class='p24 bt flex mt20'>
+                <button class='saleBtn gradientBtn01' hover-class='gradientBtn01_hover' bindtap='goToTrolley'>进入购物车</button>
+                <button class='saleBtn gradientBtn02' hover-class='gradientBtn02_hover' data-number='{{sellPopInfo.selNum}}' bindtap='chooseFn'>确认选择</button>
+            </view>
+        </view>
+    </view>
+</view>

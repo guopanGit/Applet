@@ -1,0 +1,17 @@
+<!--pages/payResult/checking.wxml-->
+<view class="icon">
+    <image class="iconImg" src="../../image/fail.png"></image>
+    <view wx:if="{{goodsFlag}}" class="hintWord">出货失败</view>
+    <view wx:else class="hintWord">出票失败</view>
+</view>
+<view class="border"></view>
+<view class="hints">
+    <view class="hintTitle">订单出问题啦~正在紧急处理</view>
+    <view class="hint1">退款会在3-15个工作日退还到您原支付账户</view>
+    <view class="hint1">如有问题请联系影城工作人员</view>
+</view>
+<view class="btnWrap">
+    <view class="btn fixedBtm">
+        <button class="login-btn" hover-class="session_hover" bindtap="viewOrderDetails">查看订单</button>
+    </view>
+</view>

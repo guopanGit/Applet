@@ -1,0 +1,19 @@
+<!--pages/login/login.wxml-->
+<!-- 引用模板 -->
+<import src="../../template/temp.wxml" /> 
+<!-- 使用模板 -->
+<template is="toast" data="{{...toastItem}}"/>
+
+<form bindsubmit="bindPhoFn" bindreset="formReset">
+    <view class="content ">
+        <view class="inputBox">
+            <input type="number" name="memberPhone" class="inputT" placeholder="请输入手机号" placeholder-class="inputMsg" bindinput="phoneChange" />
+            <view class="sendBtn" bindtap="getVerifyCodeFn">{{time}}</view>
+        </view>
+        <view class="inputBox">
+            <input type="text" name="verifyCode" class="inputT" placeholder="请输入验证码" placeholder-class="inputMsg" />
+        </view>
+		<button class='bindPhoneBtn' hover-class='bindPhoneBtn_hover' form-type='submit'>绑定</button>
+        <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="login-btn" hover-class="session_hover">免验证码一键绑定（推荐）</button> 
+    </view>
+</form>

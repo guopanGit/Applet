@@ -1,0 +1,69 @@
+{
+  "pages": [
+    "pages/cinema/cinema",
+    "pages/home/index",
+    "pages/home/filmdes",
+    "pages/store/index",
+    "pages/store/buyCardSuc",
+    "pages/store/trolleyInfo",
+    "pages/chooseSeats/chooseSeats",
+    "pages/confirmOrder/chooseCard",
+    "pages/goodsList/goodsList",
+    "pages/confirmOrder/confirmOrder",
+    "pages/confirmOrder/goodsConfirmOrder",
+    "pages/confirmOrder/chooseCoupon",
+    "pages/payResult/checking",
+    "pages/payResult/paySuc",
+    "pages/payResult/payFail",
+    "pages/orderInfoList/orderInfoList",
+    "pages/orderInfoList/orderRefund",
+    "pages/orderInfoList/failureTickte",
+    "pages/orderInfoList/code",
+    "pages/my/index",
+    "pages/my/rule",
+    "pages/my/my",
+    "pages/login/login",
+    "pages/logs/logs",
+    "pages/cardVoucher/cardList",
+    "pages/cardVoucher/voucherList",
+    "pages/cardVoucher/bindCardVoucher",
+    "pages/getUserInfo/login"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#fff",
+    "backgroundColor": "#f1f1f1",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#bcbeca",
+    "selectedColor": "#fd8e47",
+    "height": "100rpx",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "image/index.png",
+        "selectedIconPath": "image/index_c.png"
+      },
+      {
+        "pagePath": "pages/store/index",
+        "text": "商城",
+        "iconPath": "image/store.png",
+        "selectedIconPath": "image/store_c.png"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "text": "我的",
+        "iconPath": "image/mine.png",
+        "selectedIconPath": "image/mine_c.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 60000,
+    "downloadFile": 60000
+  }
+}

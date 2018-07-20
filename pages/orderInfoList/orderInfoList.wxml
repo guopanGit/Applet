@@ -1,0 +1,140 @@
+<!--pages/orderInfoList/orderInfoList.wxml-->
+<view class="container" wx:if="{{orderType == 1}}">
+  <view class="bodyBg">
+    <view class="whiteBg mt20 pt24">
+      <view class="title circle">影票信息</view>
+      <view class="filmInfo">
+        <view class="flex">
+           <view class="filmImg">
+            <image class="fImage" src="{{orderInfoData.filmPoster}}"></image>
+        </view> 
+          <view class="flex_auto">
+            <view class="fTitle">{{orderInfoData.filmName}}</view>
+            <view class="info">{{orderInfoData.cinemaName}}</view>
+            <view class="info">
+              <text>{{orderInfoData.hallName}}</text>
+              <!-- <block wx:for="{{orderInfoData.seatInfo}}" wx:for-item="seat"> -->
+              <text class="seat">{{orderInfoData.seatInfo}}</text>
+              <!-- </block> -->
+              <!--<text class="seat">5排6座</text><text class="seat">5排7座</text>-->
+            </view>
+            <view class="info">{{orderInfoData.showTime}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="codes">
+      <view class='tc'>
+        <text class="c2" wx:if="{{orderInfoData.getTicketNum != '' && orderInfoData.getTicketNum != undefined}}">取票码：{{orderInfoData.getTicketNum}}</text>
+        <text wx:if="{{orderInfoData.verificatedCode != undefined && orderInfoData.verificatedCode != ''}}">验证码：{{orderInfoData.verificatedCode}}</text>
+      </view>
+      <view class='qrWrap' bindtap='codeFn' data-codeFlag="1" data-barcodeurl='{{orderInfoData.ticketNo}}'>
+        <image class='qrcode' src='{{qrcode}}'></image>
+      </view>
+      <!-- <view class="qrcode" bindtap='codeFn' data-code="{{orderInfoData.getTicketNum}}" data-codeFlag="1">
+				<canvas canvas-id="qrcode" />
+			</view> -->
+      <view class="hint tc">请到{{orderInfoData.cinemaName}}自助机取票</view>
+    </view>
+    <block wx:if="{{orderInfoData.goodsNo != '' && orderInfoData.goodsNo != undefined}}">
+      <view class="whiteBg">
+        <view class="title">卖品信息</view>
+        <view class="sellsInfo">
+          <block wx:for="{{orderInfoData.goods}}" wx:for-item="good">
+            <text class="block">{{good.goodsName}}X {{good.amount}}</text>
+          </block>
+        </view>
+      </view>
+      <view class="codes">
+        <view class='tc'>
+          <text class="c2" wx:if="{{orderInfoData.getGoodsNum != undefined && orderInfoData.getGoodsNum != ''}}">取货码：{{orderInfoData.getGoodsNum}}</text>
+          <text wx:if="{{orderInfoData.verificatedGoodsCode != '' && orderInfoData.verificatedGoodsCode != undefined}}">验证码：{{orderInfoData.verificatedGoodsCode}}</text>
+        </view>
+        <!-- posType = 2时是火凤凰的pos卡   -->
+        <view wx:if="{{orderInfoData.posType == '2'}}" class='barcodeWrap' bindtap='codeFn' data-codeFlag="0" data-barcodeurl='{{orderInfoData.goodsNo}}'>
+          <image class='barcode' src="{{barcode}}"></image>
+        </view>
+        <view class='qrWrap' bindtap='codeFn' data-codeFlag="1" data-barcodeurl='{{orderInfoData.goodsNo}}'>
+          <image class='qrcode' src='{{qrcode1}}'></image>
+        </view>
+        <!-- <view class="barcode" bindtap='codeFn' data-code='{{orderInfoData.getGoodsNum}}' data-codeFlag="0" data-barcodeurl='{{barCodeUrl}}'>
+					<canvas canvas-id="barcode" id='barcode' />
+					<view class="tc black33">{{code}}</view>
+				</view>
+				<view class="qrcode1" bindtap='codeFn' data-code='{{orderInfoData.getGoodsNum}}' data-codeFlag="1">
+					<canvas canvas-id="qrcode1" />
+				</view> -->
+        <view class="hint tc">请到{{orderInfoData.cinemaName}}柜台处凭此码兑换</view>
+      </view>
+
+    </block>
+  </view>
+  <view class="receiptList whiteBg">
+    <view class="title">结算信息</view>
+    <view class="li flex">
+      <text class="liTit">订单号：</text>
+      <text class="flex_auto liNum">{{orderInfoData.orderNo}}</text>
+    </view>
+    <view class="li flex">
+      <text class="liTit">票价：</text>
+      <text class="flex_auto liNum">¥{{orderInfoData.ticketPrice}}</text>
+    </view>
+    <view class="li flex" wx:if="{{orderInfoData.goodsNo != '' && orderInfoData.goodsNo != undefined}}">
+      <text class="liTit">卖品：</text>
+      <text class="flex_auto liNum">¥{{orderInfoData.goodsPrice}}</text>
+    </view>
+    <view class="li flex">
+      <text class="liTit black3">实付：</text>
+      <text class="flex_auto liNum rad">¥{{orderInfoData.actualPrice}}             </text>
+    </view>
+  </view>
+  <view wx:if="{{orderInfoData.refundStatus == '1'}}" class="btmWrap">
+    <view class="selTicket">
+      <button hover-class="gradientBtn_hover" class="selectBtn gradientBtn" bindtap="reFundFn">申请退款</button>
+    </view>
+  </view>
+</view>
+<view class="container" wx:if="{{orderType == 2}}">
+  <view class="bodyBg">
+    <view class="whiteBg pt24">
+      <view class="title">卖品信息</view>
+      <view class="sellsInfo">
+        <block wx:for="{{datasList}}" wx:for-item="detil">
+            <text class='fr black3'>￥{{detil.strategyPrice / 100}}</text>
+            <text class="block">{{detil.sellName}}X {{detil.sellCount}}</text>
+        </block>
+      </view>
+      <view class="codes">
+        <view class='tc'>
+          <text class="c2" wx:if="{{datas.getGoodsNum != undefined && datas.getGoodsNum != ''}}">取货码：{{datas.getGoodsNum}}</text>
+          <text wx:if="{{datas.verificatedGoodsCode != '' && datas.verificatedGoodsCode != undefined}}">验证码：{{datas.verificatedGoodsCode}}</text>
+        </view>
+        <view wx:if="{{datas.posType == '2'}}" class='barcodeWrap' bindtap='codeFn' data-codeFlag="0" data-barcodeurl='{{datas.pickupGoodsCode}}'>
+          <image class='barcode' src="{{barcode1}}"></image>
+        </view>
+        <view class='qrWrap' bindtap='codeFn' data-codeFlag="1" data-barcodeurl='{{orderInfoData.goodsNo}}'>
+          <image class='qrcode' src='{{qrcode1}}'></image>
+        </view>
+        <view class="hint tc">请到{{datas.cinemaName}}柜台处凭此码兑换</view>
+      </view>
+        <view class="receiptList whiteBg">
+            <!-- <view class="title">结算信息</view> -->
+            <view class="li flex mt20">
+                <text class="liTit">下单时间</text>
+                <text class="flex_auto liNum">{{datas.createTime}}</text>
+            </view>
+            <view class="li flex">
+                <text class="liTit">订单号：</text>
+                <text class="flex_auto liNum">{{datas.orderId}}</text>
+            </view>
+            <view class="li flex">
+                <text class="liTit black3">总计：</text>
+                <text class="flex_auto liNum rad">¥{{datas.realPrice / 100}} </text>
+            </view>
+        </view>
+    </view>
+  </view>
+</view>
+  <view wx:if="{{touchFlag == false}}" class='msk'>
+    <image src='../../image/load1.gif' class='loadingGif'></image>
+  </view>

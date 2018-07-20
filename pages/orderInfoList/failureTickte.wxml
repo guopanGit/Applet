@@ -1,0 +1,63 @@
+<!--pages/orderInfoList/failureTickte.wxml-->
+<view class="container">
+  <view class="icon">
+    <image class="iconImg" src="../../image/suc.png"></image>
+    <view class="hintWord">订单出问题啦~正在紧急处理</view>
+    <view class="gray8d hintWord">退款会在3-15个工作日退还到您原支付账户</view>
+    <view class="gray8d hintWord">如有问题请联系影城工作人员</view>
+  </view>
+  <view class="bodyBg">
+    <view class="mt20 whiteBg pt20" wx:if="{{orderType == 1}}">
+      <view class="filmInfo">
+        <view class="filmName">{{msg.filmName}}</view>
+        <view class="mt30 info">{{msg.cinemaName}}</view>
+        <view class="info">
+          <text class="rad">{{msg.showTime}}</text>
+          <text class="pl20">{{msg.filmCount}}</text>
+        </view>
+        <view class="info">
+          <text>{{msg.hallName}}</text>
+          <text class="pl20 in_block">{{msg.seatInfo}}</text>
+        </view>
+      </view>
+      <view wx:if="{{msg.goods.length > 0}}" class="sells">
+        <block wx:for="{{msg.goods}}" wx:for-item="good">
+          <view class="sell {{index > 0 ? 'mt20':''}}">{{good.goodsName}} X {{good.amount}}</view>
+        </block>
+      </view>
+      <view class="li flex bt">
+        <text class="liTit">订单号：</text>
+        <text class="flex_auto liNum">{{msg.orderNo}}</text>
+      </view>
+      <view class="li flex">
+        <text class="liTit">票价：</text>
+        <text class="flex_auto liNum">¥{{msg.ticketPrice}}</text>
+      </view>
+      <view class="li flex">
+        <text class="liTit">卖品：</text>
+        <text class="flex_auto liNum">¥{{msg.goodsPrice}}</text>
+      </view>
+      <view class="li flex pb20">
+        <text class="liTit black3">实付：</text>
+        <text class="flex_auto liNum rad">¥{{msg.actualPrice}}</text>
+      </view>
+    </view>
+    <view class="mt20 whiteBg pt20" wx:if="{{orderType == 2}}">
+      <view wx:if="{{datasList.length > 0}}" class="sells">
+        <block wx:for="{{datasList}}" wx:for-item="detil">
+          <view class="sellIs">{{detil.sellName}} X {{detil.sellCount}}
+            <text class="fr">¥{{detil.sellPrice/100}}</text>
+          </view>
+        </block>
+      </view>
+      <view class="li flex bt">
+        <text class="liTit">订单号：</text>
+        <text class="flex_auto liNum">{{datas.orderCode}}</text>
+      </view>
+      <view class="li flex pb20">
+        <text class="liTit black3">实付：</text>
+        <text class="flex_auto liNum rad">¥{{datas.goodsPrice/100}}</text>
+      </view>
+    </view> 
+  </view>
+</view>

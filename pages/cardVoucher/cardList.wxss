@@ -1,0 +1,3 @@
+/* pages/cardVoucher/cardList.wxss */
+@import '../confirmOrder/chooseCard.wxss';
+@import '../store/index.wxss';

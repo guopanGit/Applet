@@ -1,0 +1,7 @@
+<template name="toast">
+	<view class="we_toast_wrapper" hidden="{{ !toast_visible }}">
+		<view class="we_toast">
+	        <view class="toastInfo">{{ text }}</view>
+	    </view>
+	</view>
+</template>

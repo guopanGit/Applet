@@ -1,0 +1,33 @@
+/* pages/home/filmdes.wxss */
+page{background:#fff;}
+.videoBox, .poster, .posterImg{width:750rpx;height:448rpx;}
+.defaultImg{background-color:#f4f4f4;width:750rpx;height:448rpx;}
+.filmVideo{width:750rpx;height:448rpx;background-color:#000;}
+.infoWrap{padding:24rpx 24rpx 0;}
+.filmNmae{font-size:32rpx;}
+.filmAlias{margin-top:12rpx;font-size:24rpx;color:#8d8d8d;}
+.filmTypes{margin-top:12rpx;font-size:24rpx;color:#8d8d8d;}
+.pl16{padding-left:16rpx;}
+.filmLabel{width:220rpx;}
+.ml18{margin-left:18rpx;}
+.label{float:right;padding:0 8rpx;height:28rpx;line-height:28rpx;border:2rpx solid #8d8d8d;border-radius:14rpx;color:#8d8d8d;font-size:20rpx;}
+.mov_intext{margin-top:40rpx;line-height:42rpx;font-size:26rpx;color:#8d8d8d;}
+.slideWrap{margin-top:10rpx;text-align:center;}
+.slide_btn{display:inline-block;width:14rpx;height:14rpx;border-left:2rpx solid #c8c8c8;border-bottom:2rpx solid #c8c8c8;transform: rotate(-45deg);}
+.slide_btn_cur{transform:rotate(135deg);}
+.noData{padding:50rpx 0;color:#8d8d8d;font-size:26rpx;text-align: center;}
+.actorInfo{margin-top:24rpx;line-height:44rpx;font-size:26rpx;}
+.ptTitle{padding:20rpx 0;font-size:26rpx;}
+/*photos*/
+.photos{margin-top:15rpx;padding-bottom:30rpx;height:130rpx;width:100%;overflow-y:hidden;overflow-x:auto;display:-webkit-box;display:box;-webkit-overflow-scrolling: touch;}
+.imgLi{height:100%;margin-right:20rpx;border-radius:10rpx;overflow:hidden;}
+.filmPhoto{width:180rpx;height:130rpx;border-radius:10rpx;}
+/*larget Photos*/
+.largetBox{position: fixed;left:0;top:0;right:0;bottom:0;background-color:#000;z-index:99;}
+.largeSwiper{width:100%;height:100%;}
+.imgItem{width:100%;height:100%;line-height:1;position:relative;}
+.largeImg{width:100%;position: absolute;left:50%;top:50%;transform: translate(-50%, -50%);-webkit-transform: translate(-50%, -50%);}
+/*select ticket*/
+.btmWrap{height:100rpx;}
+.selTicket{padding:15rpx 0;border-top:1rpx solid #e4e4e4;background:#fff;position:fixed;bottom:0;left:0;right:0;}
+.selectBtn{width:642rpx;height:68rpx;line-height:68rpx;border:none;border-radius:34rpx;font-size:32rpx;}

@@ -1,0 +1,8 @@
+<view class="container">
+	<view class='rule-icon'></view>
+  <view class='rule-wrap'>
+    <view class='rule-text'>仅支持不使用优惠券的影票订单退款</view>
+    <view class='rule-text'>影片开场前一小时内不支持退款</view>
+    <view class='rule-text'>含卖品的订单不支持退款</view>
+  </view>
+</view>

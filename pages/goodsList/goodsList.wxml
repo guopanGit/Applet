@@ -1,0 +1,64 @@
+<!--pages/goodsList/goodsList.wxml-->
+<!-- 引用模板 -->
+<import src="../../template/temp.wxml" /> 
+<!-- 使用模板 -->
+<template is="toast" data="{{...toastItem}}"/>
+
+<view class="page {{listLength == 0 ? 'whiteBg' : ''}}" style="overflow: {{hidden}}">
+    <view class="blockWrap">
+        <view wx:if="{{listLength > 0}}">
+            <block wx:for="{{goods}}" wx:for-item="good">
+                <view class="selBlock">
+                    <view class="icon">
+                        <image class="iconImg" src="{{good.goodsImgNew}}"></image>
+                    </view>
+                    <view class="sellInfo">
+                        <view class="sellName ellipsis">{{good.goodsName}}</view>
+                        <view class="sellDes ellipsis">{{good.goodsViewFocus}}</view>
+                        <view class="sellPrice">¥{{good.goodsPrice}}</view><!--goodsPrice是折扣价，price是原价-->
+                        <view class="addIcon" data-index="{{index}}" data-goodsCode="{{good.goodsCode}}" bindtap="putInCart">+</view>
+                    </view>
+                    <view wx:if="{{good.num > 0}}" class="goodsTag">{{good.num}}</view>
+                </view>
+            </block>
+        </view>
+         <view  wx:else class="null_sell">
+            <view class='null_icon'></view>
+            <view class='null_p'>暂无卖品信息，敬请期待！</view>
+        </view>
+        <view class="shopWrap">
+            <view class="trolley flex">
+                <view class="shopIcon" bindtap="showShopList"><text class="tab" hidden="{{nSum == 0}}">{{nSum}}</text></view>
+                <view class="sum flex_auto" bindtap="showShopList">¥{{totalSum}}</view>
+                <view class="buttonF">
+                    <view class="NextBtn login-btn" hover-class="session_hover" bindtap="nextFn">下一步</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    
+    <!--展开的购物车-->
+    <view class="shopList" hidden="{{winFlag}}">
+        <view class="mark" bindtap="closeWin"></view>
+        <view class="list">
+            <view class="sTitle"><text class="del" bindtap="delGoodInfo">清空</text>购买列表</view>
+            <scroll-view scroll-y class="sGoodList"> <!-- 这个标签有一个verifyCode，暂时先注掉 -->
+                <block wx:for="{{goodsInfo}}" wx:for-item="sGood">
+                    <view class="goodLi flex" wx:if="{{sGood.amount > 0}}">
+                        <view class="goodName">{{sGood.goodsName}}</view>
+                        <view class="goodPrice">￥{{sGood.goodSum}}</view>
+                        <view class="flex_auto">
+                            <view class="flex number">
+                                <view class="minus" data-goodsCode="{{sGood.goodsCode}}" bindtap="cutGoodFn">-</view>
+                                <view class="digit">{{sGood.amount}}</view>
+                                <view class="add" data-goodsCode="{{sGood.goodsCode}}" bindtap="putInCart">+</view>
+                            </view>    
+                        </view>
+                    </view>
+                </block>
+            </scroll-view>
+        </view>
+    </view>
+</view>
+<!-- <modal hidden="{{hideWin}}" no-cancel="{{!nocancel}}" confirm-text="取消订单" cancel-text="继续支付" bindconfirm="cancelOrder" bindcancel="goToPay">您是否取消订单？</modal> -->
+
