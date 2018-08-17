@@ -122,12 +122,15 @@ page {
 }
 
 /*座位图*/
-
 .seatsWrap {
-  width: 750rpx;
   min-height: 750rpx;
   overflow: scroll;
   position: relative;
+  text-align: center;
+}
+
+.seatsBox {
+  position: absolute;
 }
 
 .rowNum {
@@ -155,18 +158,15 @@ page {
 
 .row {
   padding: 0 37rpx 0 27rpx;
-
 }
-/*
+
 .middle {
+  padding: 0 0 0 27rpx;
   border-right: 1px dashed #c8c8c8;
-  width: 50%;
-  height: 460rpx;
   position: absolute;
   z-index: -1;
-  margin-top: 111rpx;
 }
-*/
+
 .seat {
   display: inline-block;
   width: 58rpx;

@@ -38,20 +38,21 @@
     </view>
 
     <view class="seatsWrap">
-      <view class='middle'></view>
-      <block wx:for="{{seatsMap}}" wx:for-item="rowData" wx:for-index="i">
-        <view class="row" style="width:{{rowWidth + 'rpx'}};">
-          <block wx:for="{{rowData}}" wx:for-item="seat" wx:for-index="j">
-            <!--<text class="seat {{seat == 'F' ? 'empty':''}} {{seat == 'B' ? 'soldOut':''}} {{seat == 'T' ? 'selected':''}}"></text>-->
-            <!--F: 正常、可售; B: 售出; T: 锁定; 空: 没有座，占位-->
-            <text class="seat empty" wx:if="{{seat.seatStatus == 'F'}}" data-id="{{seat.id}}" bindtap="selectTicket" data-rowIndex="{{i}}" data-colIndex="{{j}}"></text>
-            <text class="seat soldOut" wx:elif="{{seat.seatStatus == 'B'}}" data-id="{{seat.id}}"></text>
-            <text class="seat selected" wx:elif="{{seat.seatStatus == 'T' || seat.seatStatus == 'S'}}" data-id="{{seat.id}}" bindtap="selectTicket" data-rowIndex="{{i}}" data-colIndex="{{j}}"></text>
-            <text wx:else class="seat" data-id="{{seat.id}}"></text>
-          </block>
-        </view>
-      </block>
-
+      <view class='seastBox' style="margin-left:{{left + 'rpx'}}" bindtouchstart="mytouchstart" bindtouchmove="mytouchmove">
+        <view class='middle' style="width:{{middleWidth + 'rpx'}};height:{{middleHeigh + 'rpx'}} "></view>
+        <block wx:for="{{seatsMap}}" wx:for-item="rowData" wx:for-index="i">
+          <view class="row" style="width:{{rowWidth + 'rpx'}};">
+            <block wx:for="{{rowData}}" wx:for-item="seat" wx:for-index="j">
+              <!--<text class="seat {{seat == 'F' ? 'empty':''}} {{seat == 'B' ? 'soldOut':''}} {{seat == 'T' ? 'selected':''}}"></text>-->
+              <!--F: 正常、可售; B: 售出; T: 锁定; 空: 没有座，占位-->
+              <text class="seat empty" wx:if="{{seat.seatStatus == 'F'}}" data-id="{{seat.id}}" bindtap="selectTicket" data-rowIndex="{{i}}" data-colIndex="{{j}}"></text>
+              <text class="seat soldOut" wx:elif="{{seat.seatStatus == 'B'}}" data-id="{{seat.id}}"></text>
+              <text class="seat selected" wx:elif="{{seat.seatStatus == 'T' || seat.seatStatus == 'S'}}" data-id="{{seat.id}}" bindtap="selectTicket" data-rowIndex="{{i}}" data-colIndex="{{j}}"></text>
+              <text wx:else class="seat" data-id="{{seat.id}}"></text>
+            </block>
+          </view>
+        </block>
+      </view>
     </view>
   </view>
   <view class="legendWrap" hidden="{{hideLegend}}">

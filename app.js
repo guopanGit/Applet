@@ -49,7 +49,8 @@ App({
                                 //success
                                 var pc = new WXBizDataCrypt(appId, res.data.session_key);
                                 wx.getUserInfo({
-                                    success: function (res) {                                        
+                                    success: function (res) { 
+                                      console.log(res , "iv")                                       
                                         var data = pc.decryptData(res.encryptedData, res.iv);
 
                                         wx.setStorageSync('userData', data);

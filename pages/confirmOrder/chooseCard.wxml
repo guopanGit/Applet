@@ -11,41 +11,41 @@
     <view class='cardList choosePage'>
         <block wx:for="{{cardlist}}" wx:for-index="cardIndex" wx:for-item="card">
             <!-- 储值卡 -->
-            <view wx:if="{{card.cardType == 1}}" class="card cyellowBg {{cardIndex == 0 ? 'mt20' : ''}}" data-cardcode='{{card.cardCode}}' data-cardname='{{card.cardName}}' data-cardtype="{{card.cardType}}" bindtap='selectCardFn'>
+            <view wx:if="{{card.cardType == 1}}" class="card {{card.expire =='0' ? 'cyellowBg' : 'BeOverdue'}} {{cardIndex == 0 ? 'mt20' : ''}}" data-cardcode='{{card.cardCode}}' data-cardname='{{card.cardName}}' data-cardtype="{{card.cardType}}" bindtap="{{card.expire =='0' ? 'selectCardFn' : ''}}">
                 <view class='tr' data-index='{{cardIndex}}'>
                     <!-- <text class='fr f24 yelC'>详情 <text class='dJiao yelJ'></text></text> -->
                     <view class='cardTitle ellipsis'>{{card.cardName}}</view>
-                    <view class='cardtag  yellowT'>{{card.cardTypeName}}</view>
+                    <view class='cardtag'>{{card.cardTypeName}}</view>
                 </view>
-                <view class='aboutMoney yelC'>{{card.thePrice}}<text class='f30'>元</text></view>
-                <view class='deadline yelC'>有效期至{{card.limitTime}}</view>
+                <view class='aboutMoney'>{{card.thePrice}}<text class='f30'>元</text></view>
+                <view class='deadline' wx:if="{{card.limitTime != null && card.limitTime != ''}}">有效期至{{card.limitTime}}</view>
                 <!-- <view wx:if="{{card.isRecharge == 0}}" class='recharge'>立即充值</view> -->
-                <view class='cardDetials' data-index='{{cardIndex}}' catchtap="cardDetailsFn"><text class='dJiao'></text> 详情</view>
+                <view class='cardDetials' data-index='{{cardIndex}}' catchtap="cardDetailsFn"><text class="dJiao {{card.expire =='0' ? 'dJiaobg1' : 'dJiaobg2'}}"></text> 详情</view>
                 <view  class="selectedOne {{card.sub == 1 ? 'selCur' : ''}}"></view>
             </view>
             <!--  权益卡  -->
-            <view wx:elif="{{card.cardType == 2}}" class="card cgrayBg" data-cardcode='{{card.cardCode}}' data-cardname='{{card.cardName}}' data-cardtype='{{card.cardType}}' bindtap='selectCardFn'>
+            <view wx:elif="{{card.cardType == 2}}" class="card {{card.expire =='0' ? 'cyellowBg' : 'BeOverdue'}}" data-cardcode='{{card.cardCode}}' data-cardname='{{card.cardName}}' data-cardtype='{{card.cardType}}' bindtap="{{card.expire =='0' ? 'selectCardFn' : ''}}">
                 <view class='tr' data-index='{{cardIndex}}'>
                     <view class='cardTitle ellipsis'>{{card.cardName}}</view>
-                    <view class='cardtag  grayT'>{{card.cardTypeName}}</view>
+                    <view class='cardtag  white'>{{card.cardTypeName}}</view>
                 </view>
-                <view class='aboutMoney grayC1'><text class='f30'>折</text></view>
-                <view wx:if='{{card.limitTime == ""}}' class='deadline grayC'>有效期至：永久有效</view>
-                <view wx:else class='deadline yelC'>有效期至{{card.limitTime}}</view>
-                <view class='cardDetials' data-index='{{cardIndex}}' catchtap="cardDetailsFn"><text class='dJiao'></text> 详情</view>
+                <view class='aboutMoney'><text class='f30'>折</text></view>
+                <view wx:if='{{card.limitTime == ""}}' class='deadline'>有效期至：永久有效</view>
+                <view wx:else class='deadline'>有效期至{{card.limitTime}}</view>
+                <view class='cardDetials' data-index='{{cardIndex}}' catchtap="cardDetailsFn"><text class="dJiao {{card.expire =='0' ? 'dJiaobg1' : 'dJiaobg2'}}"></text> 详情</view>
                 <view  class="selectedOne {{card.sub == 1 ? 'selCur' : ''}}"></view>
             </view>
             <!-- 来自绑定的卡 -->
-            <view wx:if="{{card.cardType == '10' || card.cardType == '11'}}" class="card cpinkBg" bindtap='selectCardFn' data-cardcode='{{card.cardCode}}' data-cardtype="{{card.cardType}}"  data-cardname='{{card.cardName}}'>
+            <view wx:if="{{card.cardType == '10' || card.cardType == '11'}}" class="card cpinkBg" bindtap="{{card.expire =='0' ? 'selectCardFn' : ''}}" data-cardcode='{{card.cardCode}}' data-cardtype="{{card.cardType}}"  data-cardname='{{card.cardName}}'>
                 <view class='cardTitle' data-index='{{cardIndex}}'>
                     <text>实体卡</text>
                     <view class='cardtag  pinkT'>{{card.cardTypeName}}</view>
                 </view>
-                <view class='aboutMoney pinkC1'>{{card.thePrice}}<text class='f30'>元</text></view>
+                <view class='aboutMoney '>{{card.thePrice}}<text class='f30'>元</text></view>
                 <!-- <view class='deadline pinkC'>卡号24227162712616</view>  -->
-                <view wx:if="{{card.limitTime == ''}}" class='deadline pinkC'>有效期至：永久有效</view> 
-                <view wx:else class='deadline pinkC'>有效期至{{card.limitTime}}</view>
-                <view class='cardDetials' data-index='{{cardIndex}}' catchtap="cardDetailsFn"><text class='dJiao'></text> 详情</view>
+                <view wx:if="{{card.limitTime == ''}}" class='deadline '>有效期至：永久有效</view> 
+                <view wx:else class='deadline '>有效期至{{card.limitTime}}</view>
+                <view class='cardDetials' data-index='{{cardIndex}}' catchtap="cardDetailsFn"><text class="dJiao {{card.expire =='0' ? 'dJiaobg1' : 'dJiaobg2'}}"></text> 详情</view>
                 <view  class="selectedOne {{card.sub == 1 ? 'selCur' : ''}}"></view>
             </view>
         </block>

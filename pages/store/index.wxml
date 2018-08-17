@@ -11,7 +11,7 @@
             <text class='sellStore  {{page == "1" ? "navCur":"" }}' data-index='1' bindtap='changeNav'>卖品</text>
             <text class='cardStore  {{(page == "0") ? "navCur":"" }}' data-index='0' bindtap='changeNav'>会员卡 </text>
         </view>
-        <view wx:if='{{page == "1"}}' class='trolley totalNum' bindtap='goToTrolley'><text class='numbers' wx:if="{{trolleyTotalNum > 0}}">{{trolleyTotalNum}}</text></view>
+        <view wx:if='{{page == "1"}}' class='trolley trolley1 totalNum' bindtap='goToTrolley'><text class='numbers' wx:if="{{trolleyTotalNum > 0}}">{{trolleyTotalNum}}</text></view>
     </view>
     <!-- card list  -->
     <view class='cardStoreList clearfix' data-index='0' wx:if='{{page == "0"}}'>
@@ -21,7 +21,7 @@
         </view>
         <view wx:else>
             <block wx:for="{{cardList}}" wx:for-item="card" wx:for-index="cardIndex">
-                <view class='storeCard'>
+                <view  data-index='{{cardIndex}}' class='storeCard'>
                     <!-- 储值卡 -->
                     <view wx:if="{{card.cardType == 1}}" class='cardImg img_02'> 
                         <view class='cardMoney'>{{card.value}}元</view>
@@ -72,11 +72,11 @@
                             <text class='f34 rad'>¥ {{goods.goodsPrice}}</text>
                             <text wx:if="{{goods.price > goods.goodsPrice}}" class='pl20 gray8d f24 lint_through'>¥ {{goods.price}}</text>
                         </view>
-                        <view wx:if="{{goods.selNum <= 0}}" class='trolley' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='addFn'></view>
+                        <view wx:if="{{goods.selNum <= 0}}" class='trolley trolley2' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='addFn'></view>
                         <view wx:else class='selSells'>
-                            <text class='reduceSell' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='reduceFn'>-</text>
+                            <text class='reduceSell reduceSell0' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='reduceFn'>-</text>
                             <text class='selText'>{{goods.selNum}}</text>
-                            <text class='reduceSell' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='addFn'>+</text>
+                            <text class='reduceSell reduceSell1' data-index="{{sellIndex}}" data-goodscode="{{goods.goodsCode}}" bindtap='addFn'>+</text>
                         </view>
                     </view>
                 </view>
@@ -99,8 +99,8 @@
                 <view class='detailP mt24' wx:if="{{popInfo.cardType == 1}}">卡额度：{{popInfo.value}}</view> 
                 <view class='detailP mt24' wx:if="{{popInfo.cardDesc == null || popInfo.cardDesc == ''}}">卡说明：无</view>
                 <view class='detailP mt24' wx:else>卡说明：{{popInfo.cardDesc}}</view>
-                <view class='detailP mt24' wx:if="{{popInfo.deadLine == null || popInfo.deadLine == ''}}">卡有效期：永久有效</view>
-                <view class='detailP mt24' wx:else>卡有效期：{{popInfo.deadLine}}</view>
+                <!-- <view class='detailP mt24' wx:if="{{popInfo.deadLine == null || popInfo.deadLine == ''}}">卡有效期：永久有效</view> -->
+                <view class='detailP mt24' wx:if="{{popInfo.deadLine != null && popInfo.deadLine != ''}}">卡有效期：{{popInfo.deadLine}}</view>
                 <view class='detailP mt24'><text class="rad">本卡为原价基础上优惠折扣</text></view>
             </view>
             <view class='checkAgree bt'><text class='checkIcon {{checkflag? "checkedIcon" : ""}}' bindtap='checkFn'></text>我已阅读并同意<text>《购卡协议》</text></view>
@@ -133,9 +133,9 @@
             <view class='flex plr24'>
                 <view class='saleInfo flex_auto'></view>
                 <view class='tr flex_auto'>
-                    <text class='reduceSell' data-goodscode="{{sellPopInfo.goodsCode}}" bindtap='reduceFn'>-</text>
+                    <text class='reduceSell reduceSell0' data-goodscode="{{sellPopInfo.goodsCode}}" bindtap='reduceFn'>-</text>
                     <text class='selText'>{{sellPopInfo.selNum}}</text>
-                    <text class='reduceSell' data-goodscode="{{sellPopInfo.goodsCode}}" bindtap='addFn'>+</text>
+                    <text class='reduceSell reduceSell1' data-goodscode="{{sellPopInfo.goodsCode}}" bindtap='addFn'>+</text>
                 </view>
             </view>
             <view class='p24 bt flex mt20'>

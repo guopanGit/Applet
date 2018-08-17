@@ -125,7 +125,14 @@ Page({
             content: '确定要退出登录吗？',
             success: function (res) {
                 if (res.confirm) { //用户点击确定
-                    wx.setStorageSync('member', '');
+                  wx.setStorageSync('member', '');
+                    
+                  // try {
+                  //   wx.removeStorageSync('member')
+                  // } catch (e) {
+                  //   // Do something when catch error
+                  // }
+
                     var page = getCurrentPages().pop();
                     console.log(page);
                     if (page == undefined || page == null) { return false; }

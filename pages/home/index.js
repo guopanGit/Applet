@@ -50,10 +50,10 @@ Page({
 		// 获取系统信息
 		wx.getSystemInfo({
 			success: function (res) {
-				console.log(res);
+				// console.log(res);
 				// 可使用窗口宽度、高度
-				console.log('height=' + res.windowHeight);
-				console.log('width=' + res.windowWidth);
+			// 	console.log('height=' + res.windowHeight);
+				// console.log('width=' + res.windowWidth);
 				// 计算主体部分高度,单位为px
 				that.setData({
 					// second部分高度 = 利用窗口可使用高度 - first部分高度（这里的高度单位为px，所有利用比例将300rpx转换为px）
@@ -107,7 +107,6 @@ Page({
         cinemaCode = wx.getStorageSync('cinemaCode'); //添加tabBar之后，cinemaCode是通过缓存拿的
         memberCode = member.memberCode;
         cinemaname = wx.getStorageSync('cinemaName');
-
         if (cinemaname.length > 6) {
             cinemaname = cinemaname.slice(0, 6) + '...';
         }
@@ -121,15 +120,16 @@ Page({
         });
 
         that.getBanner();    
-        that.ajaxFn();
+        // that.ajaxFn();
 
         // console.log('index 页面 onshow function');
-        console.log(member);
+       //  console.log(member);
     },
     onReady: function () {
         wx.setNavigationBarTitle({
 			title: configJson.movieName,
         });
+        this.ajaxFn();
     },
     getBanner: function() {
         var _this = this;
@@ -177,18 +177,17 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                // console.log(res);
+               //  console.log(res);
                 var array = res.data.resultData;
                 if(array != ''){
                     shows = array.shows;
 
-                    var films = array.films,
-						filmLen = films.length;
+                  var films = array.films,
+                  filmLen = films.length;           
 
 					for (var i = 0; i < filmLen; i++) {
 
-                        films[i].flag = true; //给每一个电影添加一个字段，来控制场次的展示
-
+                        //  films[i].flag = true; //给每一个电影添加一个字段，来控制场次的展示
                         films[i].filmPosterNew = films[i].filmPosterNew + '?x-oss-process=image/resize,m_fill,h_258,w_196,limit_0/format,jpg/quality,q_80';
                         films[i].showDateView1 = films[i].showDateView.split(',');
                         films[i].showDate1 = films[i].showDate.split(',');
@@ -201,12 +200,12 @@ Page({
                         var theFilmCode = films[i].filmCode,
                             scheduleList = shows[theFilmCode], 
                             showDate = films[i].showDate1[0];
-
                         //给每个schList 加一个showDate字段
                         var curScheList = scheduleList[showDate];                        
-
+           // console.log(curScheList)
                         if (curScheList != undefined){ //设置开播时间前的太阳（月亮、空）
                             var timeFlag = 'moon';
+                          
                             for (var m = 0; m < curScheList.length; m++) {
                                 //如果策略价为0或者为''，则使用原价
                                 if (curScheList[m].terraceFilmPrice == '' || curScheList[m].terraceFilmPrice == 0 || curScheList[m].terraceFilmPrice == undefined) { 
@@ -271,7 +270,7 @@ Page({
 
                     wx.setStorageSync('shows', shows);
                 }
-				console.log(that.data.films);
+				// console.log(that.data.films);
             },
             fail: function () {
                 //fail
@@ -321,7 +320,7 @@ Page({
                 filmName = ads.adContent,
                 url = 'filmdes?filmCode=' + filmCode + '&filmName=' + filmName;
             
-            wx.redirectTo({
+          wx.navigateTo({
                 url: url
             });
         }
@@ -335,7 +334,7 @@ Page({
 
         var url = 'filmdes?filmCode=' + filmCode + '&filmName=' + filmName;
 
-        wx.redirectTo({
+        wx.navigateTo({
             url: url
         });
     },
@@ -376,10 +375,12 @@ Page({
 
     //slide up & down
     slideFn: function (e) {
+    //  console.log(e)
         var targetData =  e.currentTarget.dataset,
             index = targetData.index,
             flags = !targetData.flag,
             the = this;
+      
 		// 	wordindex = targetData.wordindex;
 		// this.setData({
 		// 	toView: wordindex,
@@ -389,12 +390,15 @@ Page({
 
         var filmsData = the.data.films;
         filmsData[index].flag = flags;
-
+      
         the.setData({
-            films: filmsData
+            films: filmsData,
+           
         });
+     
     },
     changeTab: function(e, index, n, data){
+      
         if (e){
             var targets = e.currentTarget.dataset;
             var index = targets.index, //当前影片的index值
@@ -405,7 +409,7 @@ Page({
                 n = n,
                 showDate = data;
         }
-
+     
         var filmsData = this.data.films,
             shows = this.data.shows,
             theFilmCode = filmsData[index].filmCode, //取出当前影片filmCode的value
@@ -470,7 +474,7 @@ Page({
         this.setData({
             films: filmsData
         });
-        // console.log(filmsData);
+       //   console.log(filmsData);
     },
     changeCinema: function (e) {
         wx.redirectTo({
@@ -671,13 +675,17 @@ Page({
             theOpenId = member.openid,
             url = '../chooseSeats/chooseSeats?listInfo=' + listInfo + '&filmName=' + filmName;
 
-        console.log(member);
+     //  console.log(member, memberPhone, memberCode);
         if(loginFlag){
-            loginFlag = false;
-
-            if ((memberPhone == undefined || memberPhone == '' || memberPhone == null) && (memberCode == undefined || memberCode == '' || memberCode == null) && theOpenId){
+          loginFlag = false;
+            if ((memberPhone == undefined || memberPhone == '' || memberPhone == null) && (memberCode == undefined || memberCode == '' || memberCode == null) && theOpenId == undefined){
                 // that.getUserInfo('', url);
+                // that.go(e, '../getUserInfo/login');
+              //  console.log('but session_key expired');
+                // session_key 已经失效，需要重新执行登录流程
                 that.go(e, '../getUserInfo/login');
+                // that.selTicket();
+             
             } else {
                 wx.checkSession({
                     success: function () {
@@ -693,7 +701,7 @@ Page({
                         });
                     },
                     fail: function () {
-                        console.log('but session_key expired');
+                     //   console.log('but session_key expired');
                         // session_key 已经失效，需要重新执行登录流程
                         that.go(e, '../getUserInfo/login');
                         // that.selTicket();
@@ -745,5 +753,6 @@ Page({
         }
 
     },
+  
 });
 

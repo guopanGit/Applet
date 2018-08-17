@@ -444,11 +444,14 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                var data = res.data;
+                var data = res.data,
+                  error = data.resultDesc;
                     // url;
                     console.log(data);
+              
                 if (data.resultCode == 0) {
                     // 微信支付
+                    
                     wx.requestPayment({
                         'timeStamp': data.resultData.timeStamp,
                         'nonceStr': data.resultData.nonceStr,
@@ -475,6 +478,13 @@ Page({
                             }); 
                         }
                     });
+                } else if(data.resultCode == 1) {
+                  wx.showToast({
+                    title: data.resultDesc,
+                    icon: "none",
+                    duration: 1000,
+                  })
+
                 }
             }
         });

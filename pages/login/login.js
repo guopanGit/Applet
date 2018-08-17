@@ -57,9 +57,17 @@ Page({
   },
   //获取用户微信帐户绑定的手机号的回调函数
   getPhoneNumber: function (e) {
+   if(e.detail.iv == undefined){
+    return false
+   }
     var data = e.detail,
-      userData = wx.getStorageSync('userData');
-
+      userData = wx.getStorageSync('userData'),
+       unionids = wx.getStorageSync('unionids');
+    if (!unionids) {
+      unionids = userData.unionid || ''
+    }
+    console.log(unionids)
+   
     if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
       // wx.showModal({
       // 	title: '提示',
@@ -76,7 +84,7 @@ Page({
         headimgurl: userData.avatarUrl,
         nickname: userData.nickName,
         sex: userData.gender,
-        unionid: userData.unionId,
+        unionid: unionids,
         pushId: '',
         phoneType: '0',
         vCode: vCode,
@@ -86,7 +94,7 @@ Page({
         loginType: '5', //'6',
         source: '5'  // '6'
       };
-      console.log(getWxPhonePara);
+       console.log(getWxPhonePara);
 
       //从后台获取解密后的微信绑定的手机号
       wx.request({
@@ -98,12 +106,30 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log(res);
-          var data = res.data,
-            member = data.resultData;
+      
+          console.log(res, '123');
+         
+          var data = res.data;
+          if (data.resultCode == '500') {
+            // wx.showToast({
+            //   title: data.resultDesc,
+            //   icon: 'none',
+            //   duration: 3000
+            // })
+            
+          }
+          if(data.resultData.isBinding == '0'){
+            // wx.showToast({
+            //   title: data.resultDesc,
+            //   icon: 'none',
+            //   duration: 3000
+            // })
+            return false;
+          }
+           var member = data.resultData;
           member.openid = userData.openId;
-          wx.setStorageSync('member', member);
-          if (data.resultCode == '0') {
+          wx.setStorageSync('member', member); 
+          if (data.resultCode == '0' && data.resultData.memberPhone != '' || data.resultData.memberPhone != null || data.resultData.memberPhone != undefined) {
             var indexUrl = '../home/index';
             wx.switchTab({
               url: indexUrl
@@ -111,7 +137,7 @@ Page({
             // wx.navigateBack({
             //     delta: 1
             // });
-          }
+          } 
         },
         fail: function (res) {
           console.log(res);
@@ -144,10 +170,18 @@ Page({
   //点击获取验证码
   getVerifyCodeFn: function (e) {
     var the = this,
-      memberPhone = phoneNum;
+      memberPhone = phoneNum,
+      
+     getVerifyCodePara = { 'cinemaCode': cinemaCode, 'memberPhone': memberPhone, 'type': 3, memberCode: '' };
 
-    var getVerifyCodePara = { 'cinemaCode': cinemaCode, 'memberPhone': memberPhone, 'type': 3, memberCode: '' };
-
+    if (flag == false) {
+      wx.showToast({
+        title:'一分钟内禁止重复发送获取验证码',
+        icon: 'none'
+      });
+      return false;
+    }
+   
     if (memberPhone == '' || memberPhone == undefined) {
       the.setData({
         toastItem: {
@@ -155,7 +189,7 @@ Page({
           toast_visible: !0
         }
       });
-
+     
       setTimeout(function () {
         the.setData({
           toastItem: {
@@ -212,18 +246,19 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-
+console.log(res);
           verifyCode = res.data.resultData; //系统返回的验证码
           if (res.data.resultCode == 0) {
             if (verifyCode != '' && verifyCode != undefined) {
               wx.showToast({
-                title: '发送成功',
-                icon: 'success'
+                title:'发送成功',
+                icon: 'none'
               });
             }
-          } else if (res.data.resultCode == 1) {
+          } else if (res.data.resultCode != 0) {
             wx.showToast({
-              title: '发送失败'
+              title: res.data.resultDesc,
+              icon: 'none'
             });
           }
         },
@@ -247,10 +282,11 @@ Page({
 
       userInfo = wx.getStorageSync('userData');
     // deviceCode = '' + memberPhone
-
+    console.log(userInfo+ '123')
     if (getVerifyCode == '') {
       wx.showToast({
         title: '请输入验证码',
+        icon: 'none'
       });
     } else if (memberPhone == '' || memberPhone == undefined) {
       wx.showToast({
@@ -258,6 +294,10 @@ Page({
       });
     } else {
       var bindPhoPara = { 'cinemaCode': cinemaCode, 'memberPhone': memberPhone, 'pushId': '', 'phoneType': '0', 'vCode': vCode, 'deviceCode': '小程序', 'osVersion': vCode, 'platType': '1' };
+    var  movieCode = wx.getStorageSync('movieCode');
+      if (!userInfo.unionId){
+        var unionIds = userInfo.openId + movieCode
+      }
       bindPhoPara.city = userInfo.city;
       bindPhoPara.country = userInfo.country;
       bindPhoPara.headimgurl = userInfo.avatarUrl;
@@ -266,12 +306,14 @@ Page({
       bindPhoPara.openid = userInfo.openId;
       bindPhoPara.province = userInfo.province;
       bindPhoPara.sex = userInfo.gender;
-      bindPhoPara.unionid = userInfo.unionId;
+      bindPhoPara.unionid = userInfo.unionId || unionIds;
       bindPhoPara.verifyCode = getVerifyCode;
       bindPhoPara.companyCode = wx.getStorageSync('movieCode');
       bindPhoPara.OS = wx.getStorageSync('OS');
       bindPhoPara.CVersion = wx.getStorageSync('CVersion');
       bindPhoPara.source = '5';
+      console.log(bindPhoPara.unionid)
+      
 
       wx.request({
         url: wxBindPhoUrl,
@@ -282,6 +324,7 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
+          console.log(res);
           var data = res.data,
             url = '';
 
@@ -368,8 +411,8 @@ Page({
   },
 
   //页面展示
-  onShow: function () {
-    phoneNum = phoneNum;
-  }
-
+  // onShow: function () {
+  //   phoneNum = phoneNum;
+    
+  // }
 });

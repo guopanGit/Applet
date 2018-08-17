@@ -2,7 +2,7 @@
 .container{position:absolute;left:0;top:0;right:0;bottom:0;background:#fff;}
 .mt44{margin-top:44rpx;}
 .userWrap{padding:0 24rpx;height:88rpx;line-height:88rpx;font-size:26rpx;background-color:#fff;}
-.storeNavWrap{position:absolute;left:282rpx;height:88rpx;}
+.storeNavWrap{position:absolute;left:244rpx;height:88rpx;}
 .sellStore, .cardStore{display:inline-block;height:66rpx;line-height: 90rpx;text-align:center;}
 .sellStore{margin-left:58rpx;}
 .navCur{color:#f35643;border-bottom:2rpx solid #f35643;}

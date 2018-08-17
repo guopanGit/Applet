@@ -1,5 +1,6 @@
 // pages/confirmOrder/chooseCard.js
 var url = require('../../utils/url.js'),
+  util = require('../../utils/util.js'),
   getCardListUrl = url.getCardList,
   memberCardPara,
   selCardCode;
@@ -14,7 +15,7 @@ Page({
     pageNo: 1,
     hasNext: true,
     loadOver: false,
-    cardLen: 0
+    cardLen: 0, 
   },
 
   /**
@@ -52,7 +53,8 @@ Page({
     //debugger;
     var self = this,
         pageNo = self.data.pageNo;
-    memberCardPara.pageNo = pageNo; 
+    memberCardPara.pageNo = pageNo;
+    
     wx.request({
       url: getCardListUrl,
       method: 'GET',
@@ -63,7 +65,7 @@ Page({
       },
       success: function (res) {
 
-        console.log(res);
+        console.log(res, "卡列表");
         var cardInfoData = res.data.resultData,
             hasNext = '',
             cardLen = cardInfoData.orders.length;
@@ -76,9 +78,10 @@ Page({
           } else if (cardInfoData.orders[i].cardType == 1 || cardInfoData.orders[i].cardType == 10 || cardInfoData.orders[i].cardType == 11) {
             cardInfoData.orders[i].cardComments = cardInfoData.orders[i].cardComments.substr(6).replace("元", "");
           }
-          if (cardInfoData.orders[i].limitTime == "" || cardInfoData.orders[i].limitTime == undefined) {
-            cardInfoData.orders[i].limitTime = "永久有效";
-          }
+          // if (cardInfoData.orders[i].limitTime == "" || cardInfoData.orders[i].limitTime == undefined) {
+          //   cardInfoData.orders[i].limitTime = "永久有效";
+          // }
+         
         }
         if (pageNo == 1) {
           
@@ -147,8 +150,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    //this.ajaxFn();
+   //  this.ajaxFn();
     // dbClickFlag = true
+    // var time = util.formatTime(new Date());
+    // console.log(time)
   },
 
   /**

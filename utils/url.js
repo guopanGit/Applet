@@ -5,14 +5,20 @@
 // var HOST = 'http://101.201.79.224:8081/yinghe-app',
 // 	HOST1 = 'http://101.201.79.224:8080/mplus',
 // 新版轻量化-s端测试地址
-// var HOST = 'http://192.168.0.224:8081/yinghe-app',
-// HOST1 = 'http://192.168.0.222:5555', //s端测试地址
-    // HOST1 = 'http://192.168.100.75:5555', //s端王磊电脑地址
+//  var HOST = 'http://192.168.0.224:8081/yinghe-app',
+  // HOST1 = 'http://192.168.0.222:5555', //s端测试地址
+  
+var HOST = 'http://192.168.0.145:8080/yinghe-app',
+  HOST1 = 'http://192.168.0.140:5555', //s端测试地址
+  //  HOST1 = 'http://192.168.100.52:5555', //s端崔程电脑地址
+// HOST1 = 'http://192.168.0.55:5555', //s端王磊电脑地址
+
+
 // 正式地址
 //var HOST = 'https://light.mplus.net.cn', //老轻量化接口
 //HOST1 = 'https://api.ingcore.com/mplus',//老s端
- var HOST = 'https://newlight.ingcore.com', //新轻量化接口
- HOST1 = 'https://small.ingcore.com/',//新s端
+//  var HOST = 'https://newlight.ingcore.com', //新轻量化接口
+//  HOST1 = 'https://small.ingcore.com/',//新s端
 
  
     getVerifyCode = HOST + '/app/CommonSystem/verifyCode', //获取登录验证码
@@ -20,7 +26,7 @@
     wxLogin = HOST + '/app/member/wxCheckLogin', //微信登录
     sessionID = HOST1 + '/app/member/initWxLogin', //获取sessionID
     userInfoUrl = HOST1 + '/app/member/decodeUserInfo', //获取openId和unionId
-    wxBindPho = HOST + '/app/member/wxBindingPhone', //微信绑定手机号
+    wxBindPho = HOST1 + '/app/member/wxBindingPhone', //微信绑定手机号
 	miniappsLogin = HOST1 + '/app/member/miniappsLogin', //一键获取微信手机号并注册
     bannerUrl = HOST1 + '/app/other/ad', //首页banner图
     // index = HOST + '/app/film/getIndexData', //轻量化首页接口

@@ -182,7 +182,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                console.log(res);
+               // console.log(res);
                 var data = res.data.resultData;
 
                 if (data != undefined && data != ''){

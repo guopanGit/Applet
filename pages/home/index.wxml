@@ -46,7 +46,7 @@
 					<!-- <view class="session" hover-class="session_hover" bindtap="slideFn" data-wordindex="id_{{index}}"  data-index="{{index}}" data-flag="{{film.flag}}">场次<text class="slideBtn {{film.flag ? '':'slideBtnCur'}}"></text></view> -->
 					<view class="session" hover-class="session_hover" bindtap="slideFn"  data-index="{{index}}" data-flag="{{film.flag}}">场次<text class="slideBtn {{film.flag ? '':'slideBtnCur'}}"></text></view>
 					<!--sessionList begin-->
-					<view class="sessionList ml-24 bodyBg" hidden="{{film.flag}}">
+					<view class="sessionList ml-24 bodyBg" hidden="{{!film.flag}}">
 						<view class="timeTitle timeUl box">
 							<block wx:for="{{film.showDateView1}}" wx:for-item="day" wx:for-index="n">
 								<view class="titleTab {{film.tabIndex == n ? 'tabCur' : ''}}" data-index="{{index}}" data-n="{{n}}" data-day="{{film.showDate1[n]}}" bindtap="changeTab">{{day}}</view>

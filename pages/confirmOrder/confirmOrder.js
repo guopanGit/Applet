@@ -993,10 +993,10 @@ Page({
                     second = 59;
                 }
             }
-            if (minute <= 0 && second <= 0) {
+            if (minute == 0 && second == 0) {
                 // leftTime = "00:00";
                 clearInterval(setTime);
-                downFlag = true;
+               var downFlag = true;
                 if(downFlag){
                   downFlag = false;
                   wx.showModal({
@@ -1005,14 +1005,17 @@ Page({
                     showCancel: false,
                     confirmText: '确认',
                     success: function (res) {
+                      that.cancelOrder();
+                      
                         if (res.confirm) { //用户点击确认支付
-                            that.cancelOrder();
+                            
                             clearInterval(setTime);
                         } else if(res.cancel){
                             clearInterval(setTime);
                         }
                     }
                   });
+                  
                 }
               return false;
             }

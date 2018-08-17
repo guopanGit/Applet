@@ -22,6 +22,7 @@ Page({
     qrcode1: codeUrl + '/qrcode/qrcode/getQRCode', //卖品二维码
     barcode: codeUrl + '/barCode/barCode/getBarCode', //卖品条形码
     touchFlag: true,
+    isshow: true
   },
 
   /**
@@ -108,10 +109,23 @@ ajaxFn: function () {
         data.ticketPrice = data.ticketPrice / 100; //票价
         data.goodsPrice = data.goodsPrice / 100; //卖品价格
         data.actualPrice = data.actualPrice / 100; //实付
-
+console.log(data);
+        var cinemaNamenew = data.cinemaName,
+        cinemaName = wx.getStorageSync('cinemaName');
         that.setData({
-          orderInfoData: data
+          orderInfoData: data,
+          cinemaNamenew
         });
+        console.log(cinemaNamenew, cinemaName);
+        if (cinemaName == cinemaNamenew) {
+          that.setData({
+            isshow: false
+          });
+        } else {
+          that.setData({
+            isshow: true
+          });
+        }
       }
     });
 
@@ -256,6 +270,12 @@ ajaxFn: function () {
     wx.navigateTo({
       url: url
     });
-  }
+  },
+
+  //  onShow: function () {
+    
+  // //     cinemaNamenew = this.data.cinemaNamenew;
+  //    console.log(this.data.isshow)
+  //  },
 
 })

@@ -48,7 +48,7 @@
     </view>
     <view class="btmWrap">
         <view class="selTicket">
-            <button hover-class="gradientBtn_hover" class="selectBtn gradientBtn" bindtap="selTicketFn">选择场次</button>
+            <button hover-class="gradientBtn_hover" class="selectBtn gradientBtn" bindtap="selTicketFn">回到首页</button>
         </view>
     </view>
     <view class="largetBox" hidden="{{largeFlag}}">

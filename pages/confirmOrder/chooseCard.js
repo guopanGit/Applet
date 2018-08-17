@@ -23,7 +23,7 @@ Page({
         pageNo: 1,
         cardlist: [],
         hasNext: true,
-        preCardCode: ''
+        preCardCode: '',
     },
 
     /**
@@ -40,7 +40,7 @@ Page({
             preCardCode = options.preCardCode;
 
             console.log(options);
-
+    
         orderNo = options.orderNo;
         orderType = options.orderType;
         

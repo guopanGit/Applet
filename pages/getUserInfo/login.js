@@ -6,16 +6,14 @@ var member,
   // wxBindPhoUrl = url.wxBindPho,
   wxLoginUrl = url.wxLogin,
   movieCode, //影城编码
-  wxLoginPara,  //微信登录参数
+  wxLoginPara, //微信登录参数
   prevPage = ''; //登录页的上一页
 Page({
 
   /**
    * 页面的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * 生命周期函数--监听页面加载
@@ -28,50 +26,49 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-  },
+  onReady: function () { },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-  },
+  onShow: function () { },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-  },
+  onHide: function () { },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-  },
+  onUnload: function () { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-  },
+  onPullDownRefresh: function () { },
 
   //获取用户信息fn
   bindGetUserInfo: function (e) {
-    //debugger;
+    //  console.log(e)
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 3000
+    });
+
     var that = this,
       userInfo = e.detail,
       encryptedData = userInfo.encryptedData,
       iv = userInfo.iv;
-    console.log(userInfo);
-
-    //调用微信登录，获取code值，用来传给后来拿sessionId
+    // console.log(iv + "------------------");
+    // console.log(encryptedData + "++++++++++++++++++++");
     wx.login({
       success: function (res) {
-        console.log(res);
-        wx.showToast({
-          title: '加载中',
-          icon: 'loading',
-        })
+         console.log(res, 999);
+        // var js_code = res.code;
+        // wx.setStorageSync('js_code', js_code)       
+
         //用拿到的code，从后台获取sessionId
         wx.request({
           url: sessionID,
@@ -85,15 +82,16 @@ Page({
             'Accept': 'application/json'
           },
           success: function (res) {
-            console.log(res);
+            // console.log('sessionId:');
+            // console.log(res.data.resultData);
+            // console.log(res.data.resultData);
             var sessionId = res.data.resultData; //从后台获取到的sessionId
-
             wx.setStorageSync('sessionId', sessionId);
 
             //从后台拿到的sessionId是用来解密userInfo里的加密数据encryptedData的
             wx.request({
               url: userInfoUrl,
-              method: 'GET',
+              method: 'POST',
               data: {
                 encryptedData: encryptedData,
                 iv: iv,
@@ -104,15 +102,30 @@ Page({
                 'Accept': 'application/json'
               },
               success: function (res) {
-                console.log(res);
+                // console.log(res, 1234);
                 var data = JSON.parse(res.data.resultData),
                   resultCode = res.data.resultCode,
-                  resultDesc = res.data.resultDesc;
-                console.log(data);
+                  resultDesc = res.data.resultDesc;               
+                if (data == null) {
+                  wx.showToast({
+                    title: '网络缓慢，请重试',
+                    icon: 'none',
+                    duration: 2000
+                  });
+                  return false;
+                }
+                //console.log(data, 'openid')
                 // data.language = data.language;
                 if (resultCode == '0') {
                   wx.setStorageSync('userData', data);
-                  //console.log(data.language);
+
+                  if (data.unionId) {
+                    var unionids = data.unionId
+                  } else {
+                    var unionids = data.openId + movieCode
+                  }
+                  wx.setStorageSync('unionids', unionids)
+
                   wxLoginPara = {
                     city: data.city,
                     country: data.country,
@@ -123,7 +136,7 @@ Page({
                     openid: data.openId,
                     province: data.province,
                     sex: data.gender,
-                    unionid: data.unionId,
+                    unionid: unionids,
                     loginType: '5', //'6',
                     source: '5' //'6'
                   };
@@ -147,7 +160,6 @@ Page({
               fail: function (res) {
                 var data = res.data,
                   resultCode = data.resultCode;
-
               }
             });
           }
@@ -169,13 +181,29 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
+        // console.log(res)     
+        if (res.data.resultCode == '500') {
+          //  console.log(12132)
+          // wx.showToast({
+          //   title: '网络缓慢，请重试',
+          //   icon: 'none',
+          //   duration: 2000
+          // })
+        }
+        if (res.data.resultCode == '1'){
+           wx.showToast({
+             title: res.data.resultDesc,
+             icon: 'none',
+             duration: 2000
+           })
+        }
+        //console.log(res, 123);
         // loginFlag = true;
         var data = res.data.resultData,
           url = '';
 
-        console.log(data);
-
-        if (data.isBinding == '0') {//如果没有绑定手机号，则进入手动绑定手机号页面
+        //console.log(data.unionid);
+        if (data.isBinding == '0') { //如果没有绑定手机号，则进入手动绑定手机号页面
           url = '../login/login';
           //  wx.setStorageSync('member', data); //用来存储跳往绑手机号页的当前页：0：首页，1：个人中心页
           wx.redirectTo({
@@ -191,6 +219,5 @@ Page({
       fail: function () { },
       complete: function () { }
     });
-  }
-
+  },
 })

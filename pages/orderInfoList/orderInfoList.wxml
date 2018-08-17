@@ -89,7 +89,7 @@
     </view>
   </view>
   <view wx:if="{{orderInfoData.refundStatus == '1'}}" class="btmWrap">
-    <view class="selTicket">
+    <view class="selTicket" hidden="{{isshow}}">
       <button hover-class="gradientBtn_hover" class="selectBtn gradientBtn" bindtap="reFundFn">申请退款</button>
     </view>
   </view>
