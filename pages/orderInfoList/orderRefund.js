@@ -64,7 +64,7 @@ Page({
 
           data.actualPrice = data.actualPrice / 100; //实付
           data.ticketNum = seatInfo.length; //票数
-
+          data.filmPoster = data.filmPoster.replace("?x-oss-process=image/format,jpg", "");
           data.filmPoster = data.filmPoster + "?x-oss-process=image/resize,m_fill,h_170,w_128,limit_0/format,jpg/quality,q_80";
 
           // var payType = data.payType;
@@ -141,7 +141,7 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
+  onShow: function () {
 
     },
 

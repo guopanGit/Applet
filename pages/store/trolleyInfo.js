@@ -327,7 +327,13 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                //console.log(res)
+                console.log(res)
+                if(res.data.resultCode == '2202'){
+                  wx.navigateTo({
+                    url: '../Binding/binding',
+                  });
+                  return false
+                }
                 var resultCode = res.data.resultCode;
                 if (resultCode == 0) {
                     wx.navigateTo({

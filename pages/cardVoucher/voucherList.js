@@ -29,7 +29,6 @@ Page({
         memberCode = member.memberCode;
         movieCode = wx.getStorageSync('movieCode');
         cinemaCode = wx.getStorageSync('cinemaCode');
-
         voucherListPara = { 'companyCode': movieCode, 'memberCode': memberCode, 'cinemaCode': cinemaCode, 'pageNo': that.data.pageNo, 'voucherType': '-1', };
         that.ajaxFn();
     },

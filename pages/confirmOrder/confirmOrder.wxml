@@ -59,7 +59,7 @@
         <!-- 已选会员卡的样式如下 -->
         <view wx:if="{{bindType == 0}}" class="phoneNum jiao_icon" bindtap='chooseCard'><text wx:if="{{discounTMoney == 0 && discounGMoney==0}}" class="cRad fr">无优惠</text><text class="cRad fr" wx:if="{{discounGMoney!=0 || discounTMoney!=0}}">-￥{{totalTGmoney}}</text><text class='cRad'>{{perCardName}}</text></view> 
         <view wx:if="{{bindType != 1}}" class="phoneNum jiao_icon" bindtap='chooseCoupon'><text class="gray8d fr">未使用</text><text>优惠券</text>  <text class='tagsN radBg'>可用{{vocherNum}}张</text></view>
-        <view wx:if="{{bindType == 1}}" class="phoneNum jiao_icon" bindtap='chooseCoupon'><text class="cRad fr" >-￥{{totalTGmoney}}</text><text class='cRad'>{{preVoucherName}}</text></view>
+        <view wx:if="{{bindType == 1}}" class="phoneNum jiao_icon" bindtap='chooseCoupon'><text wx:if="{{discounTMoney == 0 && discounGMoney==0}}" class="cRad fr">无优惠</text><text class="cRad fr" wx:if="{{discounGMoney!=0 || discounTMoney!=0}}">-￥{{totalTGmoney}}</text><text class='cRad'>{{preVoucherName}}</text></view>
         <!-- <view class='noRefount'>不支持退票</view> -->
         <view class="confirmWrap">
             <view class="confirmInfo fixedBtm">

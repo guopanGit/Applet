@@ -22,7 +22,8 @@ Page({
     qrcode1: codeUrl + '/qrcode/qrcode/getQRCode', //卖品二维码
     barcode: codeUrl + '/barCode/barCode/getBarCode', //卖品条形码
     touchFlag: true,
-    isshow: true
+    isshow: true,
+    cinemaCode:''
   },
 
   /**
@@ -74,18 +75,38 @@ ajaxFn: function () {
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res);
+      // console.log(res ,'___________');
         var data = res.data.resultData,
             seatInfo = data.seatInfo,
+         cinemaNamenew = data.cinemaName,
+          cinemaCode = data.cinemaCode,
             ticketNo = data.ticketNo;
         goodsNo = data.goodsNo;
         // seatInfo = seatInfo.split(' ');
+        that.setData({
+          cinemaCode
+        })
         ticketNo = ticketNo.split(',');
-
+        //  console.log(ticketNo)
+        // 根据影城 cinemaCode 修改取票码 
+        if (data.cinemaCode == '11051181') {
+          var ticketNo1 = data.ticketNo;
+          //  ticketNo1 = ticketNo1.replace(/\,/g, "")
+          ticketNo1 = ticketNo1.split(",").join("")
+         // console.log(ticketNo1);
+        } else if (data.cinemaCode == '33018111' || data.cinemaCode == '37063101'){
+          var ticketNo1 = data.ticketNo;
+          //  ticketNo1 = ticketNo1.replace(/\,/g, "")
+          ticketNo1 = ticketNo1.split(",").join("|")
+          // console.log(ticketNo1)  
+        } else {
+          var ticketNo1 = data.ticketNo;
+        }
+        data.filmPoster = data.filmPoster.replace("?x-oss-process=image/format,jpg", "");
         data.filmPoster = data.filmPoster + "?x-oss-process=image/resize,m_fill,h_170,w_128,limit_0/format,jpg/quality,q_80";
 
         that.setData({
-            qrcode: qrcode + '?content=' + ticketNo,
+            qrcode: qrcode + '?content=' + ticketNo1,
             qrcode1: qrcode + '?content=' + goodsNo,
             barcode: barcode + '?content=' + goodsNo
         });
@@ -109,15 +130,15 @@ ajaxFn: function () {
         data.ticketPrice = data.ticketPrice / 100; //票价
         data.goodsPrice = data.goodsPrice / 100; //卖品价格
         data.actualPrice = data.actualPrice / 100; //实付
-console.log(data);
-        var cinemaNamenew = data.cinemaName,
-        cinemaName = wx.getStorageSync('cinemaName');
+        // console.log(data);
+        
+       var  cinemaName = wx.getStorageSync('cinemaName');
         that.setData({
           orderInfoData: data,
           cinemaNamenew
         });
         console.log(cinemaNamenew, cinemaName);
-        if (cinemaName == cinemaNamenew) {
+        if (cinemaName == cinemaNamenew) {        
           that.setData({
             isshow: false
           });
@@ -126,6 +147,7 @@ console.log(data);
             isshow: true
           });
         }
+       //  console.log(that.data.isshow)
       }
     });
 
@@ -152,6 +174,7 @@ console.log(data);
         var datas = res.data.resultData,
             datasList = datas.sellRecords,
             goodsCode = datas.pickupGoodsCode;
+        // console.log(goodsCode')
         that.setData({
           qrcode1: qrcode + '?content=' + goodsCode,
           barcode1: barcode + '?content=' + goodsCode,
@@ -223,16 +246,16 @@ console.log(data);
                 'Accept': 'application/json'
               },
               success: function (res) {
-                console.log(res);
+               //  console.log(res);
                 var queryString = refundpara.orderNo;
                 orderRefundUrl = 'orderRefund?orderNo=' + queryString +'&orderType=1';
 
               },
               fail: function (res) {
-                console.log(res);
+               //  console.log(res);
               },
               complete: function (res) {
-                console.log(res)
+              //   console.log(res)
                 _this.setData({
                   touchFlag: true
                 });
@@ -264,8 +287,9 @@ console.log(data);
     var target = e.currentTarget.dataset,
       codeurl = target.barcodeurl,
       codeflag = target.codeflag,
-      url = 'code?url=' + codeurl + '&flag=' + codeflag;
-    console.log(url);
+      cinemaCode = this.data.cinemaCode,
+      url = 'code?url=' + codeurl + '&flag=' + codeflag + '&cinemaCode=' + cinemaCode;
+    // console.log(cinemaCode);
 
     wx.navigateTo({
       url: url

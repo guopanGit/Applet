@@ -12,13 +12,15 @@
         <view class='tItem' data-linkFlag='link_01'><view class='itemIcon i_01'></view>我的订单</view>
         <view class='tItem' data-linkFlag='link_02'><view class='itemIcon i_02'></view>会员卡</view>
         <view class='tItem' data-linkFlag='link_03'><view class='itemIcon i_03'></view>优惠券</view>
-        <view class='tItem' data-linkFlag='link_04'><view class='itemIcon i_04'></view>绑卡券</view>
+        <view class='tItem' data-linkFlag='link_04' wx:if="{{!Shield}}"><view class='itemIcon i_04'></view>绑卡券</view>
+        <view class='tItem' data-linkFlag='link_04' wx:if="{{Shield}}"><view class='itemIcon i_04'></view>绑券</view>
     </view>
     <view class='treasureList' wx:else>
         <view class='tItem' bindtap='linkFn' data-linkFlag='link_01'><view class='itemIcon i_01'></view>我的订单</view>
         <view class='tItem' bindtap='linkFn' data-linkFlag='link_02'><view class='itemIcon i_02'></view>会员卡</view>
         <view class='tItem' bindtap='linkFn' data-linkFlag='link_03'><view class='itemIcon i_03'></view>优惠券</view>
-        <view class='tItem' bindtap='linkFn' data-linkFlag='link_04'><view class='itemIcon i_04'></view>绑卡券</view>
+        <view class='tItem' bindtap='linkFn' data-linkFlag='link_04' wx:if="{{!Shield}}"><view class='itemIcon i_04'></view>绑卡券</view>
+        <view class='tItem' bindtap='linkFn' data-linkFlag='link_04' wx:if="{{Shield}}"><view class='itemIcon i_04'></view>绑券</view>
     </view>
     <view wx:if="{{loginflag}}" class='quitOut' bindtap='quitOutFn'>退出登录</view>
 </view>

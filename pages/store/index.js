@@ -1,4 +1,5 @@
 var url = require('../../utils/url.js'),
+    fn = require('../../utils/util.js'),
     getStoreCardListUrl = url.storeCardList, //接口：获取商城卡列表信息
     storeGoodsTypeListUrl = url.storeGoodsTypeList, //接口：获取商城卖品类别
     storeGoodsListUrl = url.storeGoodsList, //接口：获取商城卖品列表信息
@@ -12,6 +13,7 @@ var url = require('../../utils/url.js'),
     cinemaCode,
     memberCode,
     userPhone,
+    dbClickFlag = true,//点击购卡防止重复点击
     cardOrderInfo, //点击购卡的时候，调起byeCard接口之后，拿到的关于些卡订单的信息
     cardListPara, //获取卡列表参数对象
     goodsListPara, //获取卖品列表参数对象
@@ -30,7 +32,9 @@ Page({
         cinemaName: '',
         cardDetailFlag: false,
         sellDetailFlag: false,
+        buttonClicked:false,
         checkflag: true,
+        dbClickFlag : true,//点击购卡防止重复点击
         toastItem: {
             text: 'sucess!',
             toast_visible: !1
@@ -352,12 +356,12 @@ Page({
             cardIndex = target.index,
             cardList = self.data.cardList;
 
-        if ((userPhone == undefined || userPhone == '' || userPhone == null) || (memberCode == undefined || memberCode == '' || memberCode == null)){
-            wx.navigateTo({
-                url: '../getUserInfo/login'
-            });
-            return false;
-        }
+        // if ((userPhone == undefined || userPhone == '' || userPhone == null) || (memberCode == undefined || memberCode == '' || memberCode == null)){
+        //     wx.navigateTo({
+        //         url: '../getUserInfo/login'
+        //     });
+        //     return false;
+        // }
 
         self.setData({
             popInfo: cardList[cardIndex]
@@ -368,6 +372,7 @@ Page({
     
     //在卡详情弹框里,  点击立即购卡
     byeCardAtOnce: function (e) {
+      // console.log(e)
         var self = this,
             checkflag = self.data.checkflag,
             targets = e.currentTarget.dataset,
@@ -397,6 +402,14 @@ Page({
             // }, 2000);
         } else {
             //商城购卡接口
+            //fn.buttonClicked(self);
+          if (self.data.dbClickFlag) {
+            self.setData({
+              dbClickFlag: false
+            });
+          } else {
+            return false;
+          }
             wx.request({
                 url: byeCardUrl,
                 method: 'GET',
@@ -406,8 +419,15 @@ Page({
                     'Accept': 'application/json'
                 },
                 success: function (res) {
+                  console.log(res)
                     var resultCode = res.data.resultCode;
-                    console.log(res.data);
+                    // console.log(res.data);
+                    if(resultCode == '2202'){
+                      wx.navigateTo({
+                        url: '../Binding/binding',
+                      });
+                      return false
+                    }
                     if (resultCode == 0){
                         cardOrderInfo = res.data.resultData;
                         self.initPayFn(cardOrderInfo);
@@ -508,12 +528,12 @@ Page({
             sellIndex = target.index,
             sellList = self.data.goodsList;
 
-        if ((userPhone == undefined || userPhone == '' || userPhone == null) || (memberCode == undefined || memberCode == '' || memberCode == null)) {
-            wx.navigateTo({
-                url: '../getUserInfo/login'
-            });
-            return false;
-        }
+        // if ((userPhone == undefined || userPhone == '' || userPhone == null) || (memberCode == undefined || memberCode == '' || memberCode == null)) {
+        //     wx.navigateTo({
+        //         url: '../getUserInfo/login'
+        //     });
+        //     return false;
+        // }
 
         self.setData({
             sellPopInfo: sellList[sellIndex]
@@ -683,10 +703,10 @@ Page({
     //进入购物车
     goToTrolley:function(){
         if ((userPhone == undefined || userPhone == '' || userPhone == null) || (memberCode == undefined || memberCode == '' || memberCode == null)) {
-            wx.navigateTo({
-                url: '../getUserInfo/login'
-            });
-            return false;
+            // wx.navigateTo({
+            //     url: '../getUserInfo/login'
+            // });
+            // return false;
         }
         wx.navigateTo({
             url: 'trolleyInfo',

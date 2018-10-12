@@ -16,13 +16,23 @@ Page({
     data: {
         userName: '',
         memberHead: '',
-        loginflag: false
+        loginflag: false,
+        Shield:false
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+      movieCode = wx.getStorageSync('movieCode');
+      var movieCode = movieCode;
+
+      if (movieCode == '9408883aa1624466b6e0feea94773051') {
+
+        this.setData({
+          Shield: true
+        });
+      }
         var self = this;
         self.loadFn();
     },
@@ -67,9 +77,11 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
+     
         wx.setNavigationBarTitle({
             title: '个人中心'
         });
+      
     },
 
     /**

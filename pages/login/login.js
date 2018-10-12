@@ -276,6 +276,7 @@ console.log(res);
 
   //点击绑定手机号
   bindPhoFn: function (e) {
+    //debugger;
     var formData = e.detail.value,
       memberPhone = formData.memberPhone,
       getVerifyCode = formData.verifyCode, //用户手动填写的验证码
@@ -312,6 +313,7 @@ console.log(res);
       bindPhoPara.OS = wx.getStorageSync('OS');
       bindPhoPara.CVersion = wx.getStorageSync('CVersion');
       bindPhoPara.source = '5';
+      bindPhoPara.LoginType = '5';
       console.log(bindPhoPara.unionid)
       
 

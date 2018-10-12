@@ -66,6 +66,7 @@ Page({
                 }
 
                 if (posterNew.length > 0) { //没有预告片的时候，到海报第一张图片
+                  posterNew[0] = posterNew[0].replace("?x-oss-process=image/format,jpg", "");
                     data.filmPosterNew = posterNew[0] + '?x-oss-process=image/resize,m_fill,h_424,w_710,limit_0';
                 } else {
                     data.filmPosterNew = '';

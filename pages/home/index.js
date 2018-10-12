@@ -102,7 +102,9 @@ Page({
         }
         //页面从hide到show的时候，更新一下member的值
         member = wx.getStorageSync('member');
-
+console.log(member);
+      var memberCode = member.memberCode;
+        wx.setStorageSync('memberCode', memberCode)
         wx.setStorageSync('userData', '');
         cinemaCode = wx.getStorageSync('cinemaCode'); //添加tabBar之后，cinemaCode是通过缓存拿的
         memberCode = member.memberCode;
@@ -177,7 +179,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-               //  console.log(res);
+                console.log(res);
                 var array = res.data.resultData;
                 if(array != ''){
                     shows = array.shows;
@@ -186,7 +188,8 @@ Page({
                   filmLen = films.length;           
 
 					for (var i = 0; i < filmLen; i++) {
-
+            films[i].filmPosterNew = films[i].filmPosterNew.replace("?x-oss-process=image/format,jpg","");
+            // console.log(films[i].filmPosterNew)
                         //  films[i].flag = true; //给每一个电影添加一个字段，来控制场次的展示
                         films[i].filmPosterNew = films[i].filmPosterNew + '?x-oss-process=image/resize,m_fill,h_258,w_196,limit_0/format,jpg/quality,q_80';
                         films[i].showDateView1 = films[i].showDateView.split(',');
@@ -282,6 +285,7 @@ Page({
     },
     
     haltSalesFn: function (e) {
+      // console.log(e)
         var that = this;
         that.setData({
             toastItem: {
@@ -300,6 +304,7 @@ Page({
     },
 
     stopFn:function(e){
+      // console.log(e)
         this.setData({
             flag: true
         });
@@ -307,6 +312,7 @@ Page({
     
     //ads： go to details
     adDetailFn: function (e){
+      // console.log(e)
         var that = this,
             target = e.currentTarget.dataset,
             ads = target.ads,
@@ -328,6 +334,7 @@ Page({
 
     //go to film detail page
     filmDetailP:function(e){
+      // console.log(e)
         var target = e.currentTarget.dataset,
             filmCode = target.filmcode,
             filmName = target.filmname;
@@ -341,6 +348,7 @@ Page({
 
     //look other sessions
     lookThem: function (e) {
+      // console.log(e)
         var that = this,
             target = e.currentTarget.dataset,
             index = target.index, //当前电影的index值
@@ -361,9 +369,9 @@ Page({
                 }
             }
 
-            that.setData({
-                // films: filmsData
-            });
+            // that.setData({
+            //      films: filmsData
+            // });
 
             var n = curFilm.tabIndex;
             that.changeTab(undefined, index, n, showDates[i]);
@@ -398,7 +406,7 @@ Page({
      
     },
     changeTab: function(e, index, n, data){
-      
+      // console.log(e)
         if (e){
             var targets = e.currentTarget.dataset;
             var index = targets.index, //当前影片的index值
@@ -477,6 +485,7 @@ Page({
        //   console.log(filmsData);
     },
     changeCinema: function (e) {
+      // console.log(e)
         wx.redirectTo({
             url: '../cinema/cinema',
         });
@@ -667,6 +676,7 @@ Page({
 
     //选票
     selTicket: function (e) {
+      // console.log(e)
         var that = this,
             targets = e.currentTarget.dataset,
             listInfo = JSON.stringify(targets.listinfo),
@@ -731,6 +741,7 @@ Page({
         //     films: [],
         //     shows: []
         // });
+        
         this.ajaxFn();
         wx.stopPullDownRefresh();
     },

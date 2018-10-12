@@ -105,7 +105,7 @@
             </view>
             <view class='checkAgree bt'><text class='checkIcon {{checkflag? "checkedIcon" : ""}}' bindtap='checkFn'></text>我已阅读并同意<text>《购卡协议》</text></view>
             <view class='bindBtnWrap'>
-                <button data-cardCode='{{popInfo.cardCode}}' data-applyId='{{popInfo.applyId}}' data-promotionId='{{popInfo.promotionId}}' class='gradientBtn bindBtn' hover-class='gradientBtn_hover' bindtap='byeCardAtOnce'>立即购买</button>
+                <button data-cardCode='{{popInfo.cardCode}}' data-applyId='{{popInfo.applyId}}' data-promotionId='{{popInfo.promotionId}}' class='gradientBtn bindBtn' hover-class='gradientBtn_hover' disabled='{{!dbClickFlag}}' bindtap='byeCardAtOnce'>立即购买</button>
             </view>
         </view>
     </view>

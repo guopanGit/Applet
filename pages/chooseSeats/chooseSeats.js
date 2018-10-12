@@ -239,7 +239,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        //  console.log(res);
+         console.log(res);
         if (res.data.resultDesc == 'TOKEN_INVALID') {
           logoutToken(); //退出登录时清除用户缓存信息
 
@@ -263,9 +263,17 @@ Page({
 
 
         if (rowWidth > that.data.seatsWrapWidth) {
+          // wx.showModal({
+          //   title: '',
+          //   content: '我是1呀',
+          // })
           left = left
 
         } else if (rowWidth < that.data.seatsWrapWidth) {
+          // wx.showModal({
+          //   title: '',
+          //   content: '我是2啊',
+          // })
           left = left
         }
 
@@ -421,8 +429,8 @@ Page({
 
   /*生命周期函数--监听页面显示*/
   onShow: function () {
-    // console.log(showTime);
-    if (showTime == 'loaded') {
+    //  console.log(this.data.showTime);
+    // if (showTime == 'loaded') {
       // console.log('onshow');
       this.ajaxFn();
       this.setData({
@@ -430,9 +438,9 @@ Page({
         NUM: 0,
         totalPrice: 0
       });
-    } else {
-      showTime = 'loaded';
-    }
+    // } else {
+    //   showTime = 'loaded';
+    // }
 
   },
 
@@ -450,9 +458,8 @@ Page({
 
   /*页面相关事件处理函数--监听用户下拉动作*/
   onPullDownRefresh: function () {
-    this.setData({
-
-    });
+    this.ajaxFn();
+    wx.stopPullDownRefresh();
   },
 
   /*用户点击右上角分享*/
@@ -522,6 +529,7 @@ Page({
   },
   //选座
   selectTicket: function (e) {
+    // console.log(e)
     var that = this,
       seatInfo = that.data.seatInfo,
       seats = that.data.seatInfo.seat, // 含有已选座信息的数组
@@ -719,6 +727,7 @@ Page({
     // console.log(seatInfo);
   },
   createOrder: function (e) {
+    // console.log(e)
     var THAT = this,
       startDateTime = THAT.data.showDate + " " + listInfo.startTime,
       showStart = new Date(startDateTime.replace(/-/g, "/")),
@@ -754,6 +763,7 @@ Page({
           cancelText: '去支付',
           confirmText: '支付本单',
           success: function (res) {
+            // console.log(res)
             if (res.cancel) { //点击了去支付
               var url = '../confirmOrder/confirmOrder?orderNo=' + needPayOrderNo;
               THAT.redirectTo(e, url); //关闭当前页面，前往确认订单页面
@@ -777,6 +787,7 @@ Page({
     }
   },
   toCreatOrder: function (e) {
+    // console.log(e)
     var THE = this;
     var startDateTime = THE.data.showDate + " " + listInfo.startTime,
       createOrderParam = {};
@@ -815,6 +826,12 @@ Page({
       },
       success: function (res) {
         var createOrderData = res.data;
+        if (createOrderData.resultCode == '2202'){
+          wx.navigateTo({
+            url: '../Binding/binding',
+          });
+          return false
+        }
         if (createOrderData.resultCode == '0') {
           url = '../goodsList/goodsList?showCode=' + selTicketPara.showCode + '&orderNo=' + createOrderData.resultData.orderNo;
           THE.go(e, url);

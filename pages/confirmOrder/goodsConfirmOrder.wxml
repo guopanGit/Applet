@@ -44,8 +44,8 @@
                 <block wx:for="{{goodsMsg.sellRecords}}" wx:for-item="good">
                     <view class="sell {{index > 0 ? 'mt20':''}}"><text class='fr'>￥{{good.strategyPrice}}X {{good.sellCount}}</text>{{good.sellName}}{{good.sellUnit}}<text class='gray8d'>（门市价：￥{{good.sellPrice}}）</text> </view>
                 </block>
-                <view class='detailP mt24' wx:if="{{bindType == 0}}"><text class='cRad fr'>-¥{{discounGMoney}}</text>特惠折扣</view>
-                <view class='detailP mt24' wx:if="{{bindType == 1}}"><text class='cRad fr'>-¥{{discounGMoney}}</text>会员卡折扣</view>
+                <view class='detailP mt24' wx:if="{{bindType == 1}}"><text class='cRad fr'>-¥{{discounGMoney}}</text>优惠券折扣</view>
+                <view class='detailP mt24' wx:if="{{bindType == 0}}"><text class='cRad fr'>-¥{{discounGMoney}}</text>会员卡折扣</view>
                 <!-- <view class='detailP mt24'><text class='gray8d fr'>¥32</text>卖品实付</view> -->
             </view>
         </view>

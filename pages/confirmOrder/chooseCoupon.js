@@ -54,7 +54,7 @@ Page({
 
         voucherListPara = { 'companyCode': movieCode, 'memberCode': memberCode, 'cinemaCode': cinemaCode, 'pageNo': that.data.pageNo, 'voucherType': '-1', 'orderNo': orderNo};
         selVoucherPara = { 'memberCode': memberCode, 'cinemaCode': cinemaCode, 'companyCode': movieCode, 'token': token, 'CVersion': CVersion, 'OS': OS, 'orderNo': orderNo, 'prefAccount': '', 'bindType': 1 };
-    
+        
         that.ajaxFn();
     },
 
@@ -70,7 +70,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                console.log(res);
+               // console.log(res);
                 var data = res.data,
                     resultCode = data.resultCode,
                     resultData = data.resultData,

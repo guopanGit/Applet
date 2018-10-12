@@ -14,7 +14,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        page: 0
+        page: 0,
+       Shield:false
     },
 
     /**
@@ -25,6 +26,14 @@ Page({
         movieCode = wx.getStorageSync('movieCode');
         cinemaCode = wx.getStorageSync('cinemaCode');
         member = wx.getStorageSync('member');
+       var movieCode = movieCode;
+
+       if (movieCode == '9408883aa1624466b6e0feea94773051') {
+
+        this.setData({
+          Shield: true
+        });
+       }
         
         //绑线下卡所需的参数
         // bindCardPara = { 'companyCode': movieCode, 'cinemaCode': cinemaCode, 'memberCode': member.memberCode, 'cardNo': '', 'cardPassword': '', 'inviteCode': ''};
@@ -37,9 +46,18 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
+      movieCode = wx.getStorageSync('movieCode');
+      var movieCode = movieCode;
+      if (movieCode == '9408883aa1624466b6e0feea94773051') {
         wx.setNavigationBarTitle({
-            title: '绑卡券',
+          title: '绑券',
         });
+      } else{
+        wx.setNavigationBarTitle({
+          title: '绑卡券',
+        });
+      }
+       
     },
 
     /**

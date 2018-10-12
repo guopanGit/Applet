@@ -14,3 +14,4 @@
 .inptWrap{position:absolute;left:0;right:0;top:90rpx;}
 .bindBtnWrap{height:68rpx;padding:15rpx 24rpx;}
 .bindBtn{height:68rpx;line-height: 68rpx;border-radius: 34rpx;}
+.isShield{left: 344rpx}

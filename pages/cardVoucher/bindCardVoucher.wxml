@@ -1,9 +1,10 @@
 <!--pages/cardVoucher/bindCardVoucher.wxml-->
 <view class='container'>
     <view class="userWrap relative bt bb">
-        <view class='storeNavWrap'>
-            <text class='cardStore  {{page == "0" ? "navCur":"" }}' data-index='0' bindtap='changeNav'>绑线下券</text>
-            <text class='sellStore  {{page == "1" ? "navCur":"" }}' data-index='1' bindtap='changeNav'>绑线下卡</text>
+        <view class='storeNavWrap {{!Shield ? "" :"isShield" }}'>
+        <text class='cardStore  {{page == "0" ? "navCur":"" }}' data-index='0' bindtap='changeNav' wx:if="{{Shield}}">绑券</text>
+        <text class='cardStore  {{page == "0" ? "navCur":"" }}' data-index='0' bindtap='changeNav' wx:if="{{!Shield}}">绑线下券</text>
+        <text class='sellStore  {{page == "1" ? "navCur":"" }}' data-index='1' bindtap='changeNav' wx:if="{{!Shield}}">绑线下卡</text>
         </view>
     </view>
     <form bindsubmit="bindFn" bindreset="formReset">

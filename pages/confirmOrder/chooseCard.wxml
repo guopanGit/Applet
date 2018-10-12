@@ -24,7 +24,7 @@
                 <view  class="selectedOne {{card.sub == 1 ? 'selCur' : ''}}"></view>
             </view>
             <!--  权益卡  -->
-            <view wx:elif="{{card.cardType == 2}}" class="card {{card.expire =='0' ? 'cyellowBg' : 'BeOverdue'}}" data-cardcode='{{card.cardCode}}' data-cardname='{{card.cardName}}' data-cardtype='{{card.cardType}}' bindtap="{{card.expire =='0' ? 'selectCardFn' : ''}}">
+            <view wx:elif="{{card.cardType == 2}}" class="card {{card.expire =='0' ? 'cgrayBg' : 'BeOverdue'}}" data-cardcode='{{card.cardCode}}' data-cardname='{{card.cardName}}' data-cardtype='{{card.cardType}}' bindtap="{{card.expire =='0' ? 'selectCardFn' : ''}}">
                 <view class='tr' data-index='{{cardIndex}}'>
                     <view class='cardTitle ellipsis'>{{card.cardName}}</view>
                     <view class='cardtag  white'>{{card.cardTypeName}}</view>

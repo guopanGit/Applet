@@ -27,7 +27,8 @@
     "pages/cardVoucher/cardList",
     "pages/cardVoucher/voucherList",
     "pages/cardVoucher/bindCardVoucher",
-    "pages/getUserInfo/login"
+    "pages/getUserInfo/login",
+    "pages/Binding/binding"
   ],
   "window": {
     "backgroundTextStyle": "dark",

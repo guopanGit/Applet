@@ -23,7 +23,7 @@ Page({
         pageNo: 1,
         cardlist: [],
         hasNext: true,
-        preCardCode: '',
+        preCardCode: ''      
     },
 
     /**
@@ -104,7 +104,7 @@ Page({
               list.push(cardInfoData.orders[j]);
 
             } else {
-              if (cardInfoData.orders[j].expire == '0') {
+              if (cardInfoData.orders[j].expire) {
                 list.push(cardInfoData.orders[j]);
               }
             }
@@ -352,13 +352,21 @@ Page({
 
     //点击选择卡,预支付
     selectCardFn:function(e){
+      wx.showLoading({
+        title: '加载中...',
+        mask: true,
+        success: function(res) {
+         
+        }
+      })
         var _this = this,
             targets = e.currentTarget.dataset,
             prefAccount = targets.cardcode,
             cardType = targets.cardtype,
             prefCardName = targets.cardname,
+            flag= true,
             prePaidUrl = '';
-
+            
         if(orderType == '4') {
             prePaidUrl = goodsOrderSelCard;
         } else {
@@ -377,7 +385,8 @@ Page({
                 'Accept': 'application/json'
             },
             
-            success: function (res){
+            success: function (res){   
+              // console.log(res)          
                 var resultCode = res.data.resultCode,
                     favorInfo = res.data.resultData;
                 if (resultCode == 0 ){
@@ -385,7 +394,7 @@ Page({
                     favorInfo.prefCardName = prefCardName;
                     favorInfo.cardType = cardType;
 
-                    console.log(favorInfo);
+                    // console.log(favorInfo);
 
                     favorInfo = JSON.stringify(favorInfo);
 
@@ -398,7 +407,9 @@ Page({
                     wx.navigateBack({
                         delta: 1
                     });
+                  wx.hideLoading();
                 } else {
+                  wx.hideLoading();
                     wx.showModal({
                         title: '提示',
                         content: res.data.resultDesc,
@@ -412,6 +423,9 @@ Page({
             fail: function(res){},
             complete:function(res){}
         });
+      _this.setData({
+        flag: true
+      })
     },
 
     //不使用会员卡

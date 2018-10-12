@@ -30,7 +30,7 @@ var url = require('../../utils/url.js'),
     preCardCode, //上一次选择的卡code
     precardType, //上一次选择的卡type
     preVoucherCode, //上一次选择的券code
-	dbClickFlag = true, //防止双击出现两个支付窗户
+	  dbClickFlag = true, //防止双击出现两个支付窗户
     cardPayBack = url.cardPayBack, //校验完卡支付密码，用卡支付
     skipFlag; //判断是否是0元对换券
 

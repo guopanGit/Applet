@@ -4,7 +4,7 @@
 <!-- 使用模板 -->
 <template is="toast" data="{{...toastItem}}"/>
 
-<view class="container">
+<view class="container" bindtap='flag'>
     <view class="userHeader">
         <!-- <text class="userName">{{userName}}</text>   -->
         <!-- <view class="logout" bindtap="logoutFn">退出</view> -->
@@ -47,7 +47,7 @@
 
                     <view class="seal {{order.orderState == '1302' ? 'refund' : ''}}"></view> <!-- refund：已退票；shown：已放映  {{order.showState == '1' ? 'shown':''}} -->
                     
-                    <view  wx:if="{{order.orderState == '1000'}}" class="hintInfo">请您在 <text class="rad">{{order.orderTimeOut}}</text> 内完成支付，超时将自动取消订单</view>
+                    <view  wx:if="{{order.orderState == '1000'}}" class="hintInfo">请您在 <text class="rad">{{orderTimeOut1}}</text> 内完成支付，超时将自动取消订单</view>
                     <view wx:elif="{{order.orderState == '1305'}}" class="hintInfo"><text class="rad">很抱歉，您的退款超时，请联系影城工作人员</text></view> 
                     <view wx:elif="{{order.orderState == '1002'}}" class="hintInfo"><text class="rad">订单出问题了，正在紧急处理，退款会在3至5个工作日...</text></view>
                 </view>
