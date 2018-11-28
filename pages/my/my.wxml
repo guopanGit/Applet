@@ -1,80 +1,86 @@
 <!--my.wxml-->
 <!-- 引用模板 -->
-<import src="../../template/temp.wxml" /> 
+<import src="../../template/temp.wxml" />
 <!-- 使用模板 -->
-<template is="toast" data="{{...toastItem}}"/>
+<template is="toast" data="{{...toastItem}}" />
 
 <view class="container" bindtap='flag'>
-    <view class="userHeader">
-        <!-- <text class="userName">{{userName}}</text>   -->
-        <!-- <view class="logout" bindtap="logoutFn">退出</view> -->
-        <!--<navigator class="logout" url="../login/login" open-type="redirect">退出</navigator>-->
-        <view class='navBox'>
-          <text class='filmTag {{page == "1" ? "navOn":"" }}' data-index='1' bindtap='changeNav'>影票订单</text>
-          <text class="line"></text>
-          <text class='goodsTag {{page == "0" ? "navOn":"" }}' data-index='0' bindtap='changeNav'>卖品订单</text>
-        </view>
-        <view class='navTag'>
-          <text wx:if="{{refundStatus == '1' && page == '1'}}" class='refundRule' bindtap='refundRule'>退票规则            </text>  
-          <!-- <text bindtap="goHome" class="goHome">返回首页</text> -->
-        </view>
-			
+  <view class="userHeader">
+    <!-- <text class="userName">{{userName}}</text>   -->
+    <!-- <view class="logout" bindtap="logoutFn">退出</view> -->
+    <!--<navigator class="logout" url="../login/login" open-type="redirect">退出</navigator>-->
+    <view class='navBox'>
+      <text class='filmTag {{page == "1" ? "navOn":"" }}' data-index='1' bindtap='changeNav'>影票订单</text>
+      <text class="line"></text>
+      <text class='goodsTag {{page == "0" ? "navOn":"" }}' data-index='0' bindtap='changeNav'>卖品订单</text>
     </view>
-    <view wx:if="{{noOrder}}" class="orderListUl">
-        <view class="iconWrap">
-            <image class="iconImg" src="../../image/null.png"></image>
-            <view class="nullHint" wx:if='{{page == "0"}}'>您还没有购买卖品</view>
-            <view class="nullHint" wx:if='{{page == "1"}}'>您还没有购买影票<text class="block mt20">请回首页买票</text></view>
-        </view>
+    <view class='navTag'>
+      <text wx:if="{{refundStatus == '1' && page == '1'}}" class='refundRule' bindtap='refundRule'>退票规则</text>
+      <!-- <text bindtap="goHome" class="goHome">返回首页</text> -->
     </view>
-    <view class="orderListUl" wx:if='{{page == "1"}}'>
-        <block wx:for="{{orders}}" wx:for-item="order" wx:for-index="order_index">
-            <view class="orderListLi flex" data-detailUrl="{{order.detailsUrl}}" bindtap="goToOrderInfo">
-                <view class="imgWrap">
-                    <image class="filmImg" src="{{order.filmPosterNew}}"></image>
-                </view>
-                <view class="flex_auto relative">
-                    <view class="infos">
-                        <view class="filmName ellipsis">
-                            <text class='pr20'>{{order.filmName}}</text>
-                            <text class="tagsN radBg" wx:if="{{order.orderState == 1000}}">待支付</text>
-                            <text class="tagsN pinkBg" wx:elif="{{order.refundStatus == '1' && order.orderState != 1002}}">可退票</text>
-                        </view>
-                        <view class="time">{{order.orderTime}}</view>
-                        <view class="ticketNum">数量：{{order.filmCount}}</view>
-                        <view class="allMoney">总价：{{order.orderPrice / 100}}元</view>
-                    </view>
 
-                    <view class="seal {{order.orderState == '1302' ? 'refund' : ''}}"></view> <!-- refund：已退票；shown：已放映  {{order.showState == '1' ? 'shown':''}} -->
-                    
-                    <view  wx:if="{{order.orderState == '1000'}}" class="hintInfo">请您在 <text class="rad">{{orderTimeOut1}}</text> 内完成支付，超时将自动取消订单</view>
-                    <view wx:elif="{{order.orderState == '1305'}}" class="hintInfo"><text class="rad">很抱歉，您的退款超时，请联系影城工作人员</text></view> 
-                    <view wx:elif="{{order.orderState == '1002'}}" class="hintInfo"><text class="rad">订单出问题了，正在紧急处理，退款会在3至5个工作日...</text></view>
-                </view>
-            </view>
-        </block>
+  </view>
+  <view wx:if="{{noOrder}}" class="orderListUl">
+    <view class="iconWrap">
+      <image class="iconImg" src="../../image/null.png"></image>
+      <view class="nullHint" wx:if='{{page == "0"}}'>您还没有购买卖品</view>
+      <view class="nullHint" wx:if='{{page == "1"}}'>您还没有购买影票
+        <text class="block mt20">请回首页买票</text>
+      </view>
     </view>
-    <view class="orderListUl" wx:if='{{page == "0"}}'>
-        <block wx:for="{{goodsDataList}}" wx:for-item="goodsItem" wx:for-index="g_index">
-            <view class="orderListLi flex" data-detailUrl="{{goodsItem.detailsUrl}}" bindtap="goToOrderInfo">
-                <view class="gimgWrap">
-                    <image class="goodsImg" src="{{goodsItem.sellRecords[0].goodImg}}"></image>
-                </view>
-                <view class="flex_auto relative">
-                    <view class="infos">
-                        <view class="filmName ellipsis">
-                            <text class='pr20'>{{goodsItem.goodName}}</text>
-                            <text class="tagsN radBg" wx:if="{{goodsItem.orderState == 1000}}">待支付</text>
-                        </view>
-                        <view class="time1">{{goodsItem.createTime}}</view>
-                        <view class="time1">数量：{{goodsItem.goodCount}}</view>
-                        <view class="allMoneys">总价：{{goodsItem.totalPrice/100}}元</view>
-                    </view>
-                    <view class="seal {{goodsItem.orderState == '1302' ? 'refund1' : ''}}"></view>
-                    <view wx:if="{{goodsItem.orderState == '1305'}}" class="hintInfo"><text class="rad">很抱歉，您的退款超时，请联系影城工作人员</text></view> 
-                    <view wx:if="{{goodsItem.orderState == '1002'}}" class="hintInfo"><text class="rad">订单出问题了，正在紧急处理，退款会在3至5个工作日返回</text></view>
-                </view>
+  </view>
+  <view class="orderListUl" wx:if='{{page == "1"}}'>
+    <block wx:for="{{orders}}" wx:for-item="order" wx:for-index="order_index" wx:key="key">
+      <view class="orderListLi flex" data-detailUrl="{{order.detailsUrl}}" bindtap="goToOrderInfo">
+        <view class="imgWrap">
+          <image class="filmImg" src="{{order.filmPosterNew}}"></image>
+        </view>
+        <view class="flex_auto relative">
+          <view class="infos">
+            <view class="filmName ellipsis">
+              <text class='pr20'>{{order.filmName}}</text>
+              <text class="tagsN radBg" wx:if="{{order.orderState == 1000}}">待支付</text>
+              <text class="tagsN pinkBg" wx:if="{{order.refundStatus == 1 && order.orderState != '1501' && order.orderState != '1503' && order.orderState != '1502' && order.orderState != '1504'}}">可退票</text>
             </view>
-        </block>
-    </view>
+            <view class="time">{{order.orderTime}}</view>
+            <view class="ticketNum">数量：{{order.filmCount}}</view>
+            <view class="allMoney">总价：{{order.orderPrice / 100}}元</view>
+          </view>
+          <view class="seal {{order.orderState == '1501' || order.orderState == '1502' ? 'refund' : ''}} {{order.orderState == '1503' || order.orderState == '1504' ? 'refunds' : ''}}"></view>
+          <!-- refund：已退款； refunds：退款中；shown：已放映  {{order.showState == '1' ? 'shown':''}} -->
+          <view wx:if="{{order.orderState == '1000'}}" class="hintInfo">请您在
+            <text class="rad">{{orderTimeOut1}}</text> 内完成支付，超时将自动取消订单</view>
+          <!-- <view wx:elif="{{order.orderState == '1305'}}" class="hintInfo"><text class="rad">很抱歉，您的退款超时，请联系影城工作人员</text></view>  -->
+          <view wx:elif="{{order.orderState == '1002'}}" class="hintInfo">
+            <text class="rad">订单出问题了，正在紧急处理，退款会在3至5个工作日...</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="orderListUl" wx:if='{{page == "0"}}'>
+    <block wx:for="{{goodsDataList}}" wx:for-item="goodsItem" wx:for-index="g_index" wx:key="key">
+      <view class="orderListLi flex" data-detailUrl="{{goodsItem.detailsUrl}}" bindtap="goToOrderInfo">
+        <view class="gimgWrap">
+          <image class="goodsImg" src="{{goodsItem.sellRecords[0].goodImg}}"></image>
+        </view>
+        <view class="flex_auto relative">
+          <view class="infos">
+            <view class="filmName ellipsis">
+              <text class='pr20'>{{goodsItem.goodName}}</text>
+              <text class="tagsN radBg" wx:if="{{goodsItem.orderState == 1000}}">待支付</text>
+            </view>
+            <view class="time1">{{goodsItem.createTime}}</view>
+            <view class="time1">数量：{{goodsItem.goodCount}}</view>
+            <view class="allMoneys">总价：{{goodsItem.totalPrice/100}}元</view>
+          </view>
+          <view class="seal {{goodsItem.orderState == '1501' || goodsItem.orderState == '1502' ? 'refund1' : ''}} {{goodsItem.orderState == '1503' || goodsItem.orderState == '1504' ? 'refunds' : ''}}"></view>
+          <!-- <view wx:if="{{goodsItem.orderState == '1305'}}" class="hintInfo"><text class="rad">很抱歉，您的退款超时，请联系影城工作人员</text></view>  -->
+          <view wx:if="{{goodsItem.orderState == '1002'}}" class="hintInfo">
+            <text class="rad">订单出问题了，正在紧急处理，退款会在3至5个工作日返回</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
 </view>

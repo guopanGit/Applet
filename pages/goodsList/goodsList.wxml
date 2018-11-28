@@ -7,7 +7,7 @@
 <view class="page {{listLength == 0 ? 'whiteBg' : ''}}" style="overflow: {{hidden}}">
     <view class="blockWrap">
         <view wx:if="{{listLength > 0}}">
-            <block wx:for="{{goods}}" wx:for-item="good">
+            <block wx:for="{{goods}}" wx:for-item="good" wx:key="key">
                 <view class="selBlock">
                     <view class="icon">
                         <image class="iconImg" src="{{good.goodsImgNew}}"></image>
@@ -43,7 +43,7 @@
         <view class="list">
             <view class="sTitle"><text class="del" bindtap="delGoodInfo">清空</text>购买列表</view>
             <scroll-view scroll-y class="sGoodList"> <!-- 这个标签有一个verifyCode，暂时先注掉 -->
-                <block wx:for="{{goodsInfo}}" wx:for-item="sGood">
+                <block wx:for="{{goodsInfo}}" wx:for-item="sGood" wx:key="key">
                     <view class="goodLi flex" wx:if="{{sGood.amount > 0}}">
                         <view class="goodName">{{sGood.goodsName}}</view>
                         <view class="goodPrice">￥{{sGood.goodSum}}</view>

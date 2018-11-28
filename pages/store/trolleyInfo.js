@@ -29,7 +29,7 @@ Page({
      */
     onLoad: function (options) {
         wx.hideShareMenu(); //关闭转发按钮
-
+     // console.log(options);
         var _this = this;
         movieCode = wx.getStorageSync('movieCode'); //companyCode
         cinemaCode = wx.getStorageSync('cinemaCode');
@@ -38,7 +38,6 @@ Page({
         token = member.token;
         CVersion = wx.getStorageSync('CVersion');
         OS = wx.getStorageSync('OS');
-
         _this.trolleyList();
     },
     goIndex: function(){
@@ -62,8 +61,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-              //debugger;
-                console.log(res);
+                // console.log(res);
                 var resData = res.data;
                 if (resData.resultCode == 0) {
                     var trolleyDetails = resData.resultData.trolleyDetails,
@@ -182,15 +180,11 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                console.log(res);
-
                 that.setData({
                     typeLen: 0,
                     discountAmount: 0
                 });
             },
-            fail:function(){},
-            complete:function(){}
         });
     },
 
@@ -327,7 +321,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                console.log(res)
+                // console.log(res)
                 if(res.data.resultCode == '2202'){
                   wx.navigateTo({
                     url: '../Binding/binding',
@@ -337,7 +331,7 @@ Page({
                 var resultCode = res.data.resultCode;
                 if (resultCode == 0) {
                     wx.navigateTo({
-                        url: '../confirmOrder/goodsConfirmOrder?orderNo=' + res.data.resultData.orderId,
+                      url: '../confirmOrder/goodsConfirmOrder?orderNo=' + res.data.resultData.orderId,
                     });
                 }
             },

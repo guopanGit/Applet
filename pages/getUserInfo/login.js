@@ -58,16 +58,9 @@ Page({
     });
 
     var that = this;
-      //userInfo = e.detail,
-      //encryptedData = userInfo.encryptedData,
-      //iv = userInfo.iv;
-    // console.log(iv + "------------------");
-    // console.log(encryptedData + "++++++++++++++++++++");
     wx.login({
       success: function (res) {
-        // console.log(res, 999);
-        // var js_code = res.code;
-        // wx.setStorageSync('js_code', js_code)       
+        // console.log(res, 999);       
 
         //用拿到的code，从后台获取sessionId
         wx.request({
@@ -82,7 +75,7 @@ Page({
             'Accept': 'application/json'
           },
           success: function (res) {
-            // console.log('sessionId:');
+            // console.log(res);
             // console.log(res.data.resultData);
             // console.log(res.data.resultData);
             var sessionId = res.data.resultData; //从后台获取到的sessionId
@@ -91,7 +84,7 @@ Page({
             //从后台拿到的sessionId是用来解密userInfo里的加密数据encryptedData的
             wx.getUserInfo({
               success: function(msg){
-                console.log(msg);
+                // console.log(msg);
                 var encryptedData = msg.encryptedData,
                     iv = msg.iv;
                 wx.request({
@@ -107,7 +100,7 @@ Page({
                     'Accept': 'application/json'
                   },
                   success: function (res) {
-                    console.log(res, 1234);
+                    // console.log(res, 1234);
                     var data = JSON.parse(res.data.resultData),
                       resultCode = res.data.resultCode,
                       resultDesc = res.data.resultDesc;
@@ -128,7 +121,7 @@ Page({
                       });
                       return false;
                     }
-                    //console.log(data, 'openid')
+                    //// console.log(data, 'openid')
                     // data.language = data.language;
                     if (resultCode == '0') {
                       wx.setStorageSync('userData', data);
@@ -198,29 +191,29 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res)     
+        // console.log(res)     
         if (res.data.resultCode == '500') {
-          //  console.log(12132)
-          wx.showToast({
-            title: "",
-            icon: 'none',
-            duration: 2000
-          });
+          //  // console.log(12132)
+          // wx.showToast({
+          //   title: "",
+          //   icon: 'none',
+          //   duration: 2000
+          // });
           return false
         }
-        if (res.data.resultCode == '0'){
-           wx.showToast({
-             title: res.data.resultDesc,
-             icon: 'none',
-             duration: 2000
-           })
-        }
-        //console.log(res, 123);
+        // if (res.data.resultCode == '0'){
+        //    wx.showToast({
+        //      title: res.data.resultDesc,
+        //      icon: 'none',
+        //      duration: 2000
+        //    })
+        // }
+        //// console.log(res, 123);
         // loginFlag = true;
         var data = res.data.resultData,
           url = '';
 
-        //console.log(data.unionid);
+        //// console.log(data.unionid);
         if (data.isBinding == '0') { //如果没有绑定手机号，则进入手动绑定手机号页面
           url = '../login/login';
           wx.setStorageSync('member', data); //用来存储跳往绑手机号页的当前页：0：首页，1：个人中心页

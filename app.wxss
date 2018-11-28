@@ -4,8 +4,8 @@ page{background-color: #f1f1f1;line-height:1;color:#333;font-family: "Hiragino S
 button{font-size:32rpx;}
 button::after{border:none}
 .container {display: flex;flex-direction: column;justify-content: space-between;box-sizing: border-box;}
-.fixedTop{position:fixed;top:0;left:0;right:0;z-index:99;}
-.fixedBtm{position:fixed;bottom:0;left:0;right:0;z-index:99;}
+.fixedTop{position:fixed;top:0;left:0;right:0;z-index:88;}
+.fixedBtm{position:fixed;bottom:0;left:0;right:0;z-index:98;}
 .tl{text-align:left;}
 .tr{text-align:right;}
 .tc{text-align:center;}

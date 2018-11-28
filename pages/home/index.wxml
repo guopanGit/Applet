@@ -1,128 +1,155 @@
 <!--index.wxml-->
 <!-- 引用模板 -->
-<import src="../../template/temp.wxml" /> 
+<import src="../../template/temp.wxml" />
 <!-- 使用模板 -->
-<template is="toast" data="{{...toastItem}}"/>
+<template is="toast" data="{{...toastItem}}" />
 
 <view class="container">
-    <view class="userWrap relative">
-        <text class="address" bindtap="changeCinema">{{cinemaName}}</text>
-        <!-- <text class="users" bindtap="goToUsers"></text>   -->
-    </view>
-	<!-- <scroll-view style="height:{{scrollHeight}}px;" scroll-y="true" scroll-top="0" scroll-into-view="{{toView}}"> -->
-		<view wx:if="{{images.length>0}}" class="bannerView">
-			<swiper class="swiper_box" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-color="{{dotColor}}" indicator-active-color="{{dotCurColor}}" circular="{{circular}}">
-				<block wx:for="{{images}}"> <!--头部banner图列表-->
-					<swiper-item bindtap="adDetailFn" data-ads="{{item}}">
-						<image src="{{item.adImgNew}}" class="slide-image"/>
-					</swiper-item>
-				</block>
-			</swiper>
-			<!--<text class="address" bindtap="changeCinema">{{cinemaName}}</text>
+  <view class="userWrap relative">
+    <text class="address" bindtap="changeCinema">{{cinemaName}}</text>
+    <!-- <text class="users" bindtap="goToUsers"></text>   -->
+  </view>
+  <!-- <scroll-view style="height:{{scrollHeight}}px;" scroll-y="true" scroll-top="0" scroll-into-view="{{toView}}"> -->
+  <view wx:if="{{images.length>0}}" class="bannerView">
+    <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-color="{{dotColor}}" indicator-active-color="{{dotCurColor}}" circular="{{circular}}">
+      <block wx:for="{{images}}">
+        <!--头部banner图列表-->
+        <swiper-item bindtap="adDetailFn" data-ads="{{item}}">
+          <image src="{{item.adImgNew}}" class="slide-image" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <!--<text class="address" bindtap="changeCinema">{{cinemaName}}</text>
 			<text class="users" bindtap="goToUsers"></text>-->
-		</view>
-		<view wx:if="{{loading}}" class="dataLoading">
-			<image mode="widthFix" src="../../image/loading.gif" />
-			<view class="p">火速加载中...</view>
-		</view>
-		<view wx:else class="whiteBg filmList"> <!--电影列表-->
-			<block wx:for="{{films}}" wx:for-item="film">
-				<view class="relative filmWrap"> <!--id="id_{{index}}"-->
-					<view class="flex films " bindtap="filmDetailP" data-filmCode="{{film.filmCode}}" data-filmName="{{film.filmName}}">
-					<!-- {{film.idIndex == film.filmLen ? 'lastChildCur' : ''}} -->
-						<view class="filmImgBox hidden">
-							<image class="filmImg" src="{{film.filmPosterNew}}" mode="widthFix"></image>
-						</view>
-						<view class="flex_auto pl20">
-							<view class="filmTitle">
-								<text class="title ellipsis">{{film.filmName}}</text>
-								<!--<text class="ntsc">IMAX 3D</text>-->
-								<!--<text class="qiang">￥9.9抢</text>-->
-							</view>
-							<view class="filmInfo ellipsis">{{film.filmViewFocus}}</view>
-							<view class="filmInfo ellipsis">{{film.filmLeading}}</view>
-						</view>
-					</view>
-					<!-- <view class="session" hover-class="session_hover" bindtap="slideFn" data-wordindex="id_{{index}}"  data-index="{{index}}" data-flag="{{film.flag}}">场次<text class="slideBtn {{film.flag ? '':'slideBtnCur'}}"></text></view> -->
-					<view class="session" hover-class="session_hover" bindtap="slideFn"  data-index="{{index}}" data-flag="{{film.flag}}">场次<text class="slideBtn {{film.flag ? 'slideBtnCur':''}}"></text></view>
-					<!--sessionList begin-->
-					<view class="sessionList ml-24 bodyBg" hidden="{{!film.flag}}">
-						<view class="timeTitle timeUl box">
-							<block wx:for="{{film.showDateView1}}" wx:for-item="day" wx:for-index="n">
-								<view class="titleTab {{film.tabIndex == n ? 'tabCur' : ''}}" data-index="{{index}}" data-n="{{n}}" data-day="{{film.showDate1[n]}}" bindtap="changeTab">{{day}}</view>
-							</block>
-						</view>
-						<view class="pl20">
-							<view wx:if="{{film.scheduleShowList == undefined || film.scheduleShowList.length == 0}}" class="nonData">
-								<text class="nonIcon"></text>
-								<text class="nonDataHint">无场次排片</text>
-								<view hover-class="baseBtn_hover" class="baseBtn mt40" data-index="{{index}}" bindtap="lookThem">请查看其他场次</view>
-							</view>
-							<view wx:if="{{film.scheduleShowList}}" class="sesInfoUl">
-								<block wx:for="{{film.scheduleShowList}}" wx:for-item="list" >
-                                     <!-- bindtap="selTicket" 下面view的点击方法 -->
-									<view bindtap="selTicket"  wx:if="{{list.haltSales == '0' && list.availableSeats > '0'}}" class="sesInfoLi flex {{list.ismorrow == '1' ? 'ciri':''}}" data-listInfo="{{list}}" data-filmName="{{film.filmName}}">
-										<view class="{{list.ismorrow == '1' ? 'ciri_tab':'none'}}">次日放映</view>
-										<view class="booking relative">
-											<view class="topP"><text class="f34 bold">{{list.startTime}}</text></view>
-											<view class="nextP">结束{{list.endTime}}</view>
-										</view>
-										<view class="flex_auto">
-											<view class="topP"><text class="smallP">{{list.filmLang}}{{list.filmSight}}</text></view>
-											<view class="nextP">{{list.hallName}}</view>
-										</view>
-										<view class="booking">
-											<view wx:if="{{list.eventType == '1'}}" class="topP"><text class="f34 bold {{list.eventType == '1' ? 'rad' : ''}}">¥ {{list.eventPrice}}</text></view>
-											<view wx:else class="topP"><text class="f34 bold {{list.eventType == '' ? 'rad' : ''}}">¥ {{list.terraceFilmPrice}}</text></view>
-											<view wx:if="{{list.eventType == '1'}}" class="nextP"><text class="rad f20">限时抢票</text></view>
-											<view wx:elif="{{list.filmPrice != list.terraceFilmPrice}}" class="nextP"><text class="lint_through">¥{{list.filmPrice}}</text></view>
-										</view>
-										<block>
-											<view wx:if="{{list.eventType == ''}}" class="booking tr">
-												<view hover-class="yellow_hover" class="selTicketBtn yellowBtn mt6">购票</view>
-											</view>
-											<view wx:elif="{{list.eventType == '1'}}" class="booking tr">
-												<view hover-class="yellow_hover" class="selTicketBtn yellowBtn mt-3">购票</view>
-												<text class="selTicketHints">{{list.eventTime}}</text>
-											</view>
-										</block>
-										<view class="{{list.startTFlag == 'moon' ? 'icon_moon':''}} {{list.startTFlag == 'sun' ? 'icon_sun':''}}"></view>
-										<!--<view wx:elif="{{list.startTnum < 6 || list.startTnum > 18}}" class="icon_moon"></view>-->
-									</view>
-									<view wx:else class="sesInfoLi flex {{list.ismorrow == '1' ? 'ciri':''}}" data-listInfo="{{list}}" data-filmName="{{film.filmName}}" hidden="{{list.haltSales == '1'}}">
-										<view class="{{list.ismorrow == '1' ? 'ciri_tab':'none'}}">次日放映</view>
-										<view class="booking">
-											<view class="topP"><text class="f34 bold">{{list.startTime}}</text></view>
-											<view class="nextP">结束{{list.endTime}}</view>
-										</view>
-										<view class="flex_auto">
-											<view class="topP"><text class="smallP">{{list.filmLang}}{{list.filmSight}}</text></view>
-											<view class="nextP">{{list.hallName}}</view>
-										</view>
-										<view class="booking">
-											<view class="topP"><text class="f34 bold {{list.haltSales == '1'||list.availableSeats == '0' ? 'gray8d' : 'rad'}}">¥ {{list.terraceFilmPrice}}</text></view>
+  </view>
+  <view wx:if="{{loading}}" class="dataLoading">
+    <image mode="widthFix" src="../../image/loading.gif" />
+    <view class="p">火速加载中...</view>
+  </view>
+  <view wx:else class="whiteBg filmList">
+    <!--电影列表-->
+    <block wx:for="{{films}}" wx:for-item="film" wx:key="key">
+      <view class="relative filmWrap">
+        <!--id="id_{{index}}"-->
+        <view class="flex films " bindtap="filmDetailP" data-filmCode="{{film.filmCode}}" data-filmName="{{film.filmName}}">
+          <!-- {{film.idIndex == film.filmLen ? 'lastChildCur' : ''}} -->
+          <view class="filmImgBox hidden">
+            <image class="filmImg" src="{{film.filmPosterNew}}" mode="widthFix"></image>
+          </view>
+          <view class="flex_auto pl20">
+            <view class="filmTitle">
+              <text class="title ellipsis">{{film.filmName}}</text>
+              <!--<text class="ntsc">IMAX 3D</text>-->
+              <!--<text class="qiang">￥9.9抢</text>-->
+            </view>
+            <view class="filmInfo ellipsis">{{film.filmViewFocus}}</view>
+            <view class="filmInfo ellipsis">{{film.filmLeading}}</view>
+          </view>
+        </view>
+        <!-- <view class="session" hover-class="session_hover" bindtap="slideFn" data-wordindex="id_{{index}}"  data-index="{{index}}" data-flag="{{film.flag}}">场次<text class="slideBtn {{film.flag ? '':'slideBtnCur'}}"></text></view> -->
+        <view class="session" hover-class="session_hover" bindtap="slideFn" data-index="{{index}}" data-flag="{{film.flag}}">场次
+          <text class="slideBtn {{film.flag ? 'slideBtnCur':''}}"></text>
+        </view>
+        <!--sessionList begin-->
+        <view class="sessionList ml-24 bodyBg" hidden="{{!film.flag}}">
+          <view class="timeTitle timeUl box">
+            <block wx:for="{{film.showDateView1}}" wx:for-item="day" wx:for-index="n" wx:key="key">
+              <view class="titleTab {{film.tabIndex == n ? 'tabCur' : ''}}" data-index="{{index}}" data-n="{{n}}" data-day="{{film.showDate1[n]}}" bindtap="changeTab">{{day}}</view>
+            </block>
+          </view>
+          <view class="pl20">
+            <view wx:if="{{film.scheduleShowList == undefined || film.scheduleShowList.length == 0}}" class="nonData">
+              <text class="nonIcon"></text>
+              <text class="nonDataHint">无场次排片</text>
+              <view hover-class="baseBtn_hover" class="baseBtn mt40" data-index="{{index}}" bindtap="lookThem">请查看其他场次</view>
+            </view>
+            <view wx:if="{{film.scheduleShowList}}" class="sesInfoUl">
+              <block wx:for="{{film.scheduleShowList}}" wx:for-item="list" wx:key="key">
+                <!-- bindtap="selTicket" 下面view的点击方法 -->
+                <view bindtap="selTicket" wx:if="{{list.haltSales == '0' && list.availableSeats > '0'}}" class="sesInfoLi flex {{list.ismorrow == '1' ? 'ciri':''}}" data-listInfo="{{list}}" data-filmName="{{film.filmName}}">
+                  <view class="{{list.ismorrow == '1' ? 'ciri_tab':'none'}}">次日放映</view>
+                  <view class="booking relative">
+                    <view class="topP">
+                      <text class="f34 bold">{{list.startTime}}</text>
+                    </view>
+                    <view class="nextP">结束{{list.endTime}}</view>
+                  </view>
+                  <view class="flex_auto">
+                    <view class="topP">
+                      <text class="smallP">{{list.filmLang}}{{list.filmSight}}</text>
+                    </view>
+                    <view class="nextP">{{list.hallName}}</view>
+                  </view>
+                  <view class="booking">
+                    <view wx:if="{{list.eventType == '1'}}" class="topP">
+                      <text class="f34 bold {{list.eventType == '1' ? 'rad' : ''}}">¥ {{list.eventPrice}}</text>
+                    </view>
+                    <view wx:else class="topP">
+                      <text class="f34 bold {{list.eventType == '' ? 'rad' : ''}}">¥ {{list.terraceFilmPrice}}</text>
+                    </view>
+                    <view wx:if="{{list.eventType == '1'}}" class="nextP">
+                      <text class="rad f20">限时抢票</text>
+                    </view>
+                    <view wx:elif="{{list.filmPrice != list.terraceFilmPrice}}" class="nextP">
+                      <text class="lint_through">¥{{list.filmPrice}}</text>
+                    </view>
+                  </view>
+                  <block>
+                    <view wx:if="{{list.eventType == ''}}" class="booking tr">
+                      <view hover-class="yellow_hover" class="selTicketBtn yellowBtn mt6">购票</view>
+                    </view>
+                    <view wx:elif="{{list.eventType == '1'}}" class="booking tr">
+                      <view hover-class="yellow_hover" class="selTicketBtn yellowBtn mt-3">购票</view>
+                      <text class="selTicketHints">{{list.eventTime}}</text>
+                    </view>
+                  </block>
+                  <view class="{{list.startTFlag == 'moon' ? 'icon_moon':''}} {{list.startTFlag == 'sun' ? 'icon_sun':''}}"></view>
+                  <!--<view wx:elif="{{list.startTnum < 6 || list.startTnum > 18}}" class="icon_moon"></view>-->
+                </view>
+                <view wx:else class="sesInfoLi flex {{list.ismorrow == '1' ? 'ciri':''}}" data-listInfo="{{list}}" data-filmName="{{film.filmName}}" hidden="{{list.haltSales == '1'}}">
+                  <view class="{{list.ismorrow == '1' ? 'ciri_tab':'none'}}">次日放映</view>
+                  <view class="booking">
+                    <view class="topP">
+                      <text class="f34 bold">{{list.startTime}}</text>
+                    </view>
+                    <view class="nextP">结束{{list.endTime}}</view>
+                  </view>
+                  <view class="flex_auto">
+                    <view class="topP">
+                      <text class="smallP">{{list.filmLang}}{{list.filmSight}}</text>
+                    </view>
+                    <view class="nextP">{{list.hallName}}</view>
+                  </view>
+                  <view class="booking">
+                    <view class="topP">
+                      <text class="f34 bold {{list.haltSales == '1'||list.availableSeats == '0' ? 'gray8d' : 'rad'}}">¥ {{list.terraceFilmPrice}}</text>
+                    </view>
 
-											<view wx:if="{{(list.eventType != '' && list.eventType == null && list.eventIsSatart == 'false') || (list.haltSales == '1' && list.endPrice != list.price)}}" class="nextP"><text class="lint_through">¥{{list.filmPrice}}</text></view>
-											<view wx:elif="{{list.eventType == '1' && list.haltSales != '1'}}" class="nextP"><text class="red f20">限时抢票</text></view>
-										</view>
-										<view class="booking tr">
-											<view bindtap="haltSalesFn" wx:if="{{list.haltSales == '1'}}" class="selTicketBtn grayBtn mt6">停售</view>
-											<view wx:elif="{{list.availableSeats == '0'}}" class="selTicketBtn grayBtn mt6">售罄</view>
-										</view>
-										<view class="{{list.startTFlag == 'moon' ? 'icon_moon':''}} {{list.startTFlag == 'sun' ? 'icon_sun':''}}"></view>
-										<!--<view wx:if="{{list.startTnum < 19 && list.startTnum > 5}}" class="icon_sun"></view>
+                    <view wx:if="{{(list.eventType != '' && list.eventType == null && list.eventIsSatart == 'false') || (list.haltSales == '1' && list.endPrice != list.price)}}" class="nextP">
+                      <text class="lint_through">¥{{list.filmPrice}}</text>
+                    </view>
+                    <view wx:elif="{{list.eventType == '1' && list.haltSales != '1'}}" class="nextP">
+                      <text class="red f20">限时抢票</text>
+                    </view>
+                  </view>
+                  <view class="booking tr">
+                    <view bindtap="haltSalesFn" wx:if="{{list.haltSales == '1'}}" class="selTicketBtn grayBtn mt6">停售</view>
+                    <view wx:elif="{{list.availableSeats == '0'}}" class="selTicketBtn grayBtn mt6">售罄</view>
+                  </view>
+                  <view class="{{list.startTFlag == 'moon' ? 'icon_moon':''}} {{list.startTFlag == 'sun' ? 'icon_sun':''}}"></view>
+                  <!--<view wx:if="{{list.startTnum < 19 && list.startTnum > 5}}" class="icon_sun"></view>
 										<view wx:elif="{{list.startTnum < 6 || list.startTnum > 18}}" class="icon_moon"></view>-->
-									</view>
-								</block>
-							</view>
-							<!-- <view class="stop" data-wordindex="id_{{index}}" data-index="{{index}}" data-flag="{{film.flag}}" bindtap="slideFn"></view> -->
-							<view class="stop" data-index="{{index}}" data-flag="{{film.flag}}" bindtap="slideFn"></view>
-						</view>
-					</view>
-					<!--sessionList end-->
-				</view>
-			</block>
-		</view>
-	<!-- </scroll-view> -->
-	<view wx:if="{{loadOverFlag}}" class='loadOver'>扯到底了</view>
+                </view>
+              </block>
+            </view>
+            <!-- <view class="stop" data-wordindex="id_{{index}}" data-index="{{index}}" data-flag="{{film.flag}}" bindtap="slideFn"></view> -->
+            <view class="stop" data-index="{{index}}" data-flag="{{film.flag}}" bindtap="slideFn"></view>
+          </view>
+        </view>
+        <!--sessionList end-->
+      </view>
+    </block>
+  </view>
+  <!-- </scroll-view> -->
+  <view wx:if="{{loadOverFlag}}" class='loadOver'>扯到底了</view>
 </view>

@@ -32,4 +32,11 @@
 .ciri{padding:60rpx 24rpx 25rpx 0;}
 .ciri_tab{width:74rpx;padding:3rpx 0 4rpx;font-size:14rpx;color:#fff;background:#76d2fd;text-align:center;border-radius:11rpx;position:absolute;left:0;top:25rpx;}
 .none{display:none;}
+/* 去掉默认滚动条 */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
 /* .loadOver{height:88rpx;line-height:88rpx;background:#f8f8f8;text-align:center;font-size:26rpx;color:#aaa;} */

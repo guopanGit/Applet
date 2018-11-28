@@ -1,4 +1,7 @@
 // pages/binding/binding.js
+import {
+  $showToast
+} from '../../utils/packaging.js';
 var app = getApp(),
   url = require('../../utils/url.js'),
   URL = url.getVerifyCode,
@@ -32,49 +35,29 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     vCode = wx.getStorageSync('CVersion');
     cinemaCode = wx.getStorageSync('cinemaCode');
     memberCode = wx.getStorageSync('memberCode');
-
-    // var that = this,
-
-    // if (memberPhone == ''){
-    //     wx.showToast({
-    //         title: '请输入手机号码！',
-    //     })
-    // }
-    //关闭转发按钮
     wx.hideShareMenu()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
     wx.setNavigationBarTitle({
       title: '绑定手机号',
     });
   },
 
   //获取用户输入的手机号
-  phoneChange: function (e) {
+  phoneChange: function(e) {
     phoneNum = e.detail.value;
-    // console.log(phoneNum);
-  },
-
-  //获取用户输入的验证码
-  codeChange: function (e) {
-    // var verifyCode = e.detail.value;
-
-    // this.setData({
-    //     verifyCode: verifyCode
-    // });
-
   },
 
   //点击获取验证码
-  getVerifyCodeFn: function (e) {
+  getVerifyCodeFn: function(e) {
     var the = this,
       memberPhone = phoneNum,
 
@@ -86,10 +69,7 @@ Page({
       };
 
     if (flag == false) {
-      wx.showToast({
-        title: '一分钟内禁止重复发送获取验证码',
-        icon: 'none'
-      });
+      $showToast('一分钟内禁止重复发送获取验证码')
       return false;
     }
 
@@ -101,7 +81,7 @@ Page({
         }
       });
 
-      setTimeout(function () {
+      setTimeout(function() {
         the.setData({
           toastItem: {
             toast_visible: !1
@@ -116,7 +96,7 @@ Page({
         }
       });
 
-      setTimeout(function () {
+      setTimeout(function() {
         the.setData({
           toastItem: {
             toast_visible: !1
@@ -130,7 +110,7 @@ Page({
       the.setData({
         time: time
       });
-      countSs = setInterval(function () {
+      countSs = setInterval(function() {
         ss--;
         if (ss < 0) {
           time = '重新获取验证码';
@@ -156,37 +136,29 @@ Page({
           'Content-Type': 'text/plain',
           'Accept': 'application/json'
         },
-        success: function (res) {
+        success: function(res) {
           console.log(res);
           verifyCode = res.data.resultData; //系统返回的验证码
           if (res.data.resultCode == 0) {
             if (verifyCode != '' && verifyCode != undefined) {
-              wx.showToast({
-                title: '发送成功',
-                icon: 'none'
-              });
+              $showToast('发送成功')
             }
           } else if (res.data.resultCode != 0) {
-            wx.showToast({
-              title: res.data.resultDesc,
-              icon: 'none'
-            });
+            $showToast(res.data.resultDesc)
           }
         },
-        fail: function (res) {
+        fail: function(res) {
           // console.log(res);
         },
-        complete: function (res) {
+        complete: function(res) {
           // console.log(res);
         }
       });
     }
-
-    //
   },
 
   //点击绑定手机号
-  bindPhoFn: function (e) {
+  bindPhoFn: function(e) {
     var formData = e.detail.value,
       memberPhone = formData.memberPhone,
       getVerifyCode = formData.verifyCode, //用户手动填写的验证码
@@ -194,14 +166,9 @@ Page({
       userInfo = wx.getStorageSync('userData');
     // deviceCode = '' + memberPhone
     if (getVerifyCode == '') {
-      wx.showToast({
-        title: '请输入验证码',
-        icon: 'none'
-      });
+      $showToast('请输入验证码')
     } else if (memberPhone == '' || memberPhone == undefined) {
-      wx.showToast({
-        title: '请输入手机号',
-      });
+      $showToast('请输入手机号')
     } else {
       var bindPhoPara = {
         'cinemaCode': cinemaCode,
@@ -227,7 +194,7 @@ Page({
       bindPhoPara.memberPhone = memberPhone;
       bindPhoPara.cinemaCode = cinemaCode;
       bindPhoPara.memberCode = memberCode;
-     
+
       wx.request({
         url: updateMemberPhone,
         method: 'GET',
@@ -236,42 +203,31 @@ Page({
           'Content-Type': 'text/plain',
           'Accept': 'application/json'
         },
-        success: function (res) {
+        success: function(res) {
           console.log(res)
-          if(res.data.resultCode != '0'){
-            wx.showToast({
-              title: res.data.resultDesc,
-              icon:'none'
-            });
+          if (res.data.resultCode != '0') {
+            $showToast(res.data.resultDesc)
             return false
           }
-
-
           wx.navigateBack({
-            delta:1
+            delta: 1
           });
         },
-        fail: function (res) {
+        fail: function(res) {
 
         },
-        complete: function () { }
+        complete: function() {}
       });
     }
   },
   //form reset
-  formReset: function () {
+  formReset: function() {
     // console.log('form发生了reset事件')
   },
 
   //页面隐藏
-  onHide: function () {
+  onHide: function() {
     clearInterval(countSs);
     flag = true;
   },
-
-  //页面展示
-  // onShow: function () {
-  //   phoneNum = phoneNum;
-
-  // }
 });

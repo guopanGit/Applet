@@ -1,4 +1,5 @@
 // pages/confirmOrder/chooseCard.js
+
 var url = require('../../utils/url.js'),
     getCardListUrl = url.getCardList,//获取卡列表接口
     selCardUrl = url.selCard, //从影票确认订单进来，点击选用卡，预支付接口
@@ -39,7 +40,7 @@ Page({
             OS = wx.getStorageSync('OS'),
             preCardCode = options.preCardCode;
 
-            console.log(options);
+            // console.log(options);
     
         orderNo = options.orderNo;
         orderType = options.orderType;
@@ -78,7 +79,7 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log(res);
+          // console.log(res);
           //debugger;
           var cardInfoData = res.data.resultData,
             list = [],

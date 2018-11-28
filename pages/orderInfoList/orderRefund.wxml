@@ -1,126 +1,133 @@
 <!--pages/orderInfoList/orderRefund.wxml-->
 <view class="container" wx:if="{{orderType == 1}}">
-    <view class="bodyBg">
-        <view class="whiteBg mt20 pt24">
-            <view class="orderNumInfo circle">
-                <view>订单号：{{info.orderNo}}</view>
-                <view class="mt20">下单时间：{{info.orderTime}}</view>
+  <view class="bodyBg">
+    <view class="whiteBg mt20 pt24">
+      <view class="orderNumInfo circle">
+        <view>订单号：{{info.orderNo}}</view>
+        <view class="mt20">下单时间：{{info.orderTime}}</view>
+      </view>
+      <view class="filmInfo">
+        <view class="flex">
+          <view class="filmImg">
+            <image class="fImage" src="{{info.filmPoster}}"></image>
+          </view>
+          <view class="flex_auto">
+            <view class="fTitle">{{info.filmName}}</view>
+            <view class="info">{{info.cinemaName}}</view>
+            <view class="info">
+              <text>{{info.hallName}}</text>
+              <text class="seat">{{info.seatInfo}}</text>
             </view>
-            <view class="filmInfo">
-                <view class="flex">
-                    <view class="filmImg">
-                        <image class="fImage" src="{{info.filmPoster}}"></image>
-                    </view>
-                    <view class="flex_auto">
-                        <view class="fTitle">{{info.filmName}}</view>
-                        <view class="info">{{info.cinemaName}}</view>
-                        <view class="info">
-                            <text>{{info.hallName}}</text>
-							<text class="seat">{{info.seatInfo}}</text>
-                            <!-- <block wx:for="{{info.seatInfo}}" wx:for-item="seat">
-                                <text class="seat">{{seat}}</text>
-                            </block> -->
-                        </view>
-                        <view class="info">{{info.showTime}}</view>
-                    </view>
-                </view>
-            </view>
-            <view class="hint">
-                实付：<text class="rad">¥{{info.actualPrice}}</text>
-            </view>
-            <view class="hint">
-                <text class="gray8d">申请退款时间：{{info.applyRefundTime}}</text>
-            </view>
-            <view class="hint">
-                <view class="flex">
-                    <text class="liTit">数量：</text><text class="flex_auto liNum">{{info.ticketNum}}张</text>
-                </view>
-            </view>
-            <view class="hint">
-                <view class="flex">
-                    <text class="liTit">退款金额：</text><text class="flex_auto liNum">¥{{info.actualPrice}}</text>
-                </view>
-            </view>
-            <view class="hint">
-                <view class="flex">
-                    <text class="liTit">退回账户：</text><text class="flex_auto liNum"></text>
-                    <!-- <text class="liTit">退回账户：</text><text class="flex_auto liNum">{{info.payType}}</text> -->
-                </view>
-            </view>
-            <!--退款信息-->
-            <view class="refundInfo">
-                <text class="leftBorder"></text>
-                <view class="infoLi">
-                    <text class="grayI"></text>
-                    <view class="liTitle">退款处理中</view>
-                    <view class="liP">您的申请已受理，我们正在为您紧急处理，请耐心等待。</view>
-                </view>
-                <view wx:if="{{info.orderState == '1302'}}" class="infoLi">
-                    <text class="greenI"></text>
-                    <view class="liTitle"><text class="green">退款成功</text></view>
-                    <view class="liP"><text class="green">恭喜您！购票金额已成功退回原支付账户，到账时间3-5个工作日，请以实际到账时间以准，请注意查收</text></view>
-                </view>
-                <view wx:elif="{{info.orderState == '1305'}}" class="infoLi">
+            <view class="info">{{info.showTime}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="hint">
+        实付：
+        <text class="rad">¥{{info.actualPrice}}</text>
+      </view>
+      <view class="hint">
+        <text class="gray8d">申请退款时间：{{info.applyRefundTime}}</text>
+      </view>
+      <view class="hint">
+        <view class="flex">
+          <text class="liTit">数量：</text>
+          <text class="flex_auto liNum">{{info.ticketNum}}张</text>
+        </view>
+      </view>
+      <view class="hint">
+        <view class="flex">
+          <text class="liTit">退款金额：</text>
+          <text class="flex_auto liNum">¥{{info.actualPrice}}</text>
+        </view>
+      </view>
+      <view class="hint">
+        <view class="flex">
+          <text class="liTit">退回账户：</text>
+          <text class="flex_auto liNum"></text>
+        </view>
+      </view>
+      <!--退款信息-->
+      <view class="refundInfo">
+        <text wx:if="{{info.orderState == '1503' || info.orderState == '1504'}}" class="leftBorder"></text>
+        <view class="infoLi">
+          <text class="grayI"></text>
+          <view class="liTitle">退款处理中</view>
+          <view class="liP">您的申请已受理，我们正在为您紧急处理，请耐心等待。</view>
+        </view>
+        <view wx:if="{{info.orderState == '1501'|| info.orderState == '1502'}}" class="infoLi">
+          <text class="greenI"></text>
+          <view class="liTitle">
+            <text class="green">退款成功</text>
+          </view>
+          <view class="liP">
+            <text class="green">恭喜您！购票金额已成功退回原支付账户，到账时间3-5个工作日，请以实际到账时间以准，请注意查收</text>
+          </view>
+        </view>
+        <!-- <view wx:elif="{{info.orderState == '1305'}}" class="infoLi">
                     <text class="radI"></text>
                     <view class="liTitle"><text class="rad">退款失败</text></view>
                     <view class="liP"><text class="rad">很抱歉，您的退款未能完成，请联系影城工作人员。</text></view>
-                </view>
-            </view>
-            <!--退款信息 end-->
-        </view>
+               </view> -->
+      </view>
+      <!--退款信息 end-->
     </view>
+  </view>
 </view>
 <view class="container" wx:if="{{orderType == 2}}">
   <view class="whiteBg mt20 pt24">
-            <view class="orderNumInfo circle">
-                <view>订单号：{{datas.orderCode}}</view>
-                <view class="mt20">下单时间：{{datas.createTime}}</view>
-            </view>
-            <view class="sellIs">
-            <block wx:for="{{datasList}}" wx:for-item="detil">
-                <view class="sell {{index > 0 ? 'mt20':''}}">{{detil.sellName}} X {{detil.sellCount}}</view>
-            </block>
-            </view>
-            <view class="hint">
-                实付：<text class="rad">¥{{datas.realPrice / 100}}</text>
-            </view>
-            <view class="hint">
-                <text class="gray8d">申请退款时间：</text><text class="flex_auto liNum">¥{{datas.applyRefundTime}}</text>
-            </view>
-            <!--<view class="hint">
-                <view class="flex">
-                    <text class="liTit">数量：</text><text class="flex_auto liNum">{{info.ticketNum}}张</text>
-                </view>
-            </view>-->
-            <view class="hint">
-                <view class="flex">
-                    <text class="liTit">退款金额：</text><text class="flex_auto liNum">¥{{datas.realPrice / 100}}</text>
-                </view>
-            </view>
-            <view class="hint">
-                <view class="flex">
-                    <text class="liTit">退回账户：</text><text class="flex_auto liNum">{{datas.payType}}</text>
-                </view>
-            </view>
-            <!--退款信息-->
-            <view class="refundInfo">
-                <text class="leftBorder"></text>
-                <view class="infoLi">
-                    <text class="grayI"></text>
-                    <view class="liTitle">退款处理中</view>
-                    <view class="liP">您的申请已受理，我们正在为您紧急处理，请耐心等待。</view>
-                </view>
-                <view wx:if="{{datas.orderState == '1302'}}" class="infoLi">
-                    <text class="greenI"></text>
-                    <view class="liTitle"><text class="green">退款成功</text></view>
-                    <view class="liP"><text class="green">恭喜您！购票金额已成功退回原支付账户，到账时间3-5个工作日，请以实际到账时间以准，请注意查收</text></view>
-                </view>
-                <view wx:elif="{{datas.orderState == '1305'}}" class="infoLi">
+    <view class="orderNumInfo circle">
+      <view>订单号：{{datas.orderCode}}</view>
+      <view class="mt20">下单时间：{{datas.createTime}}</view>
+    </view>
+    <view class="sellIs">
+      <block wx:for="{{datasList}}" wx:for-item="detil">
+        <view class="sell {{index > 0 ? 'mt20':''}}">{{detil.sellName}} X {{detil.sellCount}}</view>
+      </block>
+    </view>
+    <view class="hint">
+      实付：
+      <text class="rad">¥{{datas.realPrice / 100}}</text>
+    </view>
+    <view class="hint">
+      <text class="gray8d">申请退款时间：</text>
+      <text class="flex_auto liNum">¥{{datas.applyRefundTime}}</text>
+    </view>
+    <view class="hint">
+      <view class="flex">
+        <text class="liTit">退款金额：</text>
+        <text class="flex_auto liNum">¥{{datas.realPrice / 100}}</text>
+      </view>
+    </view>
+    <view class="hint">
+      <view class="flex">
+        <text class="liTit">退回账户：</text>
+        <text class="flex_auto liNum">{{datas.payType}}</text>
+      </view>
+    </view>
+    <!--退款信息-->
+    <view class="refundInfo">
+      <text wx:if="{{datas.orderState == '1501' || datas.orderState == '1502'}}" class="leftBorder"></text>
+      <view class="infoLi">
+        <text class="grayI"></text>
+        <view class="liTitle">退款处理中</view>
+        <view class="liP">您的申请已受理，我们正在为您紧急处理，请耐心等待。</view>
+      </view>     
+      <view wx:if="{{datas.orderState == '1501'|| datas.orderState == '1502'}}" class="infoLi">       
+        <text class="greenI"></text>
+        <view class="liTitle">
+          <text class="green">退款成功</text>
+        </view>
+        <view class="liP">
+          <text class="green">恭喜您！购票金额已成功退回原支付账户，到账时间3-5个工作日，请以实际到账时间以准，请注意查收</text>
+        </view>
+      </view>
+      <!-- <view wx:elif="{{datas.orderState == '1305'}}" class="infoLi">
                     <text class="radI"></text>
                     <view class="liTitle"><text class="rad">退款失败</text></view>
                     <view class="liP"><text class="rad">很抱歉，您的退款未能完成，请联系影城工作人员。</text></view>
-                </view>
-            </view>
-            <!--退款信息 end-->
-        </view>
+                </view> -->
+    </view>
+    <!--退款信息 end-->
+  </view>
 </view>

@@ -1,0 +1,23 @@
+<!--pages/recharge/Card-Order/Card-Order.wxml-->
+<view>
+  <block wx:if="{{isSucceed}}">
+    <view class='img-warp'>
+      <image class='image' src="../../../image/succeed.png"></image>
+			<text class='recharg'>充值成功</text>
+    </view>
+			<view class='btn-warp'>
+			 <button class='go-btn' hover-class="gradientBtn02_hover" bindtap='cardList'>查看我的会员卡</button>
+			</view>
+  </block>
+  <block wx:else>
+    <view class='img-warp'>
+      <image class='image' src="../../../image/defeated.png"></image>
+      <text class='recharg'>充值失败</text>
+    </view>
+    <view class='separate'></view>
+    <view class='text-warp'>
+      <text class='txt'>金额会在3-15个工作日内退还到您原支付账户\n</text>
+      <text class='txt'>如有问题请联系影城工作人员</text>
+    </view>
+  </block>
+</view>

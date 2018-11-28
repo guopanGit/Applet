@@ -13,6 +13,9 @@ page{background:#fff;}
 .pl20{padding-left:20rpx;}
 .sells{padding:30rpx 24rpx;}
 .mt20{margin-top:20rpx;}
+.red {
+  color: #f6553c;
+}
 .sell{font-size:26rpx;}
 .border{height:20rpx;background-color:#f1f1f1;}
 .phoneNum{padding:0 48rpx 0 24rpx;height:84rpx;line-height:84rpx;font-size:26rpx;border-bottom:1rpx solid #e4e4e4}
@@ -32,11 +35,34 @@ page{background:#fff;}
 .tagsN{margin-left:14rpx;}
 .cRad{color:#f6553c;}
 /*  account detail window  */
-.maskLayer{position:fixed;left:0;right:0;top:0;bottom:0;z-index:91;background:rgba(0,0,0, .6)}
+.maskLayer{position:fixed;left:0;right:0;top:0;bottom:0;z-index:87;background:rgba(0,0,0, .6)}
+/* .maskLayer1{z-index: 98} */
 .layer{z-index:100}
 .accDetails{position:fixed;left:0;right:0;bottom:0;z-index:95;}
 .ditailWrapper{position: absolute;left:0;right:0;bottom:168rpx;background:#fff;}
+.ditailWrappers{bottom: 0;z-index: 99;}
 .detailTitle{height:86rpx;line-height:86rpx;text-align:center;font-size:30rpx;color:#333;border-bottom:1rpx solid #e7eaed;}
+.distribution-text{
+	margin-left: 100rpx;
+}
 .detailP{line-height:34rpx;color:#333;font-size:26rpx;}
 .bt{border-top:1rpx solid #e7eaed;}
 .phoneNum1{padding-right: 24rpx;}
+.tui-fr{float: right}
+/*swtich整体大小及背景色*/
+.wx-switch-input{width: 82rpx !important;height: 36rpx !important;}
+/*白色样式（false的样式）*/
+.wx-switch-input::before{ width:80rpx !important;height: 36rpx !important;}
+/*绿色样式（true的样式）*/
+.wx-switch-input::after{width: 40rpx !important;height: 36rpx !important;}
+/*输入框*/
+.input{float: right;height: 40rpx!important;width: 550rpx!important;margin-top: 20rpx; }
+.btn{ width: 86rpx;height: 86rpx;line-height:86rpx;font-size:30rpx;padding: 0 20rpx;}
+.fr{float: right;}
+.blue{color: #3c94f6}
+.white{
+  background-color: #fff;
+}
+.t-150{
+	top: -190rpx;
+}

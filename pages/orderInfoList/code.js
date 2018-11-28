@@ -22,8 +22,10 @@ Page({
       flag = opt.flag,
       url = opt.url,
       codeUrl;
+		let cinemaCode = '33018111' || '37063101' || '22021301' || '23012881' || '23060111' || '23050668' || '23050668' || '41073801' || '21130401' || '37157011' || '37037291' || '21015601' || '37037171' || '51010802';
+   
     // 根据影城 cinemaCode 修改取票码 
-    if (opt.cinemaCode == '33018111' || opt.cinemaCode == '37063101') {
+    if (cinemaCode) {
       var url = opt.url;
       url = url.split(",").join("|")
       // console.log(ticketNo1)  

@@ -19,6 +19,8 @@ Page({
      * 页面的初始数据
      */
     data: {
+      sendFlag:0,
+			isChecked:Boolean
     },
 
     /**
@@ -27,20 +29,26 @@ Page({
     onLoad: function (options) {
         //关闭转发按钮
         wx.hideShareMenu();
-    
+				console.log(options)
         var that = this,
             opt = options,
             sellCode = opt.sellCode,
             goodsFlag = false;
         orderNo = opt.orderNo;
+			if (opt.isChecked) {
+				var sendFlag = opt.sendFlag,
+					isChecked = opt.isChecked;
+			} else {
+				var sendFlag = '',
+					isChecked = '';
+			}
         if (sellCode == 'goods') {
             goodsFlag = true;
         }
-
-        
-
-        
-        
+        that.setData({
+          sendFlag,
+					isChecked
+        })        
         member = wx.getStorageSync('member');
         memberCode = member.memberCode;
         cinemaCode = wx.getStorageSync('cinemaCode');
@@ -130,13 +138,19 @@ Page({
     goTopage: function(){
       var that = this,
           orderNo = this.data.orderNo,
+        sendFlag = that.data.sendFlag,
+				isChecked = that.data.isChecked,
           url='';
+			console.log(sendFlag,isChecked)
       if (!that.data.goodsFlag) {
         url = '../orderInfoList/orderInfoList?orderNo=' + orderNo + '&orderType=1'
       } else {
         url = '../orderInfoList/orderInfoList?orderNo=' + orderNo + '&orderType=2'
-      }
-      
+      }    
+			if (sendFlag == '1' && isChecked == 'true' ) {
+				console.log('44444')
+        url = '../orderInfoList/goodsOrders?orderNo=' + orderNo + '&orderType=4'
+      } 
       wx.navigateTo({
         url: url
       });

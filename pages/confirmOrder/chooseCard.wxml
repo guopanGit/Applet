@@ -9,7 +9,7 @@
 <view wx:else class='container'>
     <view class='noUseCard' bindtap='noCardFn'>不使用会员卡<text class='radioObj'></text></view>
     <view class='cardList choosePage'>
-        <block wx:for="{{cardlist}}" wx:for-index="cardIndex" wx:for-item="card">
+        <block wx:for="{{cardlist}}" wx:for-index="cardIndex" wx:for-item="card" wx:key='key'>
             <!-- 储值卡 -->
             <view wx:if="{{card.cardType == 1}}" class="card {{card.expire =='0' ? 'cyellowBg' : 'BeOverdue'}} {{cardIndex == 0 ? 'mt20' : ''}}" data-cardcode='{{card.cardCode}}' data-cardname='{{card.cardName}}' data-cardtype="{{card.cardType}}" bindtap="{{card.expire =='0' ? 'selectCardFn' : ''}}">
                 <view class='tr' data-index='{{cardIndex}}'>
@@ -36,10 +36,10 @@
                 <view  class="selectedOne {{card.sub == 1 ? 'selCur' : ''}}"></view>
             </view>
             <!-- 来自绑定的卡 -->
-            <view wx:if="{{card.cardType == '10' || card.cardType == '11'}}" class="card cpinkBg" bindtap="{{card.expire =='0' ? 'selectCardFn' : ''}}" data-cardcode='{{card.cardCode}}' data-cardtype="{{card.cardType}}"  data-cardname='{{card.cardName}}'>
+            <view wx:if="{{card.cardType == '10' || card.cardType == '11'}}" class="card white cpinkBg" bindtap="{{card.expire =='0' ? 'selectCardFn' : ''}}" data-cardcode='{{card.cardCode}}' data-cardtype="{{card.cardType}}"  data-cardname='{{card.cardName}}'>
                 <view class='cardTitle' data-index='{{cardIndex}}'>
                     <text>实体卡</text>
-                    <view class='cardtag  pinkT'>{{card.cardTypeName}}</view>
+                    <view class='cardtag mt15 white'>{{card.cardTypeName}}</view>
                 </view>
                 <view class='aboutMoney '>{{card.thePrice}}<text class='f30'>元</text></view>
                 <!-- <view class='deadline pinkC'>卡号24227162712616</view>  -->

@@ -75,7 +75,6 @@ ajaxFn: function () {
         'Accept': 'application/json'
       },
       success: function (res) {
-      // console.log(res ,'___________');
         var data = res.data.resultData,
             seatInfo = data.seatInfo,
          cinemaNamenew = data.cinemaName,
@@ -87,18 +86,14 @@ ajaxFn: function () {
           cinemaCode
         })
         ticketNo = ticketNo.split(',');
-        //  console.log(ticketNo)
+				let cinemaCode1 = '33018111' || '37063101' || '22021301' || '23012881' || '23060111' || '23050668' || '23050668' || '41073801' || '21130401' || '37157011' || '37037291' || '21015601' || '37037171' || '51010802';
         // 根据影城 cinemaCode 修改取票码 
         if (data.cinemaCode == '11051181') {
-          var ticketNo1 = data.ticketNo;
-          //  ticketNo1 = ticketNo1.replace(/\,/g, "")
-          ticketNo1 = ticketNo1.split(",").join("")
-         // console.log(ticketNo1);
-        } else if (data.cinemaCode == '33018111' || data.cinemaCode == '37063101'){
-          var ticketNo1 = data.ticketNo;
-          //  ticketNo1 = ticketNo1.replace(/\,/g, "")
-          ticketNo1 = ticketNo1.split(",").join("|")
-          // console.log(ticketNo1)  
+          var ticketNo1 = data.ticketNo;         
+          ticketNo1 = ticketNo1.split(",").join("")        
+        } else if (cinemaCode1){
+          var ticketNo1 = data.ticketNo;          
+          ticketNo1 = ticketNo1.split(",").join("|")           
         } else {
           var ticketNo1 = data.ticketNo;
         }
@@ -246,7 +241,17 @@ ajaxFn: function () {
                 'Accept': 'application/json'
               },
               success: function (res) {
-               //  console.log(res);
+                // console.log(res);
+                if (res.data.resultCode == 500){
+                  wx.showModal({
+                    title:'',
+                    content: res.data.resultDesc,
+                    showCancel:false,
+                    confirmText:'我知道了',
+                    confirmColor:'#f56448',
+                  });
+                  return false
+                }
                 var queryString = refundpara.orderNo;
                 orderRefundUrl = 'orderRefund?orderNo=' + queryString +'&orderType=1';
 

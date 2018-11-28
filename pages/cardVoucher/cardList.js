@@ -63,49 +63,49 @@ Page({
         'Content-Type': 'text/plain',
         'Accept': 'application/json'
       },
-      success: function (res) {
+			success: function (res) {
+				wx.hideLoading();
+				console.log(res, "卡列表");
+				var cardInfoData = res.data.resultData,
+					hasNext = '',
+					cardLen = cardInfoData.orders.length;
+				if (cardInfoData.hasNext != undefined) {
+					hasNext = cardInfoData.hasNext
+				};
+				for (var i = 0; i < cardInfoData.orders.length; i++) {
+					if (cardInfoData.orders[i].cardType == 2) {
+						cardInfoData.orders[i].cardComments = cardInfoData.orders[i].cardComments;
+					} else if (cardInfoData.orders[i].cardType == 1 || cardInfoData.orders[i].cardType == 10 || cardInfoData.orders[i].cardType == 11) {
+						cardInfoData.orders[i].cardComments = cardInfoData.orders[i].cardComments.substr(6).replace("元", "");
+					}
+					// if (cardInfoData.orders[i].limitTime == "" || cardInfoData.orders[i].limitTime == undefined) {
+					//   cardInfoData.orders[i].limitTime = "永久有效";
+					// }
 
-        console.log(res, "卡列表");
-        var cardInfoData = res.data.resultData,
-            hasNext = '',
-            cardLen = cardInfoData.orders.length;
-        if (cardInfoData.hasNext != undefined){
-            hasNext = cardInfoData.hasNext
-        };
-        for (var i = 0; i < cardInfoData.orders.length; i++) {
-          if (cardInfoData.orders[i].cardType == 2) {
-            cardInfoData.orders[i].cardComments = cardInfoData.orders[i].cardComments;
-          } else if (cardInfoData.orders[i].cardType == 1 || cardInfoData.orders[i].cardType == 10 || cardInfoData.orders[i].cardType == 11) {
-            cardInfoData.orders[i].cardComments = cardInfoData.orders[i].cardComments.substr(6).replace("元", "");
-          }
-          // if (cardInfoData.orders[i].limitTime == "" || cardInfoData.orders[i].limitTime == undefined) {
-          //   cardInfoData.orders[i].limitTime = "永久有效";
-          // }
-         
-        }
-        if (pageNo == 1) {
-          
-          self.setData({
-            cardlist: cardInfoData.orders,
-            hasNext: hasNext,
-            cardLen: cardLen
-          });
-          
-        }
+				}
+				if (pageNo == 1) {
 
-        
-        if (pageNo > 1) {
-          console.log(pageNo)
-          var arr = self.data.cardlist;
-          for (var i = 0; i < cardInfoData.orders.length; i++) {
-            arr.push(cardInfoData.orders[i]);
-          }
-          self.setData({
-            cardlist: arr,
-            hasNext: hasNext
-          });
-        }
-      }
+					self.setData({
+						cardlist: cardInfoData.orders,
+						hasNext: hasNext,
+						cardLen: cardLen
+					});
+
+				}
+
+
+				if (pageNo > 1) {
+					console.log(pageNo)
+					var arr = self.data.cardlist;
+					for (var i = 0; i < cardInfoData.orders.length; i++) {
+						arr.push(cardInfoData.orders[i]);
+					}
+					self.setData({
+						cardlist: arr,
+						hasNext: hasNext
+					});
+				}
+			}
     });
   },
 
@@ -149,12 +149,13 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-   //  this.ajaxFn();
-    // dbClickFlag = true
-    // var time = util.formatTime(new Date());
-    // console.log(time)
-  },
+	onShow() {
+		wx.showLoading({
+			title: '',
+			mask: true
+		})
+		this.onLoad();
+	},
 
   /**
    * 生命周期函数--监听页面隐藏

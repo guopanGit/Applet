@@ -34,9 +34,8 @@ Page({
     orderTimeOut1: '',
     hide: null,
     show: null,
-    setTime1: null,
     on: 1,
-    flag:1
+    flag: 1
   },
 
   onLoad: function() {
@@ -71,11 +70,6 @@ Page({
     wx.setNavigationBarTitle({
       title: '我的订单'
     });
-    if (this.data.page == 1) {
-      this.ajaxFn();
-    } else if (this.data.page == 0) {
-      this.getGoodsListFn()
-    };
   },
   //切换分类导航
   changeNav: function(e) {
@@ -115,8 +109,6 @@ Page({
         'Accept': 'application/json'
       },
       success: function(res) {
-         console.log(res);
-        // console.log(that.data.orders);
         if (res.data.resultCode != 0) {
           return false;
         }
@@ -127,35 +119,16 @@ Page({
         if (data == null) {
           return false;
         }
-        if (data.orders == undefined || data.orders.length != 0) {
-          // console.log(data)
-         var times1 = MillisecondToDate(data.orders[0].orderTimeOut);
-        that.setData({
-          orderTimeOut1: times1
-        });
+				// console.log(data)
+        if (data.orders == undefined || data.orders.length != 0) {          
+          var times1 = MillisecondToDate(data.orders[0].orderTimeOut);
+          that.setData({
+            orderTimeOut1: times1
+          });
         }
-        // if (data.orders == undefined || data.orders.length == 0) {
-        //     that.setData({
-        //       noOrder: true
-        //     });
-        //   } else {
-        //     that.setData({
-        //       toastItem: {
-        //         text: '订单已加载完毕！',
-        //         toast_visible: !0
-        //       }
-        //     });
 
-        //     setTimeout(function () {
-        //       that.setData({
-        //         toastItem: {
-        //           toast_visible: !1
-        //         }
-        //       });
-        //     }, 2000);
-        //   }
         for (var i = 0, len = data.orders.length; i < len; i++) {
-          data.orders[i].filmName = data.orders[i].filmName.slice(0, 12) + '...';
+          data.orders[i].filmName = data.orders[i].filmName.slice(0, 12);
         }
         for (var i = 0, len = data.orders.length; i < len; i++) {
           data.orders[i].filmPosterNew = data.orders[i].filmPosterNew.replace("?x-oss-process=image/format,jpg", "");
@@ -163,17 +136,30 @@ Page({
 
           // 
           if (data.orders[i].orderState == '1000') { //未支付订单
-            data.orders[i].detailsUrl = '../confirmOrder/confirmOrder?orderNo=' + data.orders[i].orderNo + '&orderType=1';
-
+						if (data.orders[i].orderType == 4){
+							data.orders[i].detailsUrl = '../orderInfoList/goodsOrders?orderNo=' + data.orders[i].orderNo + '&orderType=' + data.order[i].orderType;
+					}else{
+							data.orders[i].detailsUrl = '../confirmOrder/confirmOrder?orderNo=' + data.orders[i].orderNo + '&orderType=1';
+					}        
           } else if (data.orders[i].orderState == '1002') { //出票失败
-            data.orders[i].detailsUrl = '../orderInfoList/failureTickte?orderNo=' + data.orders[i].orderNo + '&orderType=1';
-          } else if (data.orders[i].orderState == '1302' || data.orders[i].orderState == '1305') { //退款订单
-            data.orders[i].detailsUrl = '../orderInfoList/orderRefund?orderNo=' + data.orders[i].orderNo + '&orderType=1';
-
+						if (data.orders[i].orderType == 4) {
+							data.orders[i].detailsUrl = '../orderInfoList/goodsOrders?orderNo=' + data.orders[i].orderNo + '&orderType=' + data.order[i].orderType;
+					}else{
+							data.orders[i].detailsUrl = '../orderInfoList/failureTickte?orderNo=' + data.orders[i].orderNo + '&orderType=1';
+					}            
+          } else if (data.orders[i].orderState == '1501' || data.orders[i].orderState == '1503' || data.orders[i].orderState == '1305') { //退款订单 
+						if (data.orders[i].orderType == 4) {
+							data.orders[i].detailsUrl = '../orderInfoList/goodsOrders?orderNo=' + data.orders[i].orderNo + '&orderType=' + data.order[i].orderType;
+					}else{
+							data.orders[i].detailsUrl = '../orderInfoList/orderRefund?orderNo=' + data.orders[i].orderNo + '&orderType=1';
+					}         
           } else if (data.orders[i].orderState == '1001') { //正常完成订单
-            data.orders[i].detailsUrl = '../orderInfoList/orderInfoList?orderNo=' + data.orders[i].orderNo + '&orderType=1';
-          }
-
+						if (data.orders[i].orderType == 4) {
+							data.orders[i].detailsUrl = '../orderInfoList/goodsOrders?orderNo=' + data.orders[i].orderNo + '&orderType=' + data.order[i].orderType;
+						} else {
+							data.orders[i].detailsUrl = '../orderInfoList/orderInfoList?orderNo=' + data.orders[i].orderNo + '&orderType=1';
+						}       
+           }
           if (data.orders[i].orderTimeOut > 0) {
             times = MillisecondToDate(data.orders[i].orderTimeOut);
             data.orders[i].orderTimeOut = times;
@@ -228,6 +214,14 @@ Page({
         'Accept': 'application/json'
       },
       success: function(res) {
+        // console.log(res);
+				if (res.data.resultDesc == "网络异常"){
+					wx.showToast({
+						title: '网络异常',
+						icon: 'none',
+						duration: 2000
+					})
+				}
         var goodsData = res.data.resultData,
           hasNext = goodsData.hasNext;
         if (pageNo == 1) {
@@ -253,7 +247,7 @@ Page({
             for (var j = 0; j < goodsData.sellOrders[i].sellRecords.length; j++) {
               if (j == 0) {
                 goodName = goodName + goodsData.sellOrders[i].sellRecords[j].sellName;
-                //console.log(goodsData.sellOrders[i].sellRecords[j].sellName);
+                // console.log(goodsData.sellOrders[i].sellRecords[j].sellName);
               } else {
                 goodName = goodName + ' + ' + goodsData.sellOrders[i].sellRecords[j].sellName;
               }
@@ -272,15 +266,18 @@ Page({
             goodsData.sellOrders[i].sellRecords[0].goodImg = goodsData.sellOrders[i].sellRecords[0].goodImgNew + "?x-oss-process=image/resize,m_fill,h_140,w_140,limit_0";
           };
           //订单状态处理
+
           if (goodsData.sellOrders[i].orderState == '1000') {
             goodsData.sellOrders[i].detailsUrl = '../confirmOrder/goodsConfirmOrder?orderNo=' + goodsData.sellOrders[i].orderCode;
           } else if (goodsData.sellOrders[i].orderState == '1002') { //出票失败
             goodsData.sellOrders[i].detailsUrl = '../orderInfoList/failureTickte?orderNo=' + goodsData.sellOrders[i].orderCode + '&orderType= 2'; // + goodsData.sellOrders[i].orderType;
-          } else if (goodsData.sellOrders[i].orderState == '1302' || goodsData.sellOrders[i].orderState == '1305') { //退款订单
+          } else if (goodsData.sellOrders[i].orderState == '1501' || goodsData.sellOrders[i].orderState == '1503') { //退款订单 测试 
             goodsData.sellOrders[i].detailsUrl = '../orderInfoList/orderRefund?orderNo=' + goodsData.sellOrders[i].orderCode + '&orderType= 2'; // + goodsData.sellOrders[i].orderType;
-
           } else { //正常完成订单
             goodsData.sellOrders[i].detailsUrl = '../orderInfoList/orderInfoList?orderNo=' + goodsData.sellOrders[i].orderCode + '&orderType= 2'; // + goodsOrders[i].orderType;
+          }
+					if (goodsData.sellOrders[i].orderType == 4 && goodsData.sellOrders[i].orderState != '1000') {
+            goodsData.sellOrders[i].detailsUrl = '../orderInfoList/goodsOrders?orderNo=' + goodsData.sellOrders[i].orderCode;
           }
         }
         if (pageNo == 1) {
@@ -304,14 +301,10 @@ Page({
 
   },
   goToOrderInfo: function(e) {
+    // console.log(e)
     var target = e.currentTarget.dataset,
       url = target.detailurl;
-
-
     this.go(e, url);
-    // console.log("1234567894564156156")
-    // console.log(target)
-    // console.log(url)
   },
 
   //剩余支付时间，倒计时
@@ -354,12 +347,8 @@ Page({
         } else {
           hideWin1: true
         }
-
-      }
-      // console.log(order)
-     var orderTimeOut = minute + '分' + second + '秒';
-      // $("#countDown").text(minute + '分' + second + '秒');
-
+      }    
+      var orderTimeOut = minute + '分' + second + '秒'; 
       that.setData({
         orderTimeOut
       });
@@ -367,47 +356,8 @@ Page({
     that.setData({
       setTime
     })
-    // setTimeout(function() {
-    //   that.setData({
-    //     orderTimeOut1: that.data.orderTimeOut
-    //   })
-    // }, 1000)
-    // console.log(that.data.orderTimeOut1)
   },
-
-
-  //退出登录
-  // logoutFn:function() {
-  //     var url = '../home/index';
-  //     try{
-  //         wx.removeStorageSync('member');
-  //         wx.removeStorageSync('userData');
-  //         wx.showToast({
-  //             title: '退出成功',
-  //         });
-  //         wx.redirectTo({
-  //             url: url,
-  //         });
-  //     } catch(e) {
-  //         wx.showToast({
-  //             title: '退出失败！',
-  //         });
-  //     }
-
-  //     // wx.setStorageSync('member', '');
-
-  // },
-
-  //回到首页
-  // goHome: function(e){
-  //     var url = '../home/index';
-  //     // wx.redirectTo({
-  //     //     url: url,
-  //     // })
-  //     wx.switchTab({
-  //         url: url
-  //     })
-  // },
+  
   refundRule: function(e) {
     var url = 'rule';
     wx.navigateTo({
@@ -421,20 +371,7 @@ Page({
       url: url
     });
   },
-  //下拉刷新
-  onPullDownRefresh: function() {
-    // this.ajaxFn();
-    // this.setData({
-    //     orders: []
-    //   // });
-    //   var _this = this;
 
-    //   setTimeout(function(){
-    //     clearInterval(_this.data.setTime1);
-    //     _this.onShow();
-    //   },2000)
-    //   wx.stopPullDownRefresh();
-  },
   // 页面上拉触底事件的处理函数
   onReachBottom: function() {
     var pageNo = this.data.pageNo;
@@ -451,71 +388,50 @@ Page({
     }
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  // onShareAppMessage: function (res) {
-  //     var that = this;
+  flag: function(e) {
+    this.setData({
+      on: 2
+    })
+  },
 
-  //     return {
-  //         title: '订单列表',
-  //         path: 'pages/my/my',
-  //         success: function (res) {
-  //             // 转发成功
-  //         },
-  //         fail: function (res) {
-  //             // 转发失败
-  //         }
-  //     }
-
-  // },
-flag:function(e){
-  this.setData({
-    on:2
-  })
-},
+  /*
+  生命周期函数--监听页面显示
+  */
   onShow: function() {
-    wx.showLoading({
-      title: '加载中...',
-      mask: true,
-      success: function(res) {}
-    })
-    var thah = this,
-    flag = thah.data.flag;
-    thah.setData({
-      orderTimeOut1:''
-    })
-    if(flag == 1){
-      thah.setData({
-        flag: 2
-      })
-      if (thah.data.page == 1) {
-        thah.ajaxFn();
-      } else if (thah.data.page == 0) {
-        thah.getGoodsListFn()
-      };
-      setTimeout(function () {
-        // 页面显示计时结束 并读取计时开始的时间
-        var show = new Date().getTime(),
-          hide = thah.data.hide,
-          on = thah.data.on;
-        // console.log(on)
-        if (hide == null) {
-          show = 0
+    var _that = this,
+      pageNo = _that.data.pageNo;
+    orderListPara.pageNo = pageNo;
+    var show = new Date().getTime(),
+      hide = _that.data.hide,
+      on = _that.data.on;
+    if (hide == null) {
+      show = 0
+    }
+    if (on == 2) {
+      show = 0;
+      hide = 0;
+    }
+    let Millisecond = show - hide;
+    wx.request({
+      url: orderListUrl,
+      method: 'GET',
+      data: orderListPara,
+      header: {
+        'Content-Type': 'text/plain',
+        'Accept': 'application/json'
+      },
+      success: function(res) {
+        // console.log(res);
+        if (res.data.resultData.orders.length == 0) {
+          return false
         }
-        if (on == 2) {
-          show = 0;
-          hide = 0;
-        }
-        // console.log(show)
-        var Millisecond = show - hide;
+        let orderTimeOut = res.data.resultData.orders[0].orderTimeOut;
+        orderTimeOut = MillisecondToDate(orderTimeOut)
         //  格式化时间
-        var minutes = parseInt((Millisecond % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = (Millisecond % (1000 * 60)) / 1000;
+        let minutes = parseInt((Millisecond % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = (Millisecond % (1000 * 60)) / 1000;
         seconds = Math.floor(seconds);
-        var orderTimeOut2 = thah.data.orderTimeOut1;
-        // console.log(Millisecond, minutes, seconds)
-        var t1 = orderTimeOut2.substring(0, orderTimeOut2.length - 1).split('分'),
+        var t1 = orderTimeOut.substring(0, orderTimeOut.length - 1).split('分'),
           minute = t1[0],
           second = t1[1];
         minute = minute - minutes;
@@ -527,12 +443,10 @@ flag:function(e){
         if (second < 0) {
           second = 0
         }
-
         var setTime1 = setInterval(function () {
           second--;
           if (second == -1) {
             minute--;
-
             if (minute == -1) {
               clearInterval(setTime1);
               minute = 0;
@@ -542,34 +456,25 @@ flag:function(e){
             }
             if (minute <= 0 && second <= 0) {
               clearInterval(setTime1);
+              // 关闭页面
+              wx.switchTab({
+                url: '../home/index'
+              });
             }
           }
           var orderTimeOut = minute + '分' + second + '秒';
-          thah.setData({
+          _that.setData({
             orderTimeOut1: orderTimeOut,
             setTime1
           });
-
         }, 1000);
-        wx.hideLoading();
-        thah.countDownFn(orderTimeOut2);
-
-      }, 2000);
-      setTimeout(function () {
-        thah.setData({
-          on: 1
-        });
-        // console.log(thah.data.orderTimeOut1)
-      }, 3000)
-    } else{
-      if (thah.data.page == 1) {
-        thah.ajaxFn();
-      } else if (thah.data.page == 0) {
-        thah.getGoodsListFn()
-      };
-      return false
-    }
-    
+      }
+    });
+    if (_that.data.page == 1) {
+      _that.ajaxFn();
+    } else if (_that.data.page == 0) {
+      _that.getGoodsListFn()
+    };
   },
   onHide: function() {
     clearInterval(this.data.setTime1);

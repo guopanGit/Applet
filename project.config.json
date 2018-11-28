@@ -6,12 +6,14 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"nodeModules": false
+		"nodeModules": false,
+		"autoAudits": false,
+		"uglifyFileName": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.8",
-	"appid": "wx1a3677d9e646f424",
-	"projectname": "%E4%B8%AD%E7%8E%AF%E5%BD%B1%E5%9F%8E",
+	"libVersion": "2.2.5",
+	"appid": "wxd35ffbbf1bf027fe",
+	"projectname": "%E6%81%A9%E5%BE%AE%E5%BD%B1%E4%B8%9A",
 	"scripts": {
 		"beforeCompile": "",
 		"beforePreview": "",
@@ -35,14 +37,8 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
-			"list": [
-				{
-					"id": -1,
-					"name": "1",
-					"pathName": "pages/Binding/binding"
-				}
-			]
+			"current": -1,
+			"list": []
 		}
 	}
 }

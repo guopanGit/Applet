@@ -41,7 +41,7 @@
         <view class="ptTitle">剧照</view>
         <view wx:if="{{items.stagePhoto.length == 0}}" class="nophoto">暂无剧照信息，敬请期待</view>
         <view wx:else class="photos">
-            <block wx:for="{{items.filmImgNew}}" wx:for-item="img">
+            <block wx:for="{{items.filmImgNew}}" wx:for-item="img"  wx:key="key">
                 <view class="imgLi" bindtap="showLargeImg" data-index="{{index}}"><image class="filmPhoto" src="{{img}}"></image></view>
             </block>
         </view>
@@ -53,7 +53,7 @@
     </view>
     <view class="largetBox" hidden="{{largeFlag}}">
         <swiper class="largeSwiper" current="{{curIndex}}">
-            <block wx:for="{{items.filmImgNew}}" wx:for-item="largeImg">
+            <block wx:for="{{items.filmImgNew}}" wx:for-item="largeImg"  wx:key="key">
                 <swiper-item class="imgItem" bindtap="closeLargeWin">
                     <image class="largeImg" src="{{largeImg}}" mode="widthFix"></image>
                 </swiper-item>

@@ -18,7 +18,7 @@
             <text class="selectCity" bindtap="showList">{{cityName}}</text>
         </view>
     </view>
-    <block wx:for="{{cinemaList}}" wx:for-item="cinema" wx:for-index="c_index">
+    <block wx:for="{{cinemaList}}" wx:for-item="cinema" wx:for-index="c_index" wx:key="key">
         <view class="cinemaList" bindtap="selCinema" data-index="c_index" data-cinemaCode="{{cinema.cinemaCode}}" data-cinemaName="{{cinema.cinemaName}}">
             <view class="cinemaName">{{cinema.cinemaName}}</view>
             <view class="adress">
@@ -39,9 +39,9 @@
             </scroll-view>
             <view class="relative">
                 <scroll-view scroll-y class="cityView">
-                    <block wx:for="{{data}}" wx:for-item="letter" wx:for-index="letter_index">
+                    <block wx:for="{{data}}" wx:for-item="letter" wx:for-index="letter_index" wx:key="key">
                         <view class="curCity mtop0">{{letter.firstLetter}}</view>
-                        <block wx:for="{{letter.cities}}" wx:for-index="city_index" wx:for-item="city">
+                        <block wx:for="{{letter.cities}}" wx:for-index="city_index" wx:for-item="city" wx:key="key">
                             <view class="citys" bindtap="selCityFn" data-cityName="{{city.cityName}}" data-index="{{letter_index}}" data-cIndex="{{city_index}}">
                                 <text class="city">{{city.cityName}}</text>
                             </view>

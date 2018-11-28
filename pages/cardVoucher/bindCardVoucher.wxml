@@ -11,10 +11,10 @@
         <!--  绑线下券-start  -->
         <view wx:if='{{page == "0"}}' class='inptWrap'>
             <view class='userWrap bb relative'>
-                <input class='inpt' name="cardNo" placeholder='请输入券号' placeholder-class="phStyle"  value='{{cardNo}}'></input>
+                <input class='inpt' type='number' name="cardNo" placeholder='请输入券号' placeholder-class="phStyle"  value='{{cardNo}}'></input>
             </view>
             <view class='userWrap bb relative'>
-                <input class='inpt' name="cardPsw" placeholder='请输入券密码' placeholder-class="phStyle" value='{{cardPsw}}'></input>
+                <input class='inpt' type='number' name="cardPsw" placeholder='请输入券密码' placeholder-class="phStyle" value='{{cardPsw}}'></input>
             </view>
             <view class='userWrap bb relative mt44'>
                 <text class='gray8d'>邀请码</text>
@@ -27,10 +27,10 @@
         <!--  绑线下卡-start  -->
         <view wx:if='{{page == "1"}}' class='inptWrap'>
             <view class='userWrap bb relative'>
-                <input class='inpt' name="cardNo" placeholder='请输入卡号' placeholder-class="phStyle" value='{{cardNo}}'></input>
+                <input class='inpt' type='number' name="cardNo" placeholder='请输入卡号' placeholder-class="phStyle" value='{{cardNo}}'></input>
             </view>
             <view class='userWrap bb relative'>
-                <input class='inpt' name="cardPsw" placeholder='请输入卡密码' placeholder-class="phStyle" value='{{cardPsw}}'></input>
+                <input class='inpt' type='number' name="cardPsw" placeholder='请输入卡密码' placeholder-class="phStyle" value='{{cardPsw}}'></input>
             </view>
             <view class='userWrap bb relative mt44'>
                 <text class='gray8d'>邀请码</text>

@@ -70,6 +70,7 @@ Page({
                 'Content-Type': 'application/json'
             },
             success: function (res) {
+              // console.log(res)
                 var data = res.data;
                 if (data.resultCode == '0') {
                     _this.setData({
@@ -351,7 +352,7 @@ Page({
 
     //选择城市
     selCityFn:function(e){
-      console.log(e)
+      // console.log(e)
         var that = this,
             target = e.currentTarget.dataset,
             letterIndex = target.index,

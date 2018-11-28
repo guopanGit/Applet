@@ -39,16 +39,16 @@
                     <view class='cardDetials' data-index='{{cardIndex}}' bindtap="cardDetailsFn"><text class="dJiao {{card.expire =='0' ? 'dJiaobg1' : 'dJiaobg2'}}"></text> 详情</view>
                 </view>
                 <!-- 来自绑定的卡 -->
-                <view wx:if="{{card.cardType == '10' || card.cardType == '11'}}" class="card cpinkBg" bindtap='selectCardFn' data-cardcode='{{card.cardCode}}'>
+                <view wx:if="{{card.cardType == '10' || card.cardType == '11'}}" class="card white cpinkBg" bindtap='selectCardFn' data-cardcode='{{card.cardCode}}'>
                     <view class='cardTitle' data-index='{{cardIndex}}' catchtap="cardDetailsFn">
                         <!-- <text class='fr f24 pinkC'><text class='dJiao'></text>详情</text> -->
                         <text>实体卡</text>
-                        <view class='cardtag'>{{card.cardTypeName}}</view>
+                        <view class='cardtag mt15'>{{card.cardTypeName}}</view>
                     </view>
                     
                     <view class='aboutMoney'>{{card.cardComments}}<text class='f30'>元</text></view>
                     <!-- <view class='deadline pinkC'>卡号24227162712616</view>  -->
-                    <view wx:if="{{card.limitTime == ''}}" class='deadline pinkC'>有效期至：永久有效</view> 
+                    <view wx:if="{{card.limitTime == ''}}" class='deadline'>有效期至：永久有效</view> 
                     <view wx:else class='deadline'>有效期至{{card.limitTime}}</view>
                     <!-- <view wx:if="{{card.sub == 1}}"  class='selectedOne'></view>  -->
                     <view class='cardDetials' data-index='{{cardIndex}}' bindtap="cardDetailsFn"><text class="dJiao {{card.expire =='0' ? 'dJiaobg1' : 'dJiaobg2'}}"></text> 详情</view>
