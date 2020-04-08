@@ -1,0 +1,45 @@
+/* 重设支付密码 */
+
+.list {
+  padding: 0 50rpx 0 24rpx;
+  height: 100rpx;
+  line-height: 84rpx;
+  font-size: 26rpx;
+  border-bottom: 0.8px solid #e4e4e4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.phone {
+  width: 500rpx;
+  color: #000;
+}
+
+.phone-btn {
+  min-width: 110rpx;
+  height: 50rpx;
+  font-size: 22rpx;
+  line-height: 50rpx;
+  text-align: center;
+}
+
+.pwd {
+  width: 100%;
+}
+
+.btn-wrap {
+  padding: 100rpx 50rpx;
+}
+
+.recharge-btn {
+  height: 70rpx;
+  line-height: 70rpx;
+  background: -webkit-linear-gradient(left, #fd8e47, #f35643);
+  color: #fff;
+  border-radius: 50rpx;
+}
+
+.send-verify{
+  right: 30rpx;
+}

@@ -1,0 +1,55 @@
+<!-- 个人资料 -->
+<view class="info-detail">
+
+  <view class="flex item-info">
+    <text>我的头像</text>
+    <view class="flex-al">
+      <image class="avatar" src="{{avatar}}"></image>
+      <!-- <view class="info-arrow"></view> -->
+    </view>
+  </view>
+
+  <view class="flex item-info">
+    <text>昵称</text>
+    <view class="flex-al">
+      <text class="gray">{{userName}}</text>
+      <!-- <view class="info-arrow"></view> -->
+    </view>
+  </view>
+
+  <view class="flex item-info">
+    <text>性别</text>
+    <view class="flex-al gray">
+      <text wx:if='{{gender}}'>{{gender}}</text>
+      <view wx:else>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{genderArray}}">
+          <text wx:if='{{!index}}'>未选择</text>
+          <text>{{genderArray[index]}}</text>
+        </picker>
+      </view>
+      <text class="info-arrow"></text>
+    </view>
+  </view>
+
+  <view class="flex item-info">
+    <text>生日</text>
+    <view class="flex-al gray">
+      <text wx:if='{{birthday}}'>{{birthday}}</text>
+      <view wx:else>
+        <picker mode="date" value="{{date}}" start="1950-01-01" end="2020-01-01" bindchange="bindDateChange">
+          <text wx:if='{{!date}}'>未选择</text>
+          <text>{{date}}</text>
+        </picker>
+      </view>
+      <text class="info-arrow"></text>
+    </view>
+  </view>
+
+  <view class="flex item-info">
+    <text>注册影院</text>
+    <view class="flex-al">
+      <text class="gray">{{registerCinema}}</text>
+    </view>
+  </view>
+
+</view>

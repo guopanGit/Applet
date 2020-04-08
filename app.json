@@ -1,71 +1,88 @@
 {
   "pages": [
     "pages/cinema/cinema",
-    "pages/home/index",
-    "pages/home/filmdes",
-    "pages/store/index",
-    "pages/store/buyCardSuc",
-    "pages/store/trolleyInfo",
-    "pages/chooseSeats/chooseSeats",
-    "pages/confirmOrder/chooseCard",
-    "pages/goodsList/goodsList",
-    "pages/confirmOrder/confirmOrder",
-    "pages/confirmOrder/goodsConfirmOrder",
-    "pages/confirmOrder/chooseCoupon",
-    "pages/payResult/checking",
-    "pages/payResult/paySuc",
-    "pages/payResult/payFail",
-    "pages/orderInfoList/orderInfoList",
-    "pages/orderInfoList/orderRefund",
-    "pages/orderInfoList/failureTickte",
-    "pages/orderInfoList/code",
-    "pages/my/index",
-    "pages/my/rule",
-    "pages/my/my",
-    "pages/login/login",
-    "pages/logs/logs",
-    "pages/cardVoucher/cardList",
-    "pages/cardVoucher/voucherList",
-    "pages/cardVoucher/bindCardVoucher",
-    "pages/getUserInfo/login",
-    "pages/Binding/binding",
-    "pages/orderInfoList/goodsOrders"
+    "pages/cinema-home/city-list/city-list",
+    "pages/cinema-home/search-cinema/search-cinema",
+    "pages/nav-home/index/index",
+    "pages/nav-home/coupon/coupon",
+    "pages/nav-home/scene/scene",
+    "pages/nav-home/seat/seat",
+    "pages/nav-home/detail/film-detail/film-detail",
+    "pages/nav-home/detail/all-stills/all-stills",
+    "pages/nav-goods/goods",
+    "pages/nav-my/my/my",
+    "pages/nav-my/my-info/my-info",
+    "pages/nav-my/my-order/my-order",
+    "pages/nav-my/my-card/vip-card/vip-card",
+    "pages/nav-my/my-card/detailed/detailed",
+    "pages/nav-my/my-card/recharge/recharge",
+    "pages/nav-my/my-coupon/my-coupon",
+    "pages/nav-my/my-account/account/account",
+    "pages/nav-my/my-account/modify/modify",
+    "pages/nav-my/binding/binding",
+    "pages/nav-my/contact-cinema/contact-cinema",
+    "pages/sign-in/authorize/authorize",
+    "pages/sign-in/bind-phone/bind-phone",
+    "pages/order/choose-goods/choose-goods",
+    "pages/order/choose-card/choose-card",
+    "pages/order/submit-order/submit-order",
+    "pages/order/order-detail/order-detail",
+    "pages/order/network-ticket/network-ticket",
+    "pages/agreement/agreement",
+    "pages/order/choose-coupon/choose-coupon",
+    "pages/success/success",
+    "pages/nav-home/prize/prize",
+    "pages/nav-my/about/about",
+    "component/input-six/input-six",
+    "component/buy-card/buy-card",
+    "component/card-list/card-list",
+    "component/coupon-list/coupon-list",
+    "component/default/default"
   ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#fff",
-    "backgroundColor": "#f1f1f1",
-    "enablePullDownRefresh": true
+    "enablePullDownRefresh": false
   },
   "tabBar": {
-    "color": "#bcbeca",
-    "selectedColor": "#fd8e47",
-    "height": "100rpx",
+    "color": "#999",
+    "selectedColor": "#ff630e",
+    "borderStyle": "white",
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/home/index",
+        "pagePath": "pages/nav-home/index/index",
         "text": "首页",
-        "iconPath": "image/index.png",
-        "selectedIconPath": "image/index_c.png"
+        "iconPath": "image/home.png",
+        "selectedIconPath": "image/home-s.png"
       },
       {
-        "pagePath": "pages/store/index",
+        "pagePath": "pages/nav-goods/goods",
         "text": "商城",
-        "iconPath": "image/store.png",
-        "selectedIconPath": "image/store_c.png"
+        "iconPath": "image/goods.png",
+        "selectedIconPath": "image/goods-s.png"
       },
       {
-        "pagePath": "pages/my/index",
+        "pagePath": "pages/nav-my/my/my",
         "text": "我的",
         "iconPath": "image/mine.png",
-        "selectedIconPath": "image/mine_c.png"
+        "selectedIconPath": "image/mine-s.png"
       }
     ]
   },
   "networkTimeout": {
     "request": 60000,
     "downloadFile": 60000
-  }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于为你匹配最近的影院"
+    }
+  },
+  "sitemapLocation": "sitemap.json",
+  "navigateToMiniProgramAppIdList": [
+    "wx235c53b61e1c0397",
+    "wx8b46e1e8f0a25d27"
+  ]
 }

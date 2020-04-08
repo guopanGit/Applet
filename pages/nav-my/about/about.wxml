@@ -1,0 +1,13 @@
+<!--pages/nav-my/about/about.wxml-->
+<view class="setting flex" data-id="0" bindtap="destination">
+  <view class="flex-al">
+    <text class="fw">用户协议</text>
+  </view>
+  <view class="arrow gray-arrow right-arrow"></view>
+</view>
+<view class="setting flex" data-id="1" bindtap="destination">
+  <view class="flex-al">
+    <text class="fw">隐私政策</text>
+  </view>
+  <view class="arrow gray-arrow right-arrow"></view>
+</view>

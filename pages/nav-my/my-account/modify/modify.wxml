@@ -1,0 +1,22 @@
+<!--pages/nav-my/safety/recompose/recompose.wxml-->
+<view class="content">
+  <view class='list'>
+    <input class='phone' type='number' value='{{phone}}' bindinput="bindKeyPhone" placeholder='手机号' maxlength='11' />
+    <view class='send-verify' plain  bindtap='getVerify'>{{time}}</view>
+  </view>
+  <view class='list'>
+    <input class='pwd' type='number' value='{{security}}' bindinput="bindKeyVerify" placeholder='请输入验证码'
+      maxlength='6' />
+  </view>
+  <view class='list'>
+    <input class='pwd' type='number' password value='{{pwd}}' bindinput="bindKeyPwd" bindblur='bindKeyOver'
+      placeholder='请输入新密码' maxlength='6' />
+  </view>
+  <view class='list'>
+    <input class='pwd' type='number' password value='{{pwdNew}}' bindinput="bindKeyPwdNew" placeholder='再次确认新密码'
+      maxlength='6' />
+  </view>
+  <view class='btn-wrap'>
+    <view class='view-btn gradient' disabled='{{isdisabled}}' bindtap='modification'>确定</view>
+  </view>
+</view>

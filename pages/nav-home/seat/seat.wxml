@@ -1,0 +1,142 @@
+<!-- 座位图 -->
+<view class='seat-container'>
+  <view class="scene-wrap">
+    <!-- 提示 -->
+    <view class="notice-wrap">
+      <!-- 活动限购 -->
+      <view class='notice-content flex-single' wx:if='{{limitNum > 0}}'>
+        <view class="prompt-wrap">
+          <image class='prompt-img' src='/image/prompt.png'></image>
+        </view>
+        <text>本次活动每人限购{{limitNum}}张，超出部分按原价收费</text>
+      </view>
+      <!-- 购票须知 -->
+      <view class="notice-content flex-single" wx:if='{{noticeContent}}' bindtap="showNotice">
+        <view class="prompt-wrap">
+          <image class='prompt-img' src='/image/prompt.png'></image>
+        </view>
+        <view style="overflow: hidden;" class="{{notice ? 'notice-text' : ''}}">{{noticeContent}}</view>
+      </view>
+      <!-- 标签内容 -->
+      <view class='notice-content flex-single' wx:if='{{tagContent}}'>
+        <view class="prompt-wrap">
+          <image class='prompt-img' src='/image/prompt.png'></image>
+        </view>
+        <text>{{tagContent}}</text>
+      </view>
+    </view>
+    <view class='seat-scene'>
+      <view class='film-name ellipsis'>{{filmName}}</view>
+      <view>
+        <view class='flex'>
+          <view>
+            <text class="orange fz20">{{rightDate}}</text>
+            <text class="film-format">{{currentScene.movieType}}</text>
+          </view>
+          <view wx:if='{{!isShow}}' class="orange fz24 change-scene">更换场次</view>
+        </view>
+      </view>
+      <!-- 场次 -->
+      <scroll-view wx:if='{{isShow}}' class="scroll-view" scroll-x scroll-left="{{scrollLeft}}" scroll-with-animation='true'>
+        <view class="slider-wrap" id="sliderWrap">
+          <view wx:for='{{sceneArr}}' wx:for-item='scene' wx:key='id' class="flex-al">
+            <view class="day">{{scene.dayDate}}</view>
+            <block wx:for='{{scene.content}}' wx:key='key'>
+              <view data-code='{{item.showCode}}' data-item='{{item}}' data-index='{{scene.id}}' bindtap="selectScene" class="slider-item {{showCode == item.showCode ? 'active': ''}}">
+                <view wx:if='{{item.ismorrow == 1}}' class="isTommor">次日放映</view>
+                <view class="fz24">{{item.startTime}}</view>
+                <view class="gray no-wrap">{{item.movieType}}</view>
+                <view wx:if='{{item.eventPrice}}' class="orange">{{item.eventPrice}}元</view>
+                <view wx:elif='{{item.terraceFilmPrice}}' class="orange">{{item.terraceFilmPrice}}元</view>
+                <view wx:else class="orange">{{item.endPrice}}元</view>
+              </view>
+            </block>
+            <view wx:if='{{!scene.content.length}}' class="slider-item gray">
+              <view class="mt10">暂 无</view>
+              <view>场 次</view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <!-- 切换场次 -->
+      <view class="pull-down">
+        <view class="arrow orange-arrow pull-img {{isShow ? 'up-arrow' : 'down-arrow'}}"></view>
+      </view>
+      <!-- 增加用户触摸体验 -->
+      <view bindtap="showScene" class="touch-area">
+      </view>
+    </view>
+    <view>
+      <view class='screen-middle'>
+        <image class="screen-img" src="/image/screen-m.png"></image>
+        <text class="screen-text ellipsis">{{currentScene.hallName}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 座位图 -->
+  <movable-area class="movable-area" scale-area>
+    <movable-view id='movable-view' class="movable-view" direction="all" bindchange="onChange" bindscale="onScale" scale="true" scale-min="0.8" scale-max="1.2" scale-value="1" friction='500' style="height:{{height}}px;" x="{{-(width/2)+36}}">
+      <view class='seat-wrap' id='seatView'>
+        <view class='seat-view' id="seatMap">
+          <view class='seat-x' wx:for="{{seatArray}}" wx:for-index="idx" wx:key='key'>
+            <view class='seat-y' wx:for="{{item}}" wx:for-index="idy" wx:key='key'>
+              <image wx:if="{{item.ls && item.lovers}}" class="loves-seat" bindtap='selectSeat' src='{{item.iconSrc}}' data-x='{{item.r}}' data-y='{{item.c}}' data-idx='{{idx}}' data-idy='{{idy}}'></image>
+              <image wx:elif='{{!item.ls}}' class="seat-img" bindtap='selectSeat' src="{{item.iconSrc}}" data-x='{{item.r}}' data-y='{{item.c}}' data-idx='{{idx}}' data-idy='{{idy}}'></image>
+            </view>
+          </view>
+          <view class="middle-line" style="height:{{lineHeight}}px;left:{{lineLeft}}px;"></view>
+        </view>
+      </view>
+    </movable-view>
+    <view class='col-number' style='top: {{lineTop}}px'>
+      <block wx:for="{{rowArray}}" wx:key='key'>
+        <text class='seat-num' style="height:{{rowHeight}}px">{{item}}</text>
+      </block>
+    </view>
+  </movable-area>
+
+  <!-- 座位状态 -->
+  <view class="state-wrap {{iPhoneX ? 'bottom-trans' : ''}}">
+    <view class="flex-al">
+      <image class="seat-state" src="/image/seat-state.png"></image>
+      <text>可选</text>
+    </view>
+    <view class="flex-al">
+      <image class="seat-state" src="/image/select-state.png"></image>
+      <text>已选</text>
+    </view>
+    <view class="flex-al">
+      <image class="seat-state" src="/image/lock-state.png"></image>
+      <text>不可选</text>
+    </view>
+    <view class="flex-al">
+      <image class="loves-state" src="/image/loves-state.png"></image>
+      <text>情侣座</text>
+    </view>
+  </view>
+
+  <!-- 座位信息 -->
+  <view wx:if='{{selectSeatList.length}}' class="ticket-count {{iPhoneX ? 'bottom-trans' : ''}}">
+    <view class="yx-seat">已选座位</view>
+    <view class="ticket-wrap">
+      <view class="flex-al" wx:for="{{selectSeatList}}" wx:key='key'>
+        <view class="ticket-info flex" id='{{index}}' data-x='{{item.rowIndex}}' data-y='{{item.colIndex}}' bindtap='cancelSeat'>
+          <view class="fz20">{{item.seatInfo}}</view>
+          <image class="clear-icon" src="/image/clear.png"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 确认选座 -->
+  <view class="{{iPhoneX ? 'bottom-height' : ''}}">
+    <view wx:if='{{selectSeatList.length}}' class="confirm-seat {{iPhoneX ? 'bottom-fixed' : ''}}" bindtap="submit">
+      <text class="confirm-text">{{totalTicketPrice}}元</text>
+      <text class="confim-btn">确认选座</text>
+    </view>
+    <view wx:else class="confirm-seat opa-btn {{iPhoneX ? 'bottom-fixed' : ''}}">
+      <text>请先选座</text>
+    </view>
+  </view>
+</view>

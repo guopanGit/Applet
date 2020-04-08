@@ -1,0 +1,70 @@
+/* 选择会员卡 */
+
+.card-container {
+  border-bottom: none;
+  padding-bottom: 99rpx;
+}
+
+.noCard{
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  border-top: 0.8px solid #ede7e7;
+  border-bottom: 0.8px solid #ede7e7;
+  padding:0 22rpx 0 30rpx;
+}
+
+.no-select {
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.btn-wrap{
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  background-color: #fff;
+}
+
+.select{
+  width: 34rpx;
+  height: 34rpx;
+  border-radius: 34rpx;
+  border: 0.8px solid #000000;
+  margin-right: 20rpx;
+}
+
+.confirm{
+  width: 280rpx;
+  height: 99rpx;
+  line-height: 99rpx;
+  text-align: center;
+  color: #fff;
+  background:#ff630e;
+  z-index: 9;
+}
+
+.no-use{
+  display: flex;
+  width: 470rpx;
+  height: 99rpx;
+  align-items: center;
+  padding-left: 30rpx;
+  background: #fff;
+}
+
+
+.opa{
+  opacity: .5;
+}
+
+/* 适配苹果X */
+.iphone{
+  padding-bottom: 38rpx;
+}

@@ -1,0 +1,29 @@
+.form-content {
+  padding: 30rpx;
+  font-size: 28rpx;
+}
+
+.input-wrap {
+  border-bottom: 0.8px solid #eee;
+  padding: 30rpx 0;
+  position: relative;
+}
+
+.input-text {
+  width: 500rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+.send-again {
+  color: #d8d8d8;
+}
+
+.change{
+  color: #fff;
+  border: none;
+}
+
+.btn-wrap{
+  padding: 0 10rpx;
+}

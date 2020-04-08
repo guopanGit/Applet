@@ -1,0 +1,302 @@
+page {
+  font-size: 24rpx;
+}
+
+/* 影片切换 */
+
+.swiper-wrap {
+  height: 150px;
+  padding-top: 30rpx;
+  border-top:0.8px solid #edeff2;
+}
+
+.swiper-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: unset;
+}
+
+.slider-img-wrap {
+  width: 110px;
+  height: 150px;
+  transform: scale(0.9);
+  transform-origin: middle;
+  z-index: 5;
+  position: relative;
+}
+
+.slide-image {
+  width: 110px;
+  height: 150px;
+  border-radius: 4rpx;
+}
+
+.swiper-wrap .active {
+  box-shadow: 0 0 8rpx 0 rgba(0, 0, 0, 0.3);
+  transform-origin: middle;
+  transform: scale(1);
+  -webkit-transition: all 0.5s ease 0.1s;
+  transition: all 0.5s ease 0.1s;
+  z-index: 20;
+}
+
+.film-label {
+  color: #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 21;
+  border-bottom-right-radius: 8rpx;
+  padding: 4rpx 6rpx;
+  font-size: 20rpx;
+  background-color: #ff630e;
+}
+
+/* 影片信息 */
+
+.info-wrap {
+  padding: 16rpx 0 20rpx 0;
+  text-align: center;
+  background-color: #fff;
+}
+
+.info {
+  color: #999;
+  margin-top:5rpx;
+}
+
+.film-name{
+  font-size: 34rpx;
+  padding: 0 30rpx;
+}
+
+.fz34 {
+  font-size: 34rpx;
+}
+
+/* 日期切换 */
+
+.date-icon {
+  color: #fff;
+  padding: 0 4rpx;
+  font-size: 20rpx;
+  border-radius: 4rpx;
+  background-color: #ff630e;
+}
+
+.slider-container {
+  margin: 0 30rpx;
+}
+
+.slider-wrap {
+  display: -webkit-box;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+
+.slider-wrap .slider-item {
+  color: #757575;
+  margin-right: 40rpx;
+  position: relative;
+}
+
+.slider-wrap .active {
+  color: #ff630e;
+}
+
+.slider-wrap .active::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4rpx;
+  border-radius: 4rpx;
+  background-color: #ff630e;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+/* 场次列表 */
+
+.field-list {
+  background-color: #fff;
+  position: relative;
+}
+
+.field-list .gt {
+  color: #ff630e;
+}
+
+.field-item {
+  padding: 30rpx 30rpx 30rpx 0;
+  margin-left: 30rpx;
+  border-bottom: 0.8px solid #e8e8e8;
+  position: relative;
+}
+
+.label-wrap {
+  position: absolute;
+  top: 2rpx;
+  left: 0;
+}
+
+.label-icon {
+  color: #fff;
+  font-size: 20rpx;
+  padding: 0 4rpx;
+  border-radius: 4rpx;
+  margin-right: 10rpx;
+  background: -webkit-linear-gradient(left, #fd8e47, #f35643);
+}
+
+.next-day {
+  background: -webkit-linear-gradient(left, #19d8fb, #19c3fb);
+}
+
+.other-item {
+  text-align: right;
+  min-width: 124rpx;
+}
+
+.small-font {
+  color: #8d8d8d;
+  font-size: 22rpx;
+  margin-top: 10rpx;
+}
+
+.fixed-width {
+  width: 210rpx;
+}
+
+.through {
+  text-decoration: line-through;
+}
+
+.vip-price {
+  color: #ff630e;
+  font-size: 20rpx;
+}
+
+.vip-text {
+  height: 30rpx;
+  line-height: 30rpx;
+  color: #fff;
+  background-color: #ff630e;
+  padding: 0 4rpx;
+  border: 2rpx solid #ff630e;
+  border-radius: 6rpx 0 0 6rpx;
+}
+
+.vip-yen {
+  height: 30rpx;
+  line-height: 30rpx;
+  padding: 0 4rpx;
+  border: 2rpx solid #ff630e;
+  border-radius: 0 6rpx 6rpx 0;
+}
+
+.select-seat {
+  display: flex;
+  color: #ff630e;
+  border: 2rpx solid #ff630e;
+  border-radius: 54rpx;
+  width: 100rpx;
+  height: 54rpx;
+  align-items: center;
+  justify-content: center;
+  line-height: 54rpx;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.pref-icon {
+  color: #ff3787;
+  border: 2rpx solid #ff3787;
+}
+
+.no-scene {
+  margin-top: 160rpx;
+  text-align: center;
+}
+
+.no-img {
+  width: 98rpx;
+  height: 82rpx;
+  margin-bottom: 20rpx;
+}
+
+.checkOther {
+  width: 260rpx;
+  height: 54rpx;
+  margin: 0 auto;
+  margin-top: 30rpx;
+  line-height: 52rpx;
+  text-align: center;
+  color: #ff630e;
+  border: 2rpx solid #ff630e;
+  border-radius: 6rpx;
+}
+
+.field-wrap {
+  position: relative;
+  padding-left: 30rpx;
+}
+
+.sun {
+  width: 23rpx;
+  height: 23rpx;
+}
+
+.moon {
+  width: 16rpx;
+  height: 19rpx;
+}
+
+.sun, .moon {
+  position: absolute;
+  left: 22rpx;
+  top: 44rpx;
+  z-index: 1;
+}
+
+.dotted-line {
+  display: block;
+  border-left: 1px dotted #e5e8ed;
+  position: absolute;
+  left: 30rpx;
+  top: 0;
+  height: 100%;
+  z-index: 0;
+}
+
+.dotted-hide {
+  display: block;
+  width: 24rpx;
+  height: 42rpx;
+  background: #fff;
+  position: absolute;
+  left: 24rpx;
+  top: 110rpx;
+  z-index: 1;
+}
+
+.empty-page {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.rose-red {
+  background: #ff3787;
+}
+
+.sell-over{
+  border: 2rpx solid #ccc;
+  color: #ccc;
+}

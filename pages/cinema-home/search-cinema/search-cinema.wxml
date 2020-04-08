@@ -1,0 +1,27 @@
+<!-- 搜索影院 -->
+
+<view class='search-cinema-wrap'>
+  <view class='search-cinema flex'>
+    <view class='search-wrap'>
+      <icon class='search-icon' type='search' size='12' color='#999'></icon>
+      <input class='search-city' focus bindinput="bindKeyInput" value='{{inputVal}}' placeholder='搜索影院名称或地址'/>
+      <icon wx:if='{{isClear}}' bindtap='clearVal' class='clear-icon' type='clear' size='12' color='#999'></icon>
+    </view>
+    <view bindtap='cancelearch' class='orange'>取消</view>
+  </view>
+</view>
+
+<view class='cinema-list'>
+  <view bindtap='goHome' data-id='{{item}}' data-index='{{index}}' class='cinema-item flex' wx:for='{{searchList}}' wx:index='{{index}}' wx:key="key">
+    <view>
+      <view class='cinemaName'>{{item.cinemaName}}</view>
+      <view class='adr'>{{item.cinemaAddress}}</view>
+    </view>
+    <text class='meters'>{{item.distance}}km</text>
+  </view>
+</view>
+
+<view wx:if='{{isHasData}}' class='search-none'>
+  <image class='none-img' src='/image/search-none.png'></image>
+  <view class='none-text'>没有找到相关内容，换个关键字试试</view>
+</view>

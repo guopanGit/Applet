@@ -1,0 +1,78 @@
+/* 充值 */
+
+page {
+  background-color: #fff;
+  line-height: 1;
+  color: #333;
+  font-family: "Hiragino Sans GB", "Helvetica Neue", "微软雅黑", "microsoft yahei", Arial;
+}
+
+.card-warp {
+  background-color: #fff;
+}
+
+.card-top {
+  border-top: 0.8px solid #e7eaed;
+  border-bottom: 0.8px solid #e7eaed;
+  padding-left: 24rpx;
+  padding: 28rpx 0 30rpx 24rpx;
+}
+
+.cardCode {
+  font-size: 36rpx;
+  margin-bottom: 20rpx;
+}
+
+.cardName {
+  font-size: 24rpx;
+  color: #8d8d8d;
+}
+
+.sum {
+  font-size: 28rpx;
+  margin: 30rpx 0 0 24rpx;
+}
+
+.recharge-amount {
+  display: flex;
+  padding-left: 24rpx;
+  padding-top: 30rpx;
+}
+
+.sum-time {
+  width: 210rpx;
+  height: 116rpx;
+  border: 2rpx solid #ff630e;
+  color: #ff630e;
+  text-align: center;
+  line-height: 116rpx;
+  margin-right: 30rpx;
+  border-radius: 10rpx;
+}
+
+.other {
+  margin: 30rpx 0 0 24rpx;
+  font-size: 30rpx;
+}
+
+.Checked {
+  background-color: #ff630e;
+  color: #fff;
+}
+
+.btn-warp {
+  padding: 120rpx 50rpx;
+}
+
+.login-btn{
+  color: #fff;
+}
+
+.recharge-btn {
+  width: 700rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  background: -webkit-linear-gradient(left, #fd8e47, #f35643);
+  color: #fff;
+  border-radius: 50rpx;
+}

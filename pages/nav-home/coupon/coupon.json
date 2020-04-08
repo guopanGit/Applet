@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "coupon-list": "/component/coupon-list/coupon-list"
+  },
+  "disableScroll": true,
+  "component": true
+}

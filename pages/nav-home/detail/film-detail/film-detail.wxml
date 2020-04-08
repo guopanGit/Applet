@@ -1,0 +1,60 @@
+<!--影片详情页-->
+
+<view class="{{hideBtn ? 'detail-wrap' : ' '}} {{iPhoneX && hideBtn ? 'bottom-gaps' : ''}}">
+
+  <view class='film-poster'>
+    <image class='film-image' mode="aspectFill" src='{{detailData.filmPosterNew}}'></image>
+  </view>
+
+  <view class='film-name has'>{{detailData.filmName}}</view>
+
+  <view class='film-details'>
+    <view class='film-wrap has-bb'>
+      <view>上映日期：{{detailData.filmShowDate}}(中国大陆)</view>
+      <view class='mt20'>放映时长：{{detailData.filmDeartion}}</view>
+      <view class='mt20'>影片类型：{{detailData.filmType}}</view>
+      <view wx:if='{{isShow}}'>
+        <view wx:if='{{isWant}}' class='is-loved' data-flag='{{1}}' bindtap='isLoved'>
+          <image class='love-img' mode="aspectFill" src='/image/loved.png'></image>
+          <text>已想看</text>
+        </view>
+        <view wx:else bindtap='isLoved' data-flag='{{0}}' class='is-love'>
+          <image class='love-img' mode="aspectFill" src='/image/love.png'></image>
+          <text>想看</text>
+        </view>
+      </view>
+    </view>
+
+    <view class='film-wrap film-lh has-bb'>{{detailData.filmDesc}}</view>
+
+    <view class='film-wrap has-bb'>
+      <view class='main-act'>
+        <text>导演：</text>
+        <text class='flex-eight'>{{detailData.filmRegisseur}}</text>
+      </view>
+      <view class='mt20 main-act'>
+        <text>编剧：</text>
+        <text class='flex-eight'>{{detailData.filmWrite}}</text>
+      </view>
+      <view class='mt20 main-act'>
+        <text>主演：</text>
+        <text class='flex-eight'>{{detailData.filmLeading}}</text>
+      </view>
+    </view>
+    <view wx:if='{{stillsArr.length > 1}}' class='play-photo'>
+      <view class='fz24 flex'>
+        <text>剧照{{stillsArr.length}}</text>
+        <text bindtap='goAll'>全部 ></text>
+      </view>
+      <view class='photo-wrap'>
+        <block wx:for='{{stillsArr}}' wx:key='key'>
+          <image bindtap='previewImg' mode="aspectFill" data-src='{{item}}' class='item-img' src='{{item}}'></image>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if='{{hideBtn}}' class="{{iPhoneX && hideBtn ? 'bottom-height' : ''}}">
+    <view bindtap='goScene' class="select-scene big-btn {{iPhoneX ? 'bottom-fixed' : ''}}">选择场次</view>
+  </view>
+</view>

@@ -1,0 +1,35 @@
+<view class="form-content">
+  <view class="input-wrap">
+    <input type="number" class="input-text {{phoneVal == '' ? 'opacity' : ''}}" focus="{{status && source != 0}}"
+           disabled="{{!status && source != 0}}"
+           placeholder="请输入手机号" maxlength='11' value="{{phoneVal}}" bindinput="inputVal" data-type='1'/>
+    <view wx:if='{{showCode}}' class="send-verify {{phoneVal.length < 11 ? 'opacity' : ''}}" bindtap="getVerifyCode">
+      {{verifyText}}
+    </view>
+    <view wx:else class="send-verify opacity">
+      <text wx:if="{{!status}}">{{countTime}}</text>
+      <text wx:if="{{status}}">{{countTimes}}</text>
+      s后重新获取
+    </view>
+  </view>
+  <view class="input-wrap">
+    <input type="number" class="input-text {{verifyVal == '' ? 'opacity' : ''}}" placeholder="请输入验证码" maxlength='4'
+           value="{{verifyVal}}" bindinput="inputVal" data-type='2'/>
+  </view>
+  <view wx:if="{{source == 0}}" class="input-wrap">
+    <input type="number" class="input-text {{inviteVal == '' ? 'opacity' : ''}}" placeholder="请输入邀请码（选填）" maxlength='4'
+           value="{{inviteVal}}" bindinput="inputVal" data-type='3'/>
+  </view>
+  <view class="btn-wrap">
+    <view wx:if="{{source != 0}}"
+          class="login-btn buy-btn change {{(verifyVal.length < 4 || phoneVal.length < 11)  ? 'opacity' : ''}}"
+          bindtap='bindChange'>{{btnText}}
+    </view>
+    <view wx:if="{{source == 0}}" class="login-btn {{(verifyVal.length < 4 || phoneVal.length < 11)  ? 'opacity' : ''}}"
+          bindtap='binding'>绑定
+    </view>
+    <button wx:if="{{source == 0}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="login-bg">
+      一键绑定（推荐）
+    </button>
+  </view>
+</view>

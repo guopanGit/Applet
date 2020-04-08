@@ -1,0 +1,24 @@
+<!-- 输入六位密码 -->
+<view catchtouchmove='true' class='layer-center input-six'>
+  <view wx:if='{{source == 0}}' class='set-psd'>支付密码初始设置</view>
+  <view wx:if='{{source == 1}}' class='set-psd'>{{title}}</view>
+  <view wx:if='{{source == 2}}' class='set-psd'>请输入新密码</view>
+  <view wx:if='{{source == 0}}' class='set-text'>
+    <view>请设置6位数字支付密码</view>
+    <view>该密码为唯一支付密码,请勿泄露给他人</view>
+  </view>
+  <!-- 输入框（表格） -->
+  <view class='{{(interval?"pay_number":"pay_number_interval")}}  {{focus_class?"get_focus":""}}' catchtap="set_focus" style='width:{{width}};height:{{height}};'>
+    <view class='{{focus_class?(interval?"get_focus_dot":"get_focus_dot_interval"):(interval?"password_dot":"password_dot_interval")}} {{index==0?"noBorder":""}}' wx:for="{{value_num}}" wx:key="index">
+      <view wx:if="{{(value_length==item-1)&&focus_class}}" class="cursor"></view>
+      <view wx:if="{{value_length>=item}}" class="{{see?'':'dot'}}">{{see?val_arr[index]:""}}</view>
+    </view>
+  </view>
+  <!-- 输入框（隐藏） -->
+  <input value="{{input_value}}" focus="{{get_focus}}" maxlength="6" type="number" class='input_container' placeholder="" bindinput="get_value" bindfocus="get_focus" bindblur="blur" cursor="-1000" unselectable="on" />
+  <view bindtap="confirmPwd" class='confirm-pwd'>确定</view>
+  <view wx:if='{{source == 0}}' bindtap="closeInput" class='no-set'>
+    <text>暂不设置</text>
+    <view class='arrow gray-arrow right-arrow'></view>
+  </view>
+</view>

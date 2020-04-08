@@ -1,9 +1,0 @@
-<!--pages/getUserInfo/login.wxml-->
-<view class='wrapper'>
-    <view class='userHeadIcon'></view>
-    <view class='userDescription'>还未登录</view>
-    <view class='p24 relative'>
-        <button class='loginBtn gradientBtn' hover-class='gradientBtn_hover' open-type='getUserInfo'  bindgetuserinfo="bindGetUserInfo">微信用户快速登录</button>
-        <text class='wxIcon'></text>
-    </view>
-</view>

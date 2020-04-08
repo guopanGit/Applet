@@ -1,5 +1,0 @@
-.waitPayBox{height:116rpx;}
-.waitPay{height: 68rpx;}
-.sellIs{font-size:26rpx;padding: 24rpx 0;}
-.saleBtn {width:330rpx;height:68rpx;line-height:68rpx;text-align:center;font-size:34rpx;border-radius:34rpx;}
-gradientBtn02 {background:-webkit-linear-gradient(left, #fc8746, #f55d43);color:#fff;}

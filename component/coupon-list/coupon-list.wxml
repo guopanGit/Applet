@@ -1,0 +1,172 @@
+<!-- 0：影票代金劵；1：折扣劵；2：固定金额通兑券；4:免费兑换券 5:卖品券 7.商家券 8.停车券 -->
+<view class="{{fromHome}}">
+  <block wx:for="{{list}}" wx:for-index="index" wx:key="key">
+    <!-- 影票兑换券 -->
+    <block wx:if="{{item.voucherType == 2 || item.voucherType == 4}}">
+      <view wx:if="{{index != 0}}" class="gaps"></view>
+      <view class="flex {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+        <view class="discounts-wrap">
+          <view class="discounts-type {{item.clickYn == 1 ? 'overdue':'light-red'}}">
+            <view class="frame {{item.clickYn == 1 ? 'overdue-before':'light-red-before'}}">
+              <view class="center-coupon">
+                <view wx:if="{{item.voucherType == 2}}" class="big-font">兑</view>
+                <view wx:elif="{{item.voucherType == 4}}" class="big-font">免费</view>
+                <view class="fz24">影票兑换券</view>
+              </view>
+            </view>
+          </view>
+          <view class="discounts-detail">
+            <view class="fz36 black voucherName {{type == 1 ? 'max-w340' : ''}}">{{item.voucherName || item.applyName}}</view>
+            <view class="discounts-message">
+              <text wx:if="{{item.voucherCodePwd}}">券号：{{item.voucherCodePwd}}</text>
+            </view>
+            <view class="valid">
+              <text wx:if="{{present < item.startTime}}">有效期{{item.startTime}}-{{item.endTime}}</text>
+              <text wx:elif="{{item.leftDays > 1 && item.leftDays >= 10}}">有效期至{{item.endTime}}</text>
+              <text wx:elif="{{item.leftDays > 1 && item.leftDays < 10 && item.leftDays}}">还剩{{item.leftDays}}天有效</text>
+              <text wx:elif="{{item.leftDays == 0 && item.clickYn == 0}}">今天过期</text>
+              <text wx:elif="{{item.leftDays == 1 && item.clickYn == 0}}">明天过期</text>
+              <text wx:elif="{{item.leftDays < 0 || item.clickYn == 1}}">已过期</text>
+            </view>
+          </view>
+        </view>
+        <view wx:if="{{type == 1 && item.voucherType == 2}}" class="select-wrap">
+          <image wx:if="{{couponIndex[0] == item.voucherCode}}" class='selected' src='/image/selected.png'></image>
+          <view wx:else class="no-select"></view>
+        </view>
+        <view wx:if="{{type == 1 && item.voucherType == 4}}" class="select-wrap">
+          <image  wx:if="{{item.index}}"
+                 class='selected' src='/image/no-round.png'></image>
+          <view wx:else class="no-select no-round"></view>
+        </view>
+      </view>
+    </block>
+    <!-- 代金券 -->
+    <block wx:if="{{item.voucherType == 0 || item.voucherType == 5}}">
+      <view wx:if="{{index != 0}}" class="gaps"></view>
+      <view class="flex {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+        <view class="discounts-wrap">
+          <view class="discounts-type {{item.clickYn == 1 ? 'overdue' :'light-pink'}}">
+            <view class="frame {{item.clickYn == 1 ? 'overdue-before' :'light-pink-before'}}">
+              <view class="center-coupon">
+                <view wx:if="{{item.voucherType == 5}}">
+                  <block wx:if="{{item.spec == '0'}}">
+                    <text class='big-font'>{{item.voucherPar}}</text>
+                    <text>折</text>
+                  </block>
+                  <block wx:elif="{{item.spec == '1'}}">
+                    <text class='big-font'>{{item.voucherPar}}</text>
+                    <text>元</text>
+                  </block>
+                </view>
+                <view wx:elif="{{item.voucherType == 0}}">
+                  <text class='big-font'>{{item.voucherPar}}</text>
+                  <text>元</text>
+                </view>
+                <view wx:if="{{item.voucherType == 0}}" class="fz24">影票代金券</view>
+                <view wx:elif="{{item.voucherType == 5}}" class="fz24">卖品券</view>
+              </view>
+            </view>
+          </view>
+          <view class="discounts-detail">
+            <view class="fz36 black voucherName {{type == 1 ? 'max-w340' : ''}}">{{item.voucherName || item.applyName}}</view>
+            <view class="discounts-message">
+              <text wx:if="{{item.voucherCodePwd}}">券号：{{item.voucherCodePwd}}</text>
+            </view>
+            <view class="valid">
+              <text wx:if="{{present < item.startTime}}">有效期{{item.startTime}}-{{item.endTime}}</text>
+              <text wx:elif="{{item.leftDays > 1 && item.leftDays >= 10}}">有效期至{{item.endTime}}</text>
+              <text wx:elif="{{item.leftDays > 1 && item.leftDays < 10 && item.leftDays}}">还剩{{item.leftDays}}天有效</text>
+              <text wx:elif="{{item.leftDays == 0 && item.clickYn == 0}}">今天过期</text>
+              <text wx:elif="{{item.leftDays == 1 && item.clickYn == 0}}">明天过期</text>
+              <text wx:elif="{{item.leftDays < 0 || item.clickYn == 1}}">已过期</text>
+            </view>
+          </view>
+        </view>
+        <view wx:if="{{type == 1}}" class="select-wrap">
+          <image  wx:if="{{item.index}}"
+                  class='selected' src='/image/selected.png'></image>
+          <view wx:else class="no-select"></view>
+        </view>
+      </view>
+    </block>
+    <!-- 商家券 -->
+    <block wx:if="{{item.voucherType == 7}}">
+      <view wx:if="{{index != 0}}" class="gaps"></view>
+      <view class="discounts-wrap {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+        <view class="discounts-type {{item.clickYn == 1 ? 'overdue':'light-yellow'}}">
+          <view class="frame {{item.clickYn == 1 ? 'overdue-before':'light-yellow-before'}}">
+            <view class="center-coupon">
+              <image class='bus-coupon' src='/image/bus-coupon.png'></image>
+              <view class="fz24">商家券</view>
+            </view>
+          </view>
+        </view>
+        <view class="discounts-detail">
+          <view class="fz36 black voucherName">{{item.voucherName || item.applyName}}</view>
+          <view class="discounts-message">
+            <text wx:if="{{item.voucherCodePwd}}">券号：{{item.voucherCodePwd}}</text>
+          </view>
+          <view class="valid">
+            <text wx:if="{{present < item.startTime}}">有效期{{item.startTime}}-{{item.endTime}}</text>
+            <text wx:elif="{{item.leftDays > 1 && item.leftDays >= 10}}">有效期至{{item.endTime}}</text>
+            <text wx:elif="{{item.leftDays > 1 && item.leftDays < 10 && item.leftDays}}">还剩{{item.leftDays}}天有效</text>
+            <text wx:elif="{{item.leftDays == 0 && item.clickYn == 0}}">今天过期</text>
+            <text wx:elif="{{item.leftDays == 1 && item.clickYn == 0}}">明天过期</text>
+            <text wx:elif="{{item.leftDays < 0 || item.clickYn == 1}}">已过期</text>
+          </view>
+        </view>
+      </view>
+    </block>
+    <!-- 停车券 -->
+    <block wx:if="{{item.voucherType == 8 && !item.voucherFace}}">
+      <view wx:if="{{index != 0}}" class="gaps"></view>
+      <view class="discounts-wrap {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+        <view class="discounts-type {{item.clickYn == 1 ? 'overdue' :'light-blue'}}">
+          <view class="frame {{item.clickYn == 1 ? 'overdue-before' :'light-blue-before'}}">
+            <view class="center-coupon">
+              <view class="type">{{item.voucherPar}}小时</view>
+              <view class="fz24">停车券</view>
+            </view>
+          </view>
+        </view>
+        <view class="discounts-detail voucherCodePwd">
+          <view class="fz36 black ellipsis">{{item.voucherName}}</view>
+          <view class="discounts-message">使用即授权停车服务获取个人信息</view>
+          <view class="valid">
+            <text wx:if="{{item.clickYn == '2' &&  item.showStart == '0'}}">{{item.startTime}} 可用</text>
+            <text wx:if="{{item.clickYn == '3' &&  item.showStart == '0'}}">{{item.startTime}} 可用</text>
+            <text wx:if="{{item.clickYn == '4' &&  item.showStart == '0'}}"> 有效期: {{item.startTime}}</text>
+            <text wx:if="{{item.showStart == '1'}}">有效期: {{item.startTime}}</text>
+            <view class="employ" data-val="{{item}}" catchtap="service">去使用</view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <block wx:if="{{item.voucherType == 8 && item.voucherFace}}">
+      <view wx:if="{{index != 0}}" class="gaps"></view>
+      <view class="discounts-wrap park {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+        <image class='park-img' src='{{prefixImg}}{{item.voucherFace}}'></image>
+        <view class="park-wrap">
+          <view class="park-type">
+            <view class="park-coupon">
+              <view class="type">{{item.voucherPar}}</view>
+              <view class="fz24">停车券</view>
+            </view>
+          </view>
+          <view class="park-detail">
+            <view class="fz36 black ellipsis">{{item.voucherName}}</view>
+            <view class="discounts-message">使用即授权停车服务获取个人信息</view>
+            <view class="valid">
+              <text wx:if="{{item.clickYn == '2' &&  item.showStart == '0'}}">{{item.startTime}} 可用</text>
+              <text wx:if="{{item.clickYn == '3' &&  item.showStart == '0'}}">{{item.startTime}} 可用</text>
+              <text wx:if="{{item.clickYn == '4' &&  item.showStart == '0'}}"> 有效期: {{item.startTime}}</text>
+              <text wx:if="{{item.showStart == '1'}}">有效期: {{item.startTime}}</text>
+              <view wx:if="{{item.status != '0'}}" class="employ" data-val="{{item}}" catchtap="service">去使用</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>

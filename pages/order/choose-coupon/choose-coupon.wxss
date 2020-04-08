@@ -1,0 +1,130 @@
+
+page{
+  background-color: #fff !important;
+  overflow-x: hidden;
+}
+
+.chooseCouponList{
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-boxk
+}
+
+.choose-coupon {
+  display: inline-block;
+  width: 750rpx;
+  min-height: 100%;
+  padding: 188rpx 30rpx 120rpx 30rpx;
+  background-color: #f8f8f8 !important;
+  box-sizing: border-box;
+}
+
+.noCard{
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  border-top: 0.8px solid #ede7e7;
+  border-bottom: 0.8px solid #ede7e7;
+  padding:0 40rpx 0 30rpx;
+  margin-bottom: 20rpx;
+  background: #fff;
+}
+
+.no-select,
+.selected{
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+}
+
+.no-select{
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.coupon-index{
+  display: inline-block;
+  position: absolute;
+}
+
+.index{
+  height: 204rpx;
+  margin-top: 20rpx;
+  padding-top: 81rpx;
+  box-sizing: border-box;
+}
+
+.coupon-nav{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index:10;
+}
+
+.nav-tab{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border-top: 1px solid #e8e8e8;
+  background:#fff;
+  padding: 0 30rpx;
+}
+.tab-item{
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #999999;
+}
+.active{
+  border-bottom: 3rpx solid #ff630e;
+  color: #ff630e;
+}
+
+.confirm{
+  width: 280rpx;
+  height: 99rpx;
+  line-height: 99rpx;
+  text-align: center;
+  color: #fff;
+  background:#ff630e;
+  z-index: 9;
+}
+
+.no-use{
+  display: flex;
+  width: 470rpx;
+  height: 99rpx;
+  align-items: center;
+  padding-left: 30rpx;
+  background: #fff;
+}
+
+.btn-wrap{
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  background-color: #fff;
+}
+
+.select{
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 32rpx;
+  border: 0.8px solid #000000;
+  margin-right: 20rpx;
+}
+
+.opa{
+opacity: .5;
+}
+
+/* 适配苹果X */
+.iphone{
+  padding-bottom: 38rpx;
+}

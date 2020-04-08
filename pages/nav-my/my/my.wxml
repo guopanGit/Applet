@@ -1,0 +1,46 @@
+<!-- 我的 -->
+<view class="content">
+  <view class="my-bg"></view>
+  <view class="user-warp">
+    <view class="head-wrap">
+      <image class="head-img" src="{{headImg}}" data-id="1" bindtap="destination"></image>
+    </view>
+    <text class="member-name" data-id="1" bindtap="destination">{{memberName}}</text>
+  </view>
+  <view class="primary flex">
+    <view class="primary-item" data-id="2" bindtap="destination">
+      <image class="entrance" src="/image/order.png"></image>
+      <view class="tap-nav">订单</view>
+    </view>
+    <view class="primary-item" data-id="3" bindtap="destination">
+      <image class="entrance" src="/image/member.png"></image>
+      <view class="tap-nav">会员卡</view>
+    </view>
+    <view class="primary-item" data-id="4" bindtap="destination">
+      <image class="entrance" src="/image/discounts.png"></image>
+      <view class="tap-nav">优惠券</view>
+    </view>
+  </view>
+  <view class="setting flex" data-id="7" bindtap="destination">
+    <view class="flex-al">
+      <image class="my-icon" src="/image/phone.png"></image>
+      <text class="fw">联系影院</text>
+    </view>
+    <view class="arrow gray-arrow right-arrow"></view>
+  </view>
+  <view class="gaps"></view>
+  <view class="setting flex" data-id="5" bindtap="destination">
+    <view class="flex-al">
+      <image class="my-icon" src="/image/safety.png"></image>
+      <text class="fw">账号安全</text>
+    </view>
+    <view class="arrow gray-arrow right-arrow"></view>
+  </view>
+  <view class="setting deal flex" data-id="6" bindtap="destination">
+    <view class="flex-al">
+      <image class="my-icon" src="/image/deal.png"></image>
+      <text class="fw">关于</text>
+    </view>
+    <view class="arrow gray-arrow right-arrow"></view>
+  </view>
+</view>

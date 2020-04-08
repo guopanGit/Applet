@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "coupon-list": "/component/coupon-list/coupon-list",
+    "default": "/component/default/default"
+  }
+}

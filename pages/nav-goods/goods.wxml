@@ -1,0 +1,318 @@
+<!-- 卖品列表/卡列表 -->
+<view class="top-nav">
+  <view class='location-wrap loc-city flex-al' bindtap='selectCity'>
+    <text class='ellipsis'>{{locationCity}}</text>
+    <view class="arrow down-arrow black-arrow city-icon"></view>
+  </view>
+  <view class="nav-tab">
+    <view class="tab-sell {{tabIndex == 0 ? 'active' : ''}}" data-index="0" bindtap="tabToggle">卖品</view>
+    <view class="tab-card {{tabIndex == 1 ? 'active' : ''}}" data-index="1" bindtap="tabToggle">卡券</view>
+  </view>
+</view>
+
+<!-- 卖品列表组件 -->
+<view wx:if="{{tabIndex == 0 && goodsList.length}}" class="list-wrap">
+  <view class="card-wrap">
+    <buy-card id='cardRecommend' source="3" recommendCard="{{recommendCard}}" showGift="{{showGift}}"
+              recommend="{{recommend}}" initiate="{{initiate}}" discounts="{{cardPrice/100}}"></buy-card>
+  </view>
+  <view class="goods-wrap">
+    <view wx:if="{{goodsMenu.length > 1}}" class="goods-nav">
+      <scroll-view class="scroll-view" scroll-x="false" scroll-y="true" scroll-top="{{menuScroll}}">
+        <view class="goods-menu {{showCart ? 'adapta-cart' : ''}}">
+          <block wx:for="{{goodsMenu}}" wx:key="key">
+            <view bindtap="toggleMenu" data-index="{{index}}" data-menu="{{item}}"
+                  class="menu-item {{currentIndex == index ? 'active' : ''}}">{{item}}
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="goods-view {{goodsMenu.length <= 1 ? 'fill' : ''}}">
+      <scroll-view class="scroll-view" scroll-x="false" scroll-y="true" scroll-top="{{scrollTop}}"
+                   bindscroll="goodListScroll" bindscrolltolower="bindscrolltolower">
+        <view class='scroll-wrap'>
+          <block>
+            <view wx:for="{{goodsList}}" wx:key="key" wx:for-index="outIndex">
+              <view wx:if="{{goodsMenu.length > 1}}" data-name="{{item.typeName}}" class="set-meal goods-type">
+                {{item.typeName}}
+              </view>
+              <view wx:for="{{item.productList}}" wx:key="key" bindtap="checkPref" data-type="{{item}}"
+                    class="goods-item flex-single">
+                <text wx:if="{{item.isEvent == '1'}}" class="discount-icon">特惠</text>
+                <image class="goods-img" lazy-load="true" mode="aspectFill"
+                       src="{{item.goodsImgNew}}"></image>
+                <view class="goods-content">
+                  <view class="goods-name flex-al">
+                    <text class="{{goodsMenu.length <= 1 ? 'goods-max':'goods-text'}} fw fz32 ellipsis">{{item.sellName}}</text>
+                    <text wx:if="{{item.takeoutflag == '1'}}" class="delivery-icon">可配送</text>
+                  </view>
+                  <view class="goods-des ellipsis">{{item.goodsViewFocus}}</view>
+                  <view class="limit-num">
+                    <text wx:if="{{item.limitedSell}}">限制{{item.limitedSell}}份优惠</text>
+                  </view>
+                  <view class="flex">
+                    <view class="price-wrap">
+                      <text class="yen fw">¥</text>
+                      <text wx:if="{{item.isEvent == '1'}}" class="discount-price">{{item.sellEventPrice/100}}</text>
+                      <text wx:else class="discount-price">{{item.goodsPrice/100}}</text>
+                      <text
+                        wx:if="{{item.sellEventPrice && item.price > item.sellEventPrice && (!item.cardPrice || (item.cardPrice > item.sellEventPrice))}}"
+                        class="origin-price">¥{{item.price/100}}</text>
+                      <text
+                        wx:if="{{item.goodsNum <= 0 && item.cardPrice && ((item.cardPrice < item.sellEventPrice) || !item.sellEventPrice) }}"
+                        class="save">开卡享¥{{(item.cardPrice/100)}}</text>
+                    </view>
+                    <view class="flex-al align-right">
+                      <view class="region region-end" catchtap='bindSub' data-outside="{{outIndex}}"
+                            data-inside="{{index}}">
+                        <image class="sub-icon {{item.goodsNum == 0 ? 'trans-num' : 'animate-img'}}"
+                               src="/image/gray-sub.png"></image>
+                      </view>
+                      <text class="goods-num {{item.goodsNum == 0 ? 'opacity-num' : ''}}">{{item.goodsNum}}</text>
+                      <view wx:if="{{cartTotal < 99}}" class="region" catchtap='bindAdd' data-outside="{{outIndex}}"
+                            data-inside="{{index}}">
+                        <image class="add-icon" src="/image/orange-add.png"></image>
+                      </view>
+                      <view wx:if="{{cartTotal >= 99}}" class="region">
+                        <image class="add-icon" src="/image/gray-add.png"></image>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+
+<!-- 添加购物车 -->
+<view wx:if="{{cartTotal > 0  && tabIndex == 0}}" class="shop-cart-wrap">
+  <view class="shop-cart flex">
+    <view class="cart-wrap flex-al" bindtap='showCartList'>
+      <view class="icon-wrap">
+        <image class="cart-icon" src="/image/cart.png"></image>
+        <view wx:if="{{cartTotal > 0}}" class="corner-icon">{{cartTotal}}</view>
+      </view>
+      <text wx:if="{{cartTotal > 0}}" class="show-price">¥{{totalPrice / 100}}</text>
+      <text wx:else>选份心仪的卖品吧!</text>
+    </view>
+    <view bindtap="nextStep" data-type="step" class="cart-bth flex-al">
+      <view>
+        <text class="clearing">去结算</text>
+        <view class="triangle sign"></view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 遮罩 -->
+<view wx:if='{{showLayer}}' bindtap='hideLayer' catchtouchmove='true'
+      class="mask-wrap {{prefLayer ? 'high-index':''}}"></view>
+
+<!-- 购物车列表 -->
+<view wx:if='{{isCartList}}' animation="{{animate}}" class="cart-list">
+  <view class="cart-title flex">
+    <view class="cart-text gray">已选商品</view>
+    <view class="cart-clear flex-al">
+      <image class="del-img" src="/image/del-cart.png"></image>
+      <text class="del-text" bindtap="empty">清空</text>
+    </view>
+  </view>
+  <scroll-view class="cart-scroll" scroll-y>
+    <!-- 可配送 -->
+    <block wx:for="{{cartList}}" wx:key="key">
+      <view wx:if="{{item.takeoutFlag == '1'}}" class="cart-item flex">
+        <view class="cart-name ellipsis">{{item.goodsName}}</view>
+        <view class="cart-price">¥{{item.totalPrice/100}}</view>
+        <view class="flex-al">
+          <image wx:if="{{item.count}}" class="sub-icon" src="/image/gray-sub.png" data-item="{{item}}"
+                 bindtap="listSub"></image>
+          <text wx:if="{{item.count > 0}}" class="goods-num">{{item.count}}</text>
+          <image wx:if="{{cartTotal < 99}}" class="add-icon" src="/image/orange-add.png" data-item="{{item}}"
+                 bindtap="listAdd"></image>
+          <image wx:if="{{cartTotal >= 99}}" class="add-icon" src="/image/gray-add.png"></image>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{noDelivery == '1' && delivery == '1'}}" class="deliver-goods">
+      <view class="carts-gaps"></view>
+      <view class="tips-wrap flex-al">
+        <icon class="tips" type="warn" size="12"></icon>
+        <text class="orange">若选择以下卖品，则此订单无法配送</text>
+      </view>
+    </view>
+    <!-- 不可配送 -->
+    <block wx:for="{{cartList}}" wx:key="key">
+      <view wx:if="{{item.takeoutFlag == '0'}}" class="cart-item flex">
+        <view class="cart-name ellipsis">{{item.goodsName}}</view>
+        <view class="cart-price">¥{{item.totalPriceNoe/100}}</view>
+        <view class="flex-al">
+          <image wx:if="{{item.count}}" class="sub-icon" src="/image/gray-sub.png" data-item="{{item}}"
+                 bindtap="listSub"></image>
+          <text wx:if="{{item.count > 0}}" class="goods-num">{{item.count}}</text>
+          <image wx:if="{{cartTotal < 99}}" class="add-icon" src="/image/orange-add.png" data-item="{{item}}"
+                 bindtap="listAdd"></image>
+          <image wx:if="{{cartTotal >= 99}}" class="add-icon" src="/image/gray-add.png"></image>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+</view>
+
+<!-- 卖品详情 -->
+<view wx:if="{{prefLayer}}" catchtouchmove='true' class='layer-center'>
+  <view class='pref-img-wrap'>
+    <image src="{{goosDatail.goodsImgNew}}" mode="aspectFill" class='pref-img'></image>
+    <view class="close-pref" bindtap="hideLayer">
+      <icon type="clear" size="24" color="#e5e5e5"></icon>
+    </view>
+    <text class='pref-text' wx:if="{{goosDatail.isEvent == 1}}">特惠</text>
+  </view>
+  <view class='space'>
+    <view class='fz42 fw'>{{goosDatail.sellName}}</view>
+    <view class='fz24 gray999'>{{goosDatail.goodsViewFocus}}</view>
+    <view class='pref-price flex'>
+      <view>
+        <block wx:if="{{goosDatail.isEvent == '1'}}">
+          <text class='orange'>
+            <text class='fz24 fw'>¥</text>
+            <text class='fz46 fw'>{{goosDatail.sellEventPrice / 100}}</text>
+          </text>
+          <text wx:if="{{goosDatail.sellEventPrice < goosDatail.goodsPrice}}" class='through fz24 gray999 ml10'>
+            <text>¥</text>
+            <text>{{goosDatail.goodsPrice /100}}</text>
+          </text>
+        </block>
+        <block wx:else>
+          <text class='orange'>
+            <text class='fz24'>¥</text>
+            <text class='fz46'>{{goosDatail.goodsPrice / 100}}</text>
+          </text>
+          <text wx:if="{{goosDatail.goodsPrice < goosDatail.price}}" class='through fz24 gray999 ml10'>
+            <text>¥</text>
+            <text>{{goosDatail.price /100}}</text>
+          </text>
+        </block>
+        <text class='orange ml10' wx:if="{{goosDatail.isEvent == 1 && goosDatail.singleLimit}}">
+          限{{goosDatail.singleLimit}}份优惠
+        </text>
+      </view>
+      <view class='small-btn' bindtap="addCard">加入购物车</view>
+    </view>
+  </view>
+</view>
+
+<!-- 会员卡组件 -->
+<view wx:if='{{tabIndex == 1 && (cardList.length || couponList.length || giftList.length)}}' class="bg-gray">
+  <view wx:if='{{titleXArr.length>0 || titleIdArr.length>1}}' class="gift-tab">
+    <view class="tab-wrap">
+	    <view class="tabItemContainer">
+		    <text wx:if="{{cardList.length}}" class="tab-item {{toView=='tabs0' ? 'active':''}}" data-tab="tabs0" bindtap="clickTab">会员卡</text>
+		    <view class="underLine" style="opacity: {{toView=='tabs0'?1:0}}"/>
+	    </view>
+	    <view class="tabItemContainer" style="margin: 0 90rpx">
+            <text wx:if="{{couponList.length}}" class="tab-item {{toView=='tabs1' ? 'active':''}}" data-tab="tabs1" bindtap="clickTab">优惠券</text>
+		    <view class="underLine" style="opacity: {{toView=='tabs1'?1:0}}"/>
+	    </view>
+	    <view class="tabItemContainer">
+            <text wx:if="{{giftList.length}}" class="tab-item {{toView=='tabs2' ? 'active':''}}" data-tab="tabs2" bindtap="clickTab">礼包</text>
+		    <view class="underLine" style="opacity: {{toView=='tabs2'?1:0}}"/>
+	    </view>
+    </view>
+    <!--<view class="under-line" style="transform:translateX({{underlineX}}px);opacity:{{underlineX?1:0}}"></view>-->
+  </view>
+
+    <scroll-view style="padding-top:{{titleIdArr.length>1?'200rpx':'100rpx'}}"
+                 id="scroll-conent" bindscrolltolower="lowerScrollFn"
+                 scroll-into-view="{{autoScroll?toView:''}}" class="from-sell" scroll-y="true"
+                 bindscroll="cardScroll">
+      <!-- 会员卡 -->
+      <view id="tabs0" class="view-top" wx:if="{{cardList.length}}">
+        <view class="gaps"></view>
+        <view class="list-title" data-name="会员卡">会员卡</view>
+        <block wx:for="{{cardList}}" wx:key="index">
+          <view class="card-item" data-id="{{item.id}}" bindtap="cardDetails">
+            <image wx:if="{{item.promotePrice}}" class='pref-icon' src='/image/pref.png'></image>
+            <image lazy-load="{{true}}" mode="aspectFill" class='card-img' src="{{item.picurl}}"></image>
+            <view class="card-item-content">
+              <view class='vip-wrap flex-al'>
+                <image class='vip-img' src='/image/vip.png'></image>
+                <text wx:if="{{item.targetType == '1'}}" class='vip-text'>储值卡</text>
+                <text wx:if="{{item.targetType == '2'}}" class='vip-text'>权益卡</text>
+              </view>
+              <view class='card-name'>{{item.name}}</view>
+              <view class="money-warp">
+                <view class=""><text class="sell">售价：</text><text class="cny">¥</text><text class="money">{{item.promotePrice / 100 || item.price / 100}}</text></view>
+                <view  class='buy-card flex-al'>
+                  <view class="triangle-flex-box">
+                    <text class="{{item.targetType == '2' ? 'blue':'orange'}} {{item.pictureisNull == 1 ? 'gray333' : ''}} ml6">开卡</text>
+                    <view class="new-triangle {{item.targetType == '2' ? 'blue':'orange'}} {{item.pictureisNull == 1 ? 'gray333' : ''}}"></view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <!-- 优惠券 -->
+      <view wx:if="{{couponList.length}}" id="tabs1" class="view-top">
+        <view class="gaps"></view>
+        <view class="list-title" data-name="优惠券">优惠券</view>
+        <view class="coupon-list">
+          <block wx:for="{{couponList}}" wx:key="index">
+            <view class="coupon-item" data-id="{{item.id}}" bindtap="couponDetails">
+              <view class="coupon-item-img-box">
+                <image class="coupon-item-img" mode="aspectFill" src="{{item.picurl}}"></image>
+              </view>
+              <view class="coupon-item-wrap">
+                <view class="coupon-item-detail">
+                  <view class="fw coupon-item-tit ellipsis">{{item.name}}</view>
+                  <view class="coupon-item-detail-describe ellipsis">{{item.genre}}</view>
+                  <view class="fw orange price flex">
+                    <text class="digit">¥{{item.price / 100}}</text>
+                    <view class="view-btn buy-btn">立即购买</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+      <!-- 礼包 -->
+      <view wx:if="{{giftList.length}}" id="tabs2" class="view-top">
+        <view class="gaps"></view>
+        <view class="list-title" data-name="礼包">礼包</view>
+        <view class="gift-list">
+          <block wx:for="{{giftList}}" wx:key="index">
+            <view class="gift-item" data-id="{{item.id}}" bindtap="giftDetails">
+              <view class="gift-item-wrap">
+                <view class="gift-item-img-wrap">
+                  <image class="gift-item-img" mode="aspectFill" src="{{item.picurl}}"></image>
+                  <view class="gift-item-intro" wx:if="{{item.cardNum && item.voucherNum}}">内含{{item.cardNum}}卡{{item.voucherNum}}券</view>
+                  <view class="gift-item-intro" wx:if="{{item.cardNum && !item.voucherNum}}">内含{{item.cardNum}}张卡</view>
+                  <view class="gift-item-intro" wx:if="{{!item.cardNum && item.voucherNum}}">内含{{item.voucherNum}}张券</view>
+                </view>
+                <view class="fw gift-item-name">{{item.name}}</view>
+                <view class="fw orange gift-item-price">
+                  <view class="gift-item-price-fen">¥</view>
+                  <view class="digit">{{item.price / 100}}</view></view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </scroll-view>
+
+</view>
+
+<!-- 卡详情 -->
+<buy-card wx:if="{{cardDetail}}" showCardDetail ="{{cardDetails}}" showDetail ="{{couponDetails}}"
+          showGift ="{{giftDetails}}"
+></buy-card>
+
+<!-- 暂无数据 -->
+<default id="default" type="{{type}}"></default>

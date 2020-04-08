@@ -1,0 +1,105 @@
+/* 绑卡券.wxss */
+
+.content {
+  font-size: 26rpx;
+}
+
+.nav {
+  height: 88rpx;
+  border-bottom: 0.8px solid #e4e4e4;
+}
+
+.nav-item {
+  margin: 0 30rpx;
+}
+
+.no-boeder {
+  border-bottom: 0.8px solid transparent;
+}
+
+.navCur {
+  color: #ff630e;
+  border-bottom: 0.8px solid #ff630e;
+}
+
+
+.input-wrap {
+  border-bottom: 0.8px solid #eee;
+  padding: 0 30rpx;
+  position: relative;
+}
+
+.input-text {
+  height: 88rpx;
+  line-height: 88rpx;
+}
+
+.invitation {
+  padding: 0 24rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-bottom: 0.8px solid #e4e4e4;
+  margin-top: 40rpx;
+  color: #8d8d8d;
+}
+
+.hintInfo {
+  position: relative;
+  padding: 20rpx 24rpx 20rpx 60rpx;
+  background-size: 26rpx 26rpx;
+  font-size: 26rpx;
+  color: #b5b5b5;
+}
+
+.hintTxt {
+  margin-top: 10rpx;
+}
+
+.notice {
+  width: 26rpx;
+  height: 26rpx;
+  position: absolute;
+  left: 26rpx;
+  top: 34rpx;
+}
+
+.btn-wrap {
+  padding: 40rpx;
+}
+
+.bind-wrap {
+  position: relative;
+}
+
+.code-img,
+.bind-img {
+  margin-right: 20rpx;
+}
+
+.code-img {
+  width: 29rpx;
+  height: 27rpx;
+  left: 56rpx;
+}
+
+.bind-img {
+  width: 29rpx;
+  height: 29rpx;
+}
+
+.w320 {
+  width: 320rpx;
+}
+
+.mt100 {
+  margin-top: 100rpx;
+}
+
+.opa {
+  opacity: 0.5;
+}
+
+
+.btn-wrap .login-btn {
+  color: #fff;
+}

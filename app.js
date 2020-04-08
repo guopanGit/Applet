@@ -1,157 +1,202 @@
-//app.js
-import temp from 'template/temp';
+/**
+ * 导入封装函数
+ */
 
-var configJson = require('utils/bin.js').config,
-  url = require('utils/url.js'),
-  utils = require('./utils/util'),
-  wxLoginUrl = url.wxLogin,
-  appId = configJson.appId,
-  AppSecret = configJson.AppSecret,
-  wxLoginPara = {};
+import {
+  ajaxPromise
+} from 'utils/util.js';
+
+import {
+  URL,
+} from 'utils/config.js';
+
+// 接口
+const {
+  sensorsSetup, // 埋点接口
+  checkCinema
+} = URL || '';
+
+// 神策数据采集
+import sensors from './analysis/sensorsdata.min.js';
+
+sensors.init();
+
+// 百度数据采集
+const mtjwxsdk = require("./analysis/mtj-wx-sdk.js");
+
 App({
-  onLaunch: function(options) {
-    let thit = this;
-    // // console.log('App Launch')
-    //调用API从本地缓存中获取数据
-    var logs = wx.getStorageSync('logs') || [];
-    logs.unshift(Date.now());
 
-    var movieCode = configJson.movieCode;
-    //调用API从进行数据的本地缓存
-    wx.setStorageSync('logs', logs);
-    wx.setStorageSync('movieCode', movieCode);
-    wx.setStorageSync('CVersion', '2.6.1');
-    wx.setStorageSync('OS', 'IOS');
-
-  },
-  getUserInfo: function(cb) {
-    var that = this;
-    if (this.globalData.userInfo) {
-      typeof cb == "function" && cb(this.globalData.userInfo)
-    } else {
-      //调用登录接口
-      wx.login({
-        success: function(res) {
-          if (res.code) {
-            //发起网络请求
-            wx.request({
-              url: 'https://api.weixin.qq.com/sns/jscode2session',
-              method: 'GET',
-              data: {
-                js_code: res.code,
-                appid: appId,
-                secret: AppSecret,
-                grant_type: 'authorization_code'
-              },
-              header: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                'Accept': 'application/json'
-              },
-              success: function(res) {
-                //success
-                var pc = new WXBizDataCrypt(appId, res.data.session_key);
-                wx.getUserInfo({
-                  success: function(res) {
-                    // console.log(res , "iv")                                       
-                    var data = pc.decryptData(res.encryptedData, res.iv);
-
-                    wx.setStorageSync('userData', data);
-
-                    wxLoginPara.city = data.city;
-                    wxLoginPara.country = data.country;
-                    wxLoginPara.headimgurl = data.avatarUrl;
-                    wxLoginPara.language = data.language;
-                    wxLoginPara.nickname = data.nickName;
-                    wxLoginPara.openid = data.openId;
-                    wxLoginPara.province = data.province;
-                    wxLoginPara.sex = data.gender;
-                    wxLoginPara.unionid = data.unionId;
-
-                    that.wxLoginfn();
-                  },
-                })
-              },
-              fail: function() {},
-              complete: function() {}
-            });
+  /**
+   * 小程序初次加载函数
+   */
+  onLaunch(options) {
+    // 获取设备信息
+    let _this = this;
+    wx.getSystemInfo({
+      success: res => {
+        let OS = res.system.split(' ')[0];
+        wx.setStorageSync('OS', OS);
+        wx.setStorageSync('CVersion', res.version);
+        // 适配iPhoneX
+        let deviceModel = ['iPhone X', 'iPhone XR', 'iPhone XS Max'];
+        for (let i = 0; i < deviceModel.length; i++) {
+          if (res.model.indexOf(deviceModel[i]) > -1) {
+            _this.globalData.iPhoneX = true;
           }
         }
-      });
-    }
-  },
-
-  //wx login
-  wxLoginfn: function(e) {
-    var that = this;
-    wx.request({
-      url: wxLoginUrl,
-      method: 'GET',
-      data: wxLoginPara,
-      header: {
-        'Content-Type': 'text/plain',
-        'Accept': 'application/json'
       },
-      success: function(res) {
-        var data = res.data.resultData;
-        wx.setStorageSync('member', data);
-
-        if (data.isBinding == '0') {
-          var url = 'pages/login/login';
-          wx.navigateTo({
-            url: url
-          });
-        }
-
-      },
-      fail: function() {},
-      complete: function() {}
     })
   },
 
-	onShow: function (options) {
-		wx.setStorageSync('scenc', options.scene);
-		console.log(options.scene)
-		const _this = this;
-	if (options.scene == 1011 && options.query.q) {
-			let url = decodeURIComponent(options.query.q);
-			url = url.substring(url.indexOf('?') + 1).split('&');
-			let cinemaCode = url[1];
-			let cinemaName = url[2];
-			let companyCode = url[3];
-			let hallCode = url[4];
-			let movie = url[5];
-			let row = url[6];
-			let seat = url[7];
-			cinemaCode = _this.getCaption(cinemaCode);
-			cinemaName = _this.getCaption(cinemaName);
-			companyCode = _this.getCaption(companyCode);
-			hallCode = _this.getCaption(hallCode);
-			movie = _this.getCaption(movie);
-			row = _this.getCaption(row);
-			seat = _this.getCaption(seat);
-			wx.setStorageSync('cinemaCode', cinemaCode);
-			wx.setStorageSync('cinemaName', cinemaName);
-			wx.setStorageSync('companyCode', companyCode);
-			wx.setStorageSync('hallCode', hallCode);
-			wx.setStorageSync('movie', movie);
-			wx.setStorageSync('row', row);
-			wx.setStorageSync('seat', seat);
-		}
-	},
-  onHide: function() {	
-	
+  /**
+   * 监听小程序显示
+   */
+  onShow(options) {
+    // 检测更新
+    this.upgrading();
+    // 获取参数
+    let sharePara = options.query;
+    let scene = options.scene;
+    if (scene == 1012 || scene == 1013){ // 长按或相册选
+      scene = 1011
+    }
+    wx.setStorageSync('scene', scene);
+    // 扫码跳转小程序替换参数
+    if (scene === 1011 && sharePara.q) {
+      this.scanEnter(sharePara.q);
+    }
+
+    if (sharePara.cinemaCode) {
+      wx.setStorageSync('cinemaCode', sharePara.cinemaCode);
+    }
+    if (sharePara.cinemaName) {
+      wx.setStorageSync('cinemaName', sharePara.cinemaName);
+    }
+    if (sharePara.companyCode) {
+      wx.setStorageSync('companyCode', sharePara.companyCode);
+    }
+    if (sharePara.luckDrawId) {
+      wx.setStorageSync('luckDrawId', sharePara.luckDrawId);
+    }
+    if (sharePara.tabIndex) {
+      wx.setStorageSync('tabIndex', sharePara.tabIndex);
+    }
+    // 启动APP埋点参数
+    let memberCode = wx.getStorageSync('member').memberCode;
+    let cinemaName = wx.getStorageSync('cinemaName');
+    let cinemaCode = wx.getStorageSync('cinemaCode');
+    let gps = wx.getStorageSync('longitude') + ',' + wx.getStorageSync('latitude');
+
+    // 埋点接口
+    ajaxPromise(false, sensorsSetup, {
+      memberCode: memberCode ? memberCode : '',
+      cinemaName: cinemaName ? cinemaName : '',
+      gps: gps
+    }, this.sensorsSetupCall, true);
+    // 效验当前cinemaCode 是否正确
+    if (cinemaCode) {
+      ajaxPromise(false, checkCinema, {
+          cinemaCode
+        }, false, true)
+        .then((res) => {
+          let {
+            cinemaCodeNew,
+            yourCinemaCode
+          } = res.resultData;
+          if (cinemaCodeNew && cinemaCodeNew != yourCinemaCode) {
+            wx.setStorageSync('firstEntry', false);
+            wx.reLaunch({
+              url: `/pages/cinema/cinema`
+            })
+          }
+        })
+        .catch(() => {})
+    }
+
+    // 看瓜缓存过期时间
+    let getExpiration = wx.getStorageSync("melonSource") || 0; // 拿到过期时间
+    let nowTimestamp = Date.parse(new Date()); // 拿到现在时间
+    // 进行时间比较
+    if (getExpiration < nowTimestamp) { // 过期了，清空缓存，跳转到登录
+      wx.setStorageSync('melonSource', 0)
+    }
   },
+
+  // 埋点成功回调
+  sensorsSetupCall(res) {
+    // console.log(res.resultDesc);
+  },
+
+  /**
+   * 监听小程序隐藏
+   */
+  onHide() {
+    clearInterval(this.globalData.clear);
+  },
+
+  /**
+   * 全局数据媒介
+   */
   globalData: {
-    userInfo: null,
-    // url: 'http://101.201.210.244:8081/yinghe-app'
-    // movieCode: '7f8ceeed9182403796eef0de0bf8748c'
+    timer: {},
+    iPhoneX: false,
+    adShowOnce: true,
+    sceneArr: [],
+    tipsPara: {},
+    counponData: {},
+    currentScene: {},
+    ticketInfos: {},
+    couponList: [],
+    page: '',
+    cardIndex: '',
+    cardType: 0,
+    couponIndex: [],
+    voucherName: [],
+    melonSource: "",
+    checkCinema: false
   },
-	//  截取url中的参数
-	getCaption(obj) {
-		var index = obj.indexOf("=");
-		obj = obj.substring(index + 1, obj.length);
-		return obj;
-	},
-  //通过scope来引入weToast函数
-  weToast: (scope) => new weToast(scope)
-});
+
+  /**
+   * 扫码参数
+   */
+  scanEnter(url) {
+    url = decodeURIComponent(url);
+    url = url.substring(url.indexOf('?') + 1).split('&');
+    url.forEach(element => {
+      element = element.split('=');
+      wx.setStorageSync(element[0], element[1])
+    });
+  },
+
+  /**
+   * 检查更新
+   */
+  upgrading() {
+    const updateManager = wx.getUpdateManager();
+    updateManager.onCheckForUpdate((res) => {
+      if (res.hasUpdate) {
+        updateManager.onUpdateReady(() => {
+          wx.showModal({
+            title: '更新提示',
+            content: '新版本已经准备好，即将重启应用',
+            showCancel: false,
+            confirmText: '我知道了',
+            success: function (res) {
+              if (res.confirm) {
+                updateManager.applyUpdate();
+              }
+            },
+          })
+        })
+        updateManager.onUpdateFailed(() => {
+          wx.showModal({
+            title: '已经有新版本了哟~',
+            content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开~',
+            showCancel: false,
+            confirmText: '我知道了'
+          })
+        })
+      }
+    })
+  }
+})

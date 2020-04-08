@@ -1,0 +1,43 @@
+<!-- 选择会员卡 -->
+<view wx:if="{{chooseCardData.orders.length}}" class="card-container">
+  <view wx:if="{{isCoupon == 0}}" class="card-list {{iPhoneX ? 'iphone' : ''}}">
+    <card-list bind:tapCard="choosedCard" bind:refresh="refresh" source="{{source}}" isPassword="{{isPassword}}" currentIndex="{{currentIndex}}"
+               chooseCardData="{{chooseCardData.orders}}"></card-list>
+  </view>
+
+  <view wx:if="{{isCoupon == 1}}">
+    <view class="notice-wrap">
+      <view class='notice-content flex-single'>
+        <view class="prompt-wrap">
+          <image class='prompt-img' src='/image/prompt.png'></image>
+        </view>
+        <text>由于选择了优惠券，以下会员卡仅供支付，不享受折扣</text>
+      </view>
+    </view>
+    <card-list bind:tapCard="choosedCard" source="{{source}}" isPassword="{{isPassword}}" currentIndex="{{currentIndex}}"
+               chooseCardData="{{storeCard}}"></card-list>
+    <view wx:if="{{noStoreCard.length}}" class="notice-wrap">
+      <view class='notice-content flex-single'>
+        <view class="prompt-wrap">
+          <image class='prompt-img' src='/image/prompt.png'></image>
+        </view>
+        <text>选择以下会员卡，不可与优惠券同时使用</text>
+      </view>
+    </view>
+    <card-list wx:if="{{noStoreCard.length}}" bind:tapCard="choosedCard" source="{{source}}" isPassword="{{isPassword}}" currentIndex="{{currentIndex}}"
+               chooseCardData="{{noStoreCard}}"></card-list>
+  </view>
+</view>
+<!-- 输入支付密码 -->
+<view wx:if="{{showInput}}" catchtouchmove='true' bindtap="closeInput" class='mask-wrap'></view>
+<input-six wx:if="{{showInput}}" bind:confirmPassword="confirmPassword" bind:inputSix="inputSix"
+           bind:closeInput="closeInput" source="0">
+</input-six>
+<default id="default" type="4" bind:clickBtn="clickBtn"></default>
+<view wx:if="{{chooseCardData.orders.length > 0}}" class="btn-wrap {{iPhoneX ? 'iphone' : ''}}">
+  <view class="no-use" bindtap="noCard">
+    <view class="select"></view>
+    <text class="fz32">不使用会员卡</text>
+  </view>
+  <view class="confirm {{currentIndex == ''  ? 'opa' : ''}}" bindtap="confirm">确定</view>
+</view>

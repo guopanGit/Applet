@@ -1,0 +1,106 @@
+<!-- 首页影片滑动 -->
+<view class='swiper-wrap'>
+  <swiper previous-margin="264rpx" next-margin="264rpx" bindchange="swiperChange" current='{{swiperIndex}}'
+          easing-function="linear">
+    <block wx:for="{{imageArr}}" wx:index="{{index}}" wx:key="key">
+      <swiper-item id="{{index}}" data-item='{{item}}' class="swiper-item" bindtap="changeSlider">
+        <view class="slider-img-wrap {{swiperIndex == index ? ' active ' : ' '}}">
+          <image mode="aspectFill" src="{{item.fpn}}" class="slide-image "/>
+          <text wx:if="{{item.ia == '1' && item.iy}}" class='film-label rose-red'>{{item.iy}}</text>
+          <text wx:elif="{{(item.ia == '2' || item.ia == '3') && item.iy}}" class='film-label'>{{item.iy}}</text>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<!-- 影片信息 -->
+<view class='info-wrap'>
+  <view class='film-name'>
+    <text>{{filmInfo.name}}</text>
+  </view>
+  <view class='info'>
+    <text>{{filmInfo.filmDeartion}}分钟 |</text>
+    <text>{{filmInfo.filmType}}</text>
+  </view>
+</view>
+<!-- 卡推荐组件 -->
+<buy-card id='cardRecommend' source="2" renderData="{{renderData}}" recommendCard="{{recommendCard}}"
+          cardTitle="{{cardTitle}}" renderShow="{{renderShow}}"></buy-card>
+<!-- 场次列表 -->
+<view class='field-list'>
+  <!-- 日期切换 -->
+  <view class='slider-container'>
+    <scroll-view scroll-x>
+      <view class='slider-wrap'>
+        <block wx:for='{{sceneData}}' wx:index='{{index}}' wx:key='key'>
+          <view bindtap='toggleDate' data-index='{{index}}'
+                class="slider-item {{toggleIndex == index ? 'active' : ''}}">
+            <text>{{item.day}}</text>
+            <text wx:if="{{item.tagName == '惠'}}" class='date-icon rose-red'>{{item.tagName}}</text>
+            <text wx:elif='{{item.tagName}}' class='date-icon'>{{item.tagName}}</text>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+  <view class='gaps'></view>
+  <!-- 场次切换 -->
+  <view class='sun-moon'>
+    <block wx:for='{{sceneListData}}' wx:index='{{index}}' wx:key='key'>
+      <view class='field-wrap'>
+        <view class='flex field-item'>
+          <view class="label-wrap">
+            <text wx:if="{{item.ismorrow == '1'}}" class='label-icon next-day'>次日放映</text>
+            <text wx:if="{{item.tagName && item.tagType == '3'}}" class='label-icon'>{{item.tagName}}</text>
+          </view>
+          <view class='each-item'>
+            <view class='fz34'>{{item.startTime}}</view>
+            <view class='small-font'>结束{{item.endTime}}</view>
+          </view>
+          <view class='each-item fixed-width'>
+            <view class='fz28'>{{item.movieType}}</view>
+            <view class='small-font ellipsis'>{{item.hallName}}</view>
+          </view>
+          <view class='each-item other-item'>
+            <view wx:if="{{item.finalPrice}}">
+              <text class='yen orange'>¥</text>
+              <text class='fz36 orange'>{{item.finalPrice}}</text>
+            </view>
+            <view>
+              <view wx:if="{{item.cardPrice && item.cardPrice > 0}}" class='vip-price flex-al'>
+                <view class='vip-text'>开卡享</view>
+                <view class='yen vip-yen'>¥{{item.cardPrice}}</view>
+              </view>
+              <view wx:else>
+                <view wx:if="{{item.throughPrice}}">
+                  <text class='yen gray'>¥</text>
+                  <text class='small-font through'>{{item.throughPrice}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class='each-item'>
+             <view wx:if="{{item.isStopSell}}" class='select-seat sell-over' data-id="1" bindtap="StopSell">停售</view>
+            <view wx:elif="{{item.isSellOut}}" class='select-seat sell-over' data-id="2" bindtap="StopSell">售罄</view>
+            <view wx:elif='{{item.eventPrice}}' class='select-seat pref-icon' id='{{index}}' data-item='{{item}}'
+                  bindtap='selectSeat'>特惠</view>
+            <view wx:else class='select-seat' id='{{index}}' data-item='{{item}}' bindtap='selectSeat'>购票</view>
+          </view>
+        </view>
+        <view class='sun-moon'>
+          <image wx:if="{{item.sm == 'moon'}}" class='moon' src='/image/moon.png'></image>
+          <image wx:if="{{item.sm == 'sun'}}" class='sun' src='/image/sun.png'></image>
+          <view class='dotted-line'></view>
+        </view>
+      </view>
+    </block>
+    <view class='dotted-hide'></view>
+  </view>
+  <!-- 暂无数据 -->
+  <view wx:if='{{isHasData}}' class='no-scene'>
+    <image class='no-img' src='/image/no-scene.png'></image>
+    <view class='gray'>无场次排片</view>
+    <view bindtap='chekcOther' class='checkOther'>请查看其他场次</view>
+  </view>
+</view>
+<view wx:if='{{!sceneListData.length && !imageArr.length}}' class='empty-page'></view>

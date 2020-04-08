@@ -1,0 +1,128 @@
+<!-- 选择卖品 -->
+<view class='count-wrap'>
+  <view class="count-time">支付剩余时间：{{countTime}}</view>
+</view>
+<view class='goods-wrap'>
+  <view wx:for="{{goodsList}}" wx:key="key" class="goods-list">
+    <view class="goods-item flex-single">
+      <text wx:if="{{item.isActivity == '1'}}" class="discount-icon">特惠</text>
+      <image bindtap="checkPref" data-key="{{item}}" mode="aspectFill" data-index="{{index}}" class="goods-img"
+        lazy-load="true" src="{{item.goodsImg}}"></image>
+      <view class="goods-content">
+        <view class="goods-name spilled ellipsis">{{item.goodsName}}</view>
+        <view class="goods-desc ellipsis">{{item.goodsDesc}}</view>
+        <view class="limit-num">
+          <text wx:if="{{item.isActivity == '1'}}">限制{{item.memberLimit}}份优惠</text>
+        </view>
+        <view class="flex">
+          <view>
+            <text class="yen">¥</text>
+            <block wx:if="{{item.isActivity == '1'}}">
+              <text class="discount-price">{{item.activityPrice/100}}</text>
+              <text wx:if="{{item.activityPrice < item.goodsPrice}}" class="origin-price">¥{{item.goodsPrice/100}}</text>
+            </block>
+            <block wx:else>
+              <text class="discount-price">{{item.goodsPrice/100}}</text>
+              <text wx:if="{{item.goodsPrice < item.originalPrice}}" class="origin-price">¥{{item.originalPrice/100}}</text>
+              <text wx:if="{{item.amount <= 0 && item.cardPrice < item.goodsPrice }}" class="save">开卡享¥{{(item.cardPrice/100)}}</text>
+            </block>
+          </view>
+          <view class="flex-al">
+            <image bindtap='bindSub' data-index="{{index}}"
+              class="sub-icon {{item.amount == 0 ? 'trans-num' : 'animate-img'}}" src="/image/gray-sub.png"></image>
+            <text class="goods-num {{item.amount == 0 ? 'opacity-num' : ''}}">{{item.amount}}</text>
+            <image wx:if="{{cartTotal < 99}}" bindtap='bindAdd' data-index="{{index}}" class="add-icon" src="/image/orange-add.png"></image>
+            <image wx:else data-index="{{index}}" class="add-icon" src="/image/gray-add.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 添加购物车 -->
+<view class="shop-cart-wrap {{iPhoneX ? 'adapta-fixed' : ''}}">
+  <view class="shop-cart flex">
+    <view class="cart-wrap flex-al" bindtap='showCartList'>
+      <view class="icon-wrap">
+        <image class="cart-icon" src="/image/cart.png"></image>
+        <view wx:if="{{cartTotal > 0}}" class="corner-icon">{{cartTotal}}</view>
+      </view>
+      <text wx:if="{{cartTotal > 0}}" class="show-price">¥{{totalPrice / 100}}</text>
+      <text wx:else class="fz28">选份心仪的卖品吧!</text>
+    </view>
+    <view wx:if="{{cartTotal > 0}}" bindtap="nextStep" data-type="step" class="cart-bth flex-al">
+      <text>下一步</text>
+      <view class="triangle"></view>
+    </view>
+    <view wx:else bindtap="nextStep" class="cart-bth">不了，谢谢</view>
+  </view>
+</view>
+<!-- 遮罩 -->
+<view wx:if='{{showLayer}}' bindtap='hideLayer' catchtouchmove='true' class="mask-wrap {{prefLayer ? 'high-index':''}}">
+</view>
+<!-- 购物车列表 -->
+<view wx:if='{{isCartList}}' animation="{{animate}}" class="cart-list {{iPhoneX ? 'adapta-list' : ''}}">
+  <view class="cart-title flex">
+    <view class="cart-text gray">已选商品</view>
+    <view bindtap="clearCart" class="cart-clear flex-al">
+      <image class="del-img" src="/image/del-cart.png"></image>
+      <text class="del-text">清空</text>
+    </view>
+  </view>
+  <scroll-view class="cart-scroll" scroll-y>
+    <view wx:for="{{cartList}}" wx:key="key" class="cart-item flex">
+      <view class="cart-name ellipsis">{{item.goodsName}}</view>
+<!--      <view wx:if="{{item.isActivity == '1'}}" class="cart-price">¥{{item.activityPrice/100}}</view>-->
+      <view class="cart-price">¥{{item.total/100}}</view>
+      <view class="flex-al">
+        <image bindtap='bindSub' data-index="{{item.index}}" class="sub-icon" src="/image/gray-sub.png"></image>
+        <text class="goods-num">{{item.amount}}</text>
+        <image wx:if="{{cartTotal < 99}}" bindtap='bindAdd' data-index="{{item.index}}" class="add-icon" src="/image/orange-add.png"></image>
+        <image wx:else data-index="{{index}}" class="add-icon" src="/image/gray-add.png"></image>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<!-- 特惠卖品 -->
+<view wx:if="{{prefLayer}}" catchtouchmove='true' class='layer-center'>
+  <view class='pref-img-wrap'>
+    <image src="{{preferential.goodsImg}}" mode="aspectFill" class='pref-img'></image>
+    <view class="close-pref" bindtap="hideLayer">
+      <icon type="clear" size="24" color="#e5e5e5"></icon>
+    </view>
+    <text wx:if="{{preferential.isActivity == '1'}}" class='pref-text'>特惠</text>
+  </view>
+  <view class='space'>
+    <view class='fz42'>{{preferential.goodsName}}</view>
+    <view class='fz24 gray999 mt10'>{{preferential.goodsDesc}}</view>
+    <view class='pref-price flex'>
+      <view wx:if="{{preferential.isActivity == '1'}}">
+        <text class='orange'>
+          <text class='fz24'>¥</text>
+          <text class='fz46'>{{preferential.activityPrice/100}}</text>
+        </text>
+        <text wx:if="{{preferential.activityPrice < preferential.goodsPrice}}" class='through fz24 gray999 ml10'>
+          <text>¥</text>
+          <text>{{preferential.goodsPrice/100}}</text>
+        </text>
+        <text wx:if="{{preferential.memberLimit}}" class='orange ml10'>限{{preferential.memberLimit}}份优惠</text>
+      </view>
+      <view wx:else>
+        <text class='orange'>
+          <text class='fz24'>¥</text>
+          <text class='fz46'>{{preferential.goodsPrice/100}}</text>
+        </text>
+        <text wx:if="{{preferential.goodsPrice < preferential.originalPrice}}" class='through fz24 gray999 ml10'>
+          <text>¥</text>
+          <text>{{preferential.originalPrice/100}}</text>
+        </text>
+        <text wx:if="{{preferential.memberLimit}}" class='orange ml10'>限{{preferential.memberLimit}}份优惠</text>
+      </view>
+      <view bindtap='bindAdd' data-index="{{preferential.index}}" data-sign="favour" class='small-btn'>
+        加入购物车
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 适配 -->
+<view wx:if="{{iPhoneX }}" class="adapta-view"></view>

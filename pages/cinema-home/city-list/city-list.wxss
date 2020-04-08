@@ -1,0 +1,89 @@
+page {
+  font-size: 28rpx;
+}
+
+.city-wrap {
+  margin-left: 30rpx;
+}
+
+.a-z {
+  width: 60rpx;
+  position: fixed;
+  right: 10rpx;
+  top: 50%;
+  transform: translate(0, -50%);
+  text-align: center;
+  font-size: 20rpx;
+  z-index: 2;
+}
+
+.letter-item {
+  height: 40rpx;
+  line-height: 40rpx;
+}
+
+.city-item-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.near-city {
+  width: 200rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  text-align: center;
+  border: 2rpx solid #eee;
+  margin-top: 30rpx;
+}
+
+.lociton-icon {
+  width: 18rpx;
+  height: 25rpx;
+  margin-right: 10rpx;
+}
+
+.city-item {
+  width: 70%;
+  height: 80rpx;
+  line-height: 80rpx;
+  position: relative;
+}
+
+.city-item::after {
+  content: '';
+  display: block;
+  width: 720rpx;
+  border-bottom: 0.8px solid #eee;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.city-item-A-Z {
+  color: #999;
+  margin-top: 40rpx;
+  font-size: 24rpx;
+}
+
+.img-float {
+  width: 70rpx;
+  height: 58rpx;
+}
+
+.letter-float {
+  width: 70rpx;
+  height: 58rpx;
+  color: #fff;
+  font-size: 32rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-80rpx);
+}
+
+.text-float {
+  position: absolute;
+  left: 16rpx;
+  top: 6rpx;
+}

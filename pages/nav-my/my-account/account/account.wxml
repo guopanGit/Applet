@@ -1,0 +1,18 @@
+<!-- 账号安全 -->
+<view class="content">
+  <view class="setting deal flex" bindtap="changePhone">
+    <view class="flex-al">
+      <text>换绑手机号</text>
+    </view>
+    <view class="flex">
+      <view>{{phone}}</view>
+      <view class="arrow gray-arrow right-arrow"></view>
+    </view>
+  </view>
+  <view class="setting deal flex" bindtap="toRecompose">
+    <view class="flex-al">
+      <text>重设支付密码</text>
+    </view>
+    <view class="arrow gray-arrow right-arrow"></view>
+  </view>
+</view>

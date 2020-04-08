@@ -1,0 +1,442 @@
+/* 卡列表组件 */
+
+@import '/app.wxss';
+
+.card-list {
+  padding: 0rpx 30rpx 40rpx;
+}
+
+.white{
+  font-weight: 700;
+  color: #fff;
+  opacity: .5;
+  font-size: 24rpx;
+}
+
+.card-wrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.card-wrap:last-child{
+  margin: 0;
+}
+
+.card-face {
+  flex: 9;
+  color: #fff;
+  position: relative;
+}
+
+.card-bg {
+  width: 100%;
+}
+
+.card-face,
+.card-bg {
+  height: 390rpx;
+  border-radius: 18rpx;
+}
+
+.outline-bg {
+  box-shadow: 0 8rpx 16rpx 0 rgba(0, 0, 0, 0.2), 0 6rpx 20rpx 0 rgba(0, 0, 0, 0.2);
+}
+
+.stored-bg {
+  box-shadow: 0 8rpx 16rpx 0 rgba(250, 94, 72, 0.2), 0 6rpx 20rpx 0 rgba(250, 94, 72, 0.2);
+}
+
+.equity-bg {
+  box-shadow: 0 8rpx 16rpx 0 rgba(91, 135, 244, 0.2), 0 6rpx 20rpx 0 rgba(91, 135, 244, 0.2);
+}
+
+.card-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 60rpx 30rpx 60rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.card-text {
+  font-size: 42rpx;
+  font-weight: 700;
+  margin-bottom: 20rpx;
+  white-space: nowrap;
+
+}
+
+.card-date {
+  display: inline-block;
+  color: #fff;
+  line-height: 40rpx;
+  font-size: 20rpx;
+  border-radius: 4rpx;
+}
+
+.card-date-bd{
+  padding: 4rpx 8rpx;
+  opacity: 0.5;
+  border: solid 1px #ffffff;
+  border-radius: 4rpx;
+}
+
+.select-wrap {
+  flex: 1;
+  text-align: right;
+}
+
+.no-select,
+.selected {
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+}
+
+.no-select {
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.card-price {
+  margin-top: 33rpx;
+}
+
+.buy-card {
+  width: 180rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 34px;
+  justify-content: center;
+}
+
+.outline-bg .buy-card {
+  color: #333;
+}
+
+.stored-bg .buy-card {
+  color: #fd7c40;
+}
+
+.equity-bg .buy-card {
+  color: #5b88f4;
+}
+
+.outline-bg .triangle {
+  border-left-color: #333;
+}
+
+.stored-bg .triangle {
+  border-left-color: #fd7c40;
+}
+
+.equity-bg .triangle {
+  border-left-color: #5b88f4;
+}
+
+.orange {
+  color: #fd7c40;
+  border-left-color: #fd7c40;
+  font-weight: 700;
+}
+
+.triangle{
+  display: inline-block;
+}
+
+.blue {
+  color: #5b88f4;
+  border-left-color: #5b88f4;
+  font-weight: 700;
+}
+
+.gray333{
+  color: #333;
+  border-left-color: #333;
+  font-weight: 700;
+}
+
+.sell-price {
+  font-size: 48rpx;
+  font-weight: 700;
+  margin-left: 6rpx;
+}
+
+.pref-wrap {
+  position: absolute;
+  top: -10rpx;
+  left: 38rpx;
+}
+
+.pref-img {
+  width: 84rpx;
+  height: 49rpx;
+}
+
+.tr {
+  font-size: 24rpx;
+  text-align: right;
+  margin-top: 30rpx;
+}
+
+.card-psd {
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  font-size: 28rpx;
+  text-align: center;
+  border-radius: 18rpx;
+  background-color: rgba(0, 0, 0, .8);
+}
+
+.card-wrap .inp-psd {
+  margin: 40rpx auto 0 auto;
+}
+
+.vip-img {
+  width: 73rpx;
+  height: 27rpx;
+}
+
+.vip-text {
+  font-size: 30rpx;
+  margin-left: 10rpx;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .5);
+}
+
+.vip-wrap {
+  margin-bottom: 10rpx;
+}
+
+.over-icon{
+  position: absolute;
+  width: 180rpx;
+  height: 135rpx;
+  top: 30rpx;
+  right: 30rpx;
+}
+
+/* 支付密码框 */
+
+.pay_number {
+  margin: 0 auto;
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: row;
+  border: 2rpx solid #cfd4d3;
+}
+
+.pay_number_interval {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  border-left: 0.8px solid #cfd4d3;
+}
+
+/* 第一个格子输入框 */
+
+.content .noBorder {
+  border-left: none;
+}
+
+/* 支付密码框聚焦的时候 */
+
+.get_focus {
+  border-color: #fe681d;
+}
+
+/* 单个格式样式 */
+
+.password_dot {
+  flex: 1;
+  border-left: 1px solid #cfd4d3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password_dot_interval {
+  flex: 1;
+  border: 2rpx solid #cfd4d3;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 单个格式样式（聚焦的时候） */
+
+.get_focus_dot {
+  flex: 1;
+  border-left: 0.8px solid #fe681d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.get_focus_dot_interval {
+  flex: 1;
+  border: 2rpx solid #fe681d;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 模拟光标 */
+
+.cursor {
+  width: 1px;
+  height: 15px;
+  background-color: #fe681d;
+  animation: focus 0.7s infinite;
+}
+
+/* 光标动画 */
+
+@keyframes focus {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* 格式中的点 */
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  border-radius: 50%;
+}
+
+/* 输入框 */
+
+.input_container {
+  height: 0;
+  width: 0;
+  min-height: 0;
+  position: relative;
+  text-indent: -999em;
+  left: -100%;
+}
+
+.ml6{
+  margin-left: 6px;
+}
+
+.unusual{
+  width: 100%;
+  position: absolute;
+  top: 26rpx;
+  left: 0;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.unusual-content{
+  height: 70rpx;
+  padding: 0 20rpx;
+  border-radius: 14rpx;
+  background: rgba(255,255,255,.9);
+}
+
+.unusual-img{
+  display: flex;
+  font-size: 24rpx;
+  align-items: center;
+  color: #333;
+}
+
+.connectionless{
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 14rpx;
+}
+
+.refresh-btn{
+  width: 80rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  border-radius: 10rpx;
+  border: 1px solid #333;
+  font-size: 22rpx;
+  color: #333;
+  text-align: center;
+}
+
+/* 更新密码 */
+
+.updatePwd-wrap{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  z-index: 13;
+}
+
+.updatePwd-title{
+  padding: 0 30rpx;
+  height: 88rpx;
+  color: #333;
+}
+
+.clear-wrap{
+  width: 120rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: right;
+}
+
+.clear{
+  width: 30rpx;
+  height: 28rpx;
+}
+
+.updatePwd-item{
+  height: 88rpx;
+  line-height: 88rpx;
+  border-bottom: 0.8px solid #f8f8f8;
+}
+
+.updatePwd-key{
+   display: inline-block;
+   width: 140rpx;
+   font-size: 24rpx;
+   text-align: right;
+   color: #999;
+ }
+
+.updatePwd-val{
+  display: inline-block;
+  width: 560rpx;
+  font-size: 28rpx;
+  text-align: left;
+  color: #999;
+}
+
+.updatePwd-input{
+  display: inline;
+  width: 100%;
+}
+
+.updatePwd-btn{
+  width: 600rpx;
+  height: 88rpx;
+  margin: 30rpx auto;
+  background: linear-gradient(to right, #fd8e47, #f35643);
+}

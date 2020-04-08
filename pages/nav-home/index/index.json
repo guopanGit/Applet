@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "buy-card": "/component/buy-card/buy-card",
+    "coupon-list": "/component/coupon-list/coupon-list"
+  },
+  "component": true
+}

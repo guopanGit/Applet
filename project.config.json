@@ -1,24 +1,46 @@
 {
-	"description": "项目配置文件。",
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
+		"enhance": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
+		"coverView": true,
 		"nodeModules": false,
 		"autoAudits": false,
-		"uglifyFileName": false
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": true,
+		"uglifyFileName": true,
+		"checkInvalidKey": true,
+		"checkSiteMap": false,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.2.5",
-	"appid": "wxd35ffbbf1bf027fe",
-	"projectname": "%E6%81%A9%E5%BE%AE%E5%BD%B1%E4%B8%9A",
+	"libVersion": "2.10.2",
+	"appid": "wx6e30c4fee25d8aac",
+	"projectname": "%E5%95%86%E5%93%81%E4%B8%AD%E5%BF%83",
+	"cloudfunctionTemplateRoot": "",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
 	"scripts": {
 		"beforeCompile": "",
 		"beforePreview": "",
 		"beforeUpload": ""
 	},
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -33,12 +55,30 @@
 			"list": []
 		},
 		"game": {
+			"list": []
+		},
+		"gamePlugin": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": 1,
+					"name": "商城",
+					"pathName": "pages/nav-goods/goods",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/nav-my/my/my",
+					"query": "",
+					"scene": null
+				}
+			]
 		}
 	}
 }

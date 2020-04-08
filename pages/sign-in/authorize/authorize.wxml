@@ -1,0 +1,10 @@
+<view class='wrapper'>
+  <view class="login-wrap">
+    <image class="user-img" src="/image/login-img.png"></image>
+    <view class='login-text'>还未登录</view>
+  </view>
+  <view class="login-btn-wrap">
+    <button class='login-bg' open-type='getUserInfo' bindgetuserinfo="bindGetUserInfo">立即登录</button>
+    <view class='login-btn' bindtap="noneLogin">暂不登录</view>
+  </view>
+</view>

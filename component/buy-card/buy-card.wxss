@@ -1,0 +1,349 @@
+@import '/app.wxss';
+
+/* 卡推荐 */
+
+.lh1{
+  line-height: 1;
+}
+
+.rec-card {
+  padding: 20rpx 30rpx;
+  background-color: #fff9f5;
+}
+
+.card-laber {
+  color: #fff;
+  border-radius: 4rpx;
+  background-color: #ff630e;
+  font-size: 20rpx;
+  padding: 4rpx 8rpx;
+  margin-right: 14rpx;
+}
+
+.card-agreement {
+  width: 520rpx;
+  height: 46rpx;
+  text-align: center;
+  margin: 20rpx auto 20rpx;
+  box-sizing: border-box;
+}
+
+.through {
+  margin-left: 20rpx;
+}
+
+.match-item {
+  line-height: 1;
+  margin-bottom: 16rpx;
+}
+
+.match {
+  margin-bottom: 16rpx;
+}
+
+.match:last-child {
+  margin-bottom: 0;
+}
+
+.city-name {
+  color: #ff630e;
+  margin-bottom: 16rpx;
+}
+
+.check-detail {
+  margin-bottom: 26rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #ff630e;
+  margin-top: 10rpx;
+}
+
+.open-card {
+  padding-top: 20rpx;
+  position: relative;
+  bottom: 0;
+}
+
+.my-card{
+  bottom: 10rpx;
+  right: 260rpx;
+}
+
+.touch-agree{
+  width: 240rpx;
+  bottom: 0rpx;
+  right: 160rpx;
+}
+
+
+.ml0{
+  margin-left: 10rpx;
+}
+
+.head-title{
+  width: 490rpx;
+  font-size: 48rpx;
+  line-height: 48rpx;
+  font-weight: 700;
+  margin-bottom: 20rpx;
+}
+
+/* 商场卡推荐 */
+
+.store-referrals{
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 44rpx 0 20rpx;
+  background: #ffefe5;
+  font-size: 26rpx;
+}
+
+.add-vip{
+  width: 98rpx;
+  height: 34rpx;
+  margin-right: 20rpx;
+}
+
+.instant{
+  display: flex;
+  align-items: center;
+  line-height: 100%;
+  /* border-left: 1px solid rgba(0,0,0,.2); */
+}
+
+.vertical{
+  width: 1px;
+  height: 20rpx;
+  background: rgba(0,0,0,.2);
+  margin-right: 20rpx;
+}
+
+.arrows{
+  margin-left: 10rpx;
+  position: relative;
+}
+
+.arrows:after{
+  display: block;
+  content:'';
+  width: 14rpx;
+  height: 14rpx;
+  border-top: 2rpx solid #333;
+  border-right: 2rpx solid #333;
+  position: absolute;
+  top: -8rpx;
+  transform: rotate(45deg);
+}
+
+.option{
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 10rpx;
+  vertical-align: middle;
+}
+
+.uncheck-agree{
+  width: 100rpx;
+  right: 440rpx;
+}
+
+.use-des{
+  margin-bottom: 10rpx;
+}
+
+/* 优惠券 */
+.voucherName{
+  font-weight: 700;
+}
+
+.coupon-num {
+  margin-top: 6rpx;
+  font-size: 30rpx;
+  color: #999;
+}
+
+.rule {
+  max-height: 100rpx;
+}
+
+.apply {
+  max-height: 200rpx;
+}
+
+.city-name {
+  line-height: 1;
+  color: #ff630e;
+}
+
+.cinema-name {
+  margin: 10rpx 0;
+}
+
+.btn-wrap{
+  padding: 30rpx 50rpx;
+}
+
+.view-btn{
+  margin-top: 20rpx;
+}
+
+.coupon-btn{
+  height: 40rpx;
+}
+
+/* 礼包 */
+
+.gift-content{
+  margin-bottom: 30rpx;
+}
+
+.max800{
+  max-height: 800rpx;
+}
+
+.pt20{
+  padding-top: 20rpx;
+  line-height: 36rpx;
+}
+
+.include{
+  font-size: 24rpx;
+  padding-left: 40rpx;
+}
+
+.gift-item{
+  padding: 20rpx 0;
+}
+
+.gift-item-title{
+  display:flex;
+  align-items: center;
+}
+
+.sign{
+  width: 20rpx;
+  height: 20rpx;
+  margin-right: 20rpx;
+  background: #3e3e3e;
+}
+
+.gift-item-content{
+  padding: 10rpx 0rpx 30rpx;
+  margin-left:40rpx;
+  border-bottom: 0.8px solid #edf0f2;
+}
+
+.describe{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  padding-right: 30rpx;
+}
+
+.textBox{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+
+.wxc-elip {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 36rpx;
+}
+
+.elip--multiple {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+
+.line2{
+  -webkit-line-clamp: 2;
+}
+
+.unfold{
+  color: #1a8bff;
+  margin-right: 20rpx;
+  white-space: nowrap;
+  display: flex;
+  align-items:flex-end;
+  margin-left: 5rpx;
+  padding-bottom: 8rpx;
+}
+
+.apply{
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #1a8bff;
+}
+
+.gray-arrow{
+  width: 10rpx;
+  height: 10rpx;
+  border-color: #1a8bff;
+  transform: rotate(45deg);
+  margin-left: 10rpx;
+  margin-bottom: 4rpx;
+}
+
+.rotate{
+  transform: rotate(-135deg);
+  margin-top: 12rpx;
+}
+
+.byInfo{
+  color: #333;
+  line-height: 36rpx;
+}
+
+.explain-wrap{
+  padding: 0 60rpx 0 40rpx;
+}
+
+.gift-btn{
+  right: 520rpx;
+}
+
+.black {
+  color: #333;
+}
+
+.gray999 {
+  color: #999;
+}
+
+.w600{
+  width: 600rpx;
+}
+
+.type-name{
+  font-size: 30rpx;
+  line-height: 1;
+  color: #999999;
+}
+
+.icon{
+  margin-right: -10rpx;
+  margin-top: -10rpx;
+  opacity: .9;
+}
+
+.inline{
+  display: inline;
+}
+
+.block{
+  display: block;
+}
+
+.mb20{
+  margin-bottom: 20rpx;
+}
+

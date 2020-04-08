@@ -1,0 +1,9 @@
+<!-- 联系影院.wxml -->
+<view class="content">
+  <view class="cinema">
+    <image class="logo" src="{{http}}{{dateil.cinemaLogPath}}" mode="aspectFit" lazy-load="false"></image>
+    <view class="">{{dateil.cinemaName}}</view>
+  </view>
+  <view class="text" bindtap="phone">联系电话：{{dateil.cinemaTel}}</view>
+  <view class="text">地址：{{dateil.cinemaAddress}}</view>
+</view>

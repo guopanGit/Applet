@@ -1,0 +1,29 @@
+/* 充值明细 */
+@import "/app.wxss";
+
+.card-detailed{
+  border-top: 0.8px solid #edeff2;
+}
+
+.card-name {
+  padding: 20rpx 30rpx;
+}
+
+.card-img {
+  width: 108rpx;
+  height: 108rpx;
+}
+
+.card-item {
+  padding: 30rpx;
+  border-bottom: 0.8px solid #eee;
+}
+
+.card-item:last-child{
+ border: none;
+}
+
+.tr {
+  text-align: right;
+  font-size: 24rpx;
+}

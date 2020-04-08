@@ -1,0 +1,18 @@
+.login-wrap {
+  width: 140rpx;
+  padding: 120rpx 0;
+  font-size: 28rxp;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.user-img {
+  width: 140rpx;
+  height: 140rpx;
+  margin-bottom: 30rpx;
+}
+
+.login-btn-wrap{
+  width: 530rpx;
+  margin: 0 auto;
+}

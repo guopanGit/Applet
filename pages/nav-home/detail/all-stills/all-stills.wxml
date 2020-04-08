@@ -1,0 +1,6 @@
+<!-- 全部剧照 -->
+<view class='all-stills '>
+  <block wx:for='{{stillsArr}}' wx:key='key'>
+    <image bindtap='previewImg' mode="aspectFill" data-src='{{item}}' class='stills-item' src='{{item}}'></image>
+  </block>
+</view>

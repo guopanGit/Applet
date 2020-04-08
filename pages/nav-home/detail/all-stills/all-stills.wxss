@@ -1,0 +1,11 @@
+.all-stills {
+  padding: 30rpx 0 0 30rpx;
+}
+
+.stills-item {
+  width: 330rpx;
+  height: 220rpx;
+  margin-bottom: 30rpx;
+  margin-right: 30rpx;
+  vertical-align: top;
+}

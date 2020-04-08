@@ -1,0 +1,21 @@
+/* pages/nav-my/my-coupon / my-coupon .wxss */
+
+page {
+  background-color: #f8f8f8 !important;
+}
+
+.content {
+  padding: 20rpx 30rpx;
+}
+
+.add-coupon {
+  color: #999;
+  height: 80rpx;
+  background-color: #fff;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.add-icon {
+  transform: rotate(45deg);
+}

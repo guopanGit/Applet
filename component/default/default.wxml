@@ -1,0 +1,25 @@
+<!-- component/default/default.wxml -->
+<view class="default" wx:if="{{show}}">
+  <view class="default-wrap">
+    <image class="default-img" src="http://image.mplus.net.cn/images/not-sell-card.png" wx:if="{{type == '1'}}"></image>
+    <image class="default-img" src="http://image.mplus.net.cn/images/no-snack.png" wx:if="{{type == '2'}}"></image>
+    <image class="default-img" src="http://image.mplus.net.cn/images/no-order.png" wx:if="{{type == '3' || type == '10'}}"></image>
+    <image class="default-img" src="http://image.mplus.net.cn/images/vip-cry.png" wx:if="{{type == '4'}}"></image>
+    <image class="default-img" src="http://image.mplus.net.cn/images/coupon-cry.png" wx:if="{{type == '5'}}"></image>
+    <image class="default-img" src="http://image.mplus.net.cn/images/no-network.png" wx:if="{{type == '6'}}"></image>
+    <image class="default-img" src="http://image.mplus.net.cn/images/draw-ticket.png" wx:if="{{type == '7'}}"></image>
+    <image class="default-img" src="http://image.mplus.net.cn/images/no-vip.png" wx:if="{{type == '8'}}"></image>
+    <image class="default-img" src="http://image.mplus.net.cn/images/no-coupon.png" wx:if="{{type == '9'}}"></image>
+    <view wx:if="{{type == '1'}}">暂无会员卡售卖，先去看看电影吧</view>
+    <view wx:if="{{type == '2'}}">卖品上架准备中，敬请期待</view>
+    <view wx:if="{{type == '3'}}">订单空空如也，去买张电影票吧</view>
+    <view wx:if="{{type == '10'}}">订单空空如也，去买张会员卡吧</view>
+    <view wx:if="{{type == '4'}}">暂时没有合适的会员卡可用</view>
+    <view wx:if="{{type == '5'}}">暂时没有合适的优惠券可用</view>
+    <view wx:if="{{type == '6'}}">网络不给力哟</view>
+    <view wx:if="{{type == '7'}}">努力出票中 ,请稍等...</view>
+    <view wx:if="{{type == '8'}}">您还没有会员卡</view>
+    <view wx:if="{{type == '9'}}">您还没有优惠券</view>
+    <view class=" btn {{kind}}" bindtap="clickBtn">{{title}}</view>
+  </view>
+</view>

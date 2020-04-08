@@ -1,0 +1,18 @@
+<!--pages/success/success.wxml-->
+<view class="content">
+  <view class="img-wrap">
+    <image wx:if="{{status == 1 || status == 3}}" class="success" src="/image/success.png"></image>
+    <image wx:if="{{status == 2}}" class="success" src="/image/failed.png"></image>
+  </view>
+  <view class="text f32">{{title}}</view>
+  <view class="btn-wrap">
+    <view wx:if="{{status != 3}}" class="view-btn gradient" bindtap="check">查看订单</view>
+    <view wx:else class="view-btn gradient" bindtap="refresh">点击刷新</view>
+    <view wx:if="{{type == 3 && status != 3}}" class="view-btn home-btn" bindtap="toHome">返回首页</view>
+  </view>
+  <view wx:if="{{isParkingVoucher}}" class="ticket-wrap">
+    <image class="ticket-img" src="/image/ticket.png"></image>
+    <view class="ticket-type">恭喜你获得一张免费停车券</view>
+    <view class="view-btn hollow fz26" bindtap="toCoupon">点击查看</view>
+  </view>
+</view>

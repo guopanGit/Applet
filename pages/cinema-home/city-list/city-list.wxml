@@ -1,0 +1,33 @@
+<!-- 选择城市列表 -->
+<view class='city-wrap'>
+
+  <view class='a-z'>
+    <block wx:for="{{letterArr}}" wx:index='{{i}}' wx:key="key">
+      <view>
+        <view class="letter-item {{isBlue ? 'blue' : ''}}" data-id='{{item}}' data-index='{{index}}' bindtap='bindLetter'>{{item}}</view>
+      </view>
+    </block>
+    <view wx:if='{{isFloat}}' class='letter-float' style="top:{{top + 'px'}}">
+      <image class='img-float' src='/image/float.png'></image>
+      <text class='text-float'>{{letter}}</text>
+    </view>
+  </view>
+
+  <view class='city-item-content'>
+    <view wx:for="{{cityArr}}" wx:index='{{index}}' wx:key="key">
+      <view wx:if='{{item.firstLetter == nearCityText}}'>
+        <view class='city-item-A-Z' data-letter='{{item.firstLetter}}'>最近城市</view>
+        <view class='near-city' data-cityCode='{{item.cityCode}}' bindtap='citySelected'>
+          <image class='lociton-icon' src='/image/location-icon.png'></image>
+          <text>{{item.cityName}}</text>
+        </view>
+      </view>
+      <view wx:else>
+        <view wx:if='{{item.firstLetter}}' class='city-item-A-Z' data-letter='{{item.firstLetter}}'>{{item.firstLetter}}</view>
+        <view class='city-item ' data-cityCode='{{item.cityCode}}' bindtap='citySelected'>{{item.cityName}}</view>
+      </view>
+
+    </view>
+  </view>
+
+</view>

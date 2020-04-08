@@ -1,0 +1,27 @@
+<!-- 卡明细 -->
+<view class='card-detailed' wx:if='{{cardInfo}}'>
+  <view class="card-name flex-al">
+    <image class='card-img' src='/image/min-store.png'></image>
+    <view class="ml10">
+      <view class='fz34 fw'>{{cardInfo.cardName}}</view>
+      <view>
+        <text class="fz24 fw">余额：</text>
+        <text class='yen fw'>¥ </text>
+        <text class='orange fw'>{{cardInfo.balance / 100}}</text>
+      </view>
+    </view>
+  </view>
+  <view class='gaps'></view>
+  <view class='card-item flex' wx:for="{{list}}" wx:key="key">
+    <view class='fz34'>
+      <view class="flex-single">
+        <text>{{item.sign}}</text>
+        <view class="ml10">¥{{item.consumeBalance / 100}}</view>
+      </view>
+    </view>
+    <view class='tr'>
+      <view class='gray999'>{{item.consumeTime}}</view>
+      <view class="{{item.state ? 'gray999' : ''}}">{{item.consumeType}}</view>
+    </view>
+  </view>
+</view>

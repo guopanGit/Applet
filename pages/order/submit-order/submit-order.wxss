@@ -1,0 +1,301 @@
+/* 确认订单 */
+
+@import "/style/style.wxss";
+@import "/app.wxss";
+
+.orderDetail{
+  border-top: 0.8rpx solid #edeff2;
+}
+
+.seat-info {
+  padding: 30rpx;
+  font-size: 24rpx;
+  position: relative;
+}
+
+.film-name{
+  width: 540rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.count-down {
+  width: 174rpx;
+  position: absolute;
+  right: 0;
+  top: 30rpx;
+  background-color: #ffefe6;
+  border-radius: 30rpx 0px 0px 30rpx;
+  font-size: 32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7rpx 0;
+}
+
+.count-img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
+}
+
+.subtotal {
+  padding: 20rpx 30rpx 20rpx;
+  font-size: 28rpx;
+  border-top: 0.8px solid #eee;
+}
+
+.goods-item {
+  padding: 30rpx 30rpx 30rpx 0;
+  margin-left: 30rpx;
+  border-bottom: 0.8px solid #eee;
+}
+
+.goods-item:last-child {
+  border-bottom: none;
+}
+
+.goods-img {
+  width: 180rpx;
+  height: 180rpx;
+  border: solid 0.8px #eee;
+  margin-right: 20rpx;
+  border-radius: 4rpx;
+}
+
+.goods-price {
+  font-size: 24rpx;
+  margin-top: 30rpx;
+  color: #ff630e;
+}
+
+.ml6 {
+  margin-left: 6rpx;
+}
+
+.ml10 {
+  margin-left: 10rpx;
+}
+
+.choose-discount {
+  font-size: 28rpx;
+}
+
+.choose-discount .arrow {
+  margin-left: 10rpx;
+}
+
+.des-info {
+  flex: 1;
+  color: #999;
+}
+
+.confirm-order-wrap {
+  width: 100%;
+  height: 236rpx;
+  box-sizing: border-box;
+}
+
+.confirm-order {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0  30rpx 30rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-top: 0.8px solid #eee;
+  z-index: 15;
+}
+
+.confirm-order .up-arrow {
+  margin: 10rpx 0 0 10rpx;
+}
+
+.confirm-order .down-arrow {
+  margin-left: 10rpx;
+}
+
+.order-goods {
+  color: #999;
+  font-size: 24rpx;
+  margin-top: 10rpx;
+  height: 36rpx;
+}
+
+.need-agree {
+  display: inline-block;
+  width: 22rpx;
+  height: 22rpx;
+  border-radius: 50%;
+  border: 2rpx solid #999;
+}
+
+.agree-touch {
+  position: absolute;
+  left: 5rpx;
+  top: 22rpx;
+  width: 60rpx;
+  height: 60rpx;
+  background-color: transparent;
+}
+
+.details-title {
+  text-align: center;
+}
+
+.price-details-layer {
+  bottom: 236rpx;
+}
+
+.all-goods-price {
+  color: #999;
+  margin-top: 20rpx;
+}
+
+.price-details-layer .layer-content {
+  border-bottom: none;
+}
+
+.refund-layer .layer-center {
+  width: 670rpx;
+}
+
+.refund-rule {
+  position: relative;
+  text-align: center;
+  padding: 0 30rpx 30rpx 30rpx;
+}
+
+.refund-layer .agree-touch {
+  left: 160rpx;
+  top: -14rpx;
+}
+
+.refund-layer .refund-des {
+  margin-top: 0;
+}
+
+/*配送地址*/
+.picker-wrap{
+  height: 500rpx;
+  padding: 0 30rpx;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: #fff;
+}
+
+.picker{
+  height: 500rpx;
+}
+
+.picker-option{
+  top: -150rpx;
+}
+
+.hall{
+  flex: 5;
+}
+
+.seat{
+  width: 460rpx;
+  text-align: right;
+}
+
+.confirm{
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: right;
+  color: #0575f2;
+  border-bottom: 0.8px solid #eee;
+}
+
+.confirm-text{
+  padding: 0 30rpx;
+}
+
+/*配送时间*/
+.date-wrap{
+  height: 800rpx;
+  background: #f6f6f6;
+  font-size: 28rpx;
+  padding: 0;
+}
+
+.date-title{
+  text-align: center;
+  height: 50rpx;
+  line-height: 50rpx;
+  border-bottom: 0.8px solid #e7eaed;
+}
+
+.day{
+  width: 40%;
+  text-align: center;
+}
+
+.day-item{
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.on{
+  background: #fff;
+}
+
+.time{
+  width: 60%;
+  text-align: right;
+}
+
+.time-item{
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: 0.8px solid #e7eaed;
+  background: #fff;
+}
+
+.item-icon, .item-name{
+  display: inline-block;
+}
+.item-icon{
+  width: 40rpx;
+  margin: 0 40rpx 0 80rpx;
+}
+
+.discount-icon{
+  top: 30rpx;
+}
+
+.arrow {
+  margin-left: 10rpx;
+}
+
+.explain{
+  height: 80rpx;
+  line-height: 80rpx;
+  overflow: hidden;
+}
+
+.selected-icon{
+  width: 26rpx;
+  height: 26rpx;
+}
+
+.ban-icon{
+  margin-top: 32rpx;
+}
+
+.service{
+  margin-left: 10rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+
+

@@ -1,0 +1,16 @@
+<!-- 抢红包 -->
+<view class="red-bg">
+  <view class="red-wrap">
+    <view class="red-content">
+      <view class="red-total">
+        <view class="fz48">{{couponData.hasLimitRedpacketCount}}</view>
+        <view class="fz20 gold">已抢人数</view>
+      </view>
+      <view class="reward-text">你击败了65%的用户获得以下奖励</view>
+      <view class="reward-wrap">
+        <coupon-list list="{{couponData.vouchers}}" source="{{source}}"></coupon-list>
+      </view>
+    </view>
+    <image class="red-img" src="/image/red-bg.png"></image>
+  </view>
+</view>

@@ -1,0 +1,191 @@
+<!-- 卡列表组件 -->
+<card-list>
+  <view class="card-list">
+    <block wx:for="{{chooseCardData}}" wx:key="key">
+      <!-- 实体卡 -->
+      <view wx:if="{{item.cardType == '10' || item.cardType == '11'}}" catchtap="tapCard" data-val="{{item}}"
+        data-index="{{index}}" class="card-wrap">
+        <view class="card-face outline-bg">
+          <image wx:if="{{item.expire == '0'}}" lazy-load="{{true}}" class='card-bg'
+            src="http://image.mplus.net.cn/images/outline-card.png">
+          </image>
+          <image wx:else class='card-bg' src="http://image.mplus.net.cn/images/overdue-card.png"></image>
+          <view wx:if="{{item.isValid == '2'}}" class='card-psd flex-center'>
+            <view>
+              <view>检测到您修改过卡密码</view>
+              <view wx:if="{{source == 1}}" class='mt10'>到 <text class='orange'>'我的 > 会员卡'</text> 输入新密码后
+                <view class='mt10'>即可正常使用</view>
+              </view>
+              <view wx:else class='mt10'>为保证您的正常使用，请输入新密码</view>
+              <view wx:if="{{source != 1}}" data-val="{{item}}" catchtap="inputSix" class='small-btn inp-psd'>输入新密码</view>
+            </view>
+          </view>
+          <view wx:if="{{item.isValid == '0'}}" class="unusual">
+            <view class="flex unusual-content">
+             <view class="unusual-img">
+               <image class='connectionless' src="/image/connectionless.png"></image>
+               <text>网络异常，请稍后再试或联系影院前台</text>
+             </view>
+              <view class="refresh-btn" bindtap="refresh">刷新</view>
+            </view>
+          </view>
+          <view class='card-content'>
+            <view class='vip-wrap flex-al'>
+              <image class='vip-img' src='/image/vip.png'></image>
+              <text class='vip-text'>实体卡</text>
+            </view>
+            <view class='card-text'>{{item.cardName}}</view>
+            <view class='card-date'>
+              <text wx:if='{{source == 3}}' class="card-date-bd">永久有效</text>
+            </view>
+            <view class='flex-end'>
+              <view class='card-price flex'>
+                <view wx:if="{{item.isValid == '1'}}">
+                  <text class='white fw'>余额：</text>
+                  <text class='fz32 bolder'>¥</text>
+                  <text class='sell-price'>{{item.balance}}</text>
+                </view>
+              </view>
+              <view class='tr'>此卡仅限影院前台充值</view>
+            </view>
+          </view>
+        </view>
+        <view wx:if='{{source == 1}}' class='select-wrap'>
+          <image wx:if="{{currentIndex == item.cardCode}}" class='selected' src='/image/selected.png'></image>
+          <view wx:else class='no-select'></view>
+        </view>
+      </view>
+      <!-- 储值卡 -->
+      <view wx:if="{{item.cardType == '1'}}" class="card-wrap" catchtap="tapCard" data-val="{{item}}"
+        data-index="{{index}}">
+        <view class="card-face {{item.expire == '0' && !item.cardFace ? 'stored-bg' : ''}}">
+          <image lazy-load="{{true}}" wx:if="{{item.expire == '0' && !item.cardFace}}" class='card-bg'
+            src='http://image.mplus.net.cn/images/stored-card.png'></image>
+          <image lazy-load="{{true}}" wx:elif="{{item.expire == '0' && item.cardFace}}" class='card-bg'
+            src="{{item.cardFace}}"></image>
+          <view wx:else>
+            <image lazy-load="{{true}}" class='card-bg' src="http://image.mplus.net.cn/images/overdue-card.png"></image>
+            <image lazy-load="{{true}}" class='over-icon' src="http://image.mplus.net.cn/images/over-icon.png"></image>
+          </view>
+          <view class='card-content'>
+            <view class='vip-wrap flex-al'>
+              <image class='vip-img' src='/image/vip.png'></image>
+              <text class='vip-text'>储值卡</text>
+            </view>
+            <view class='card-text'>{{item.cardName}}</view>
+            <view class='card-date'>
+              <text class="card-date-bd" wx:if="{{(source == 1 || source == 3) && item.expire == '0' && !item.remainingDays}}">有效期至{{item.limitTime}}</text>
+              <text class="card-date-bd" wx:if="{{(source == 1 || source == 3) && item.expire == '0' && item.remainingDays}}">{{item.remainingDays}}</text>
+            </view>
+            <view class="card-price flex">
+              <view>
+                <text wx:if="{{source == 2}}" class='white fw'>售价：</text>
+                <text wx:else class='white fw'>余额：</text>
+                <text class='fz32 bolder'>¥</text>
+                <text class='sell-price' wx:if="{{item.balance}}">{{item.balance}}</text>
+                <text class='sell-price' wx:if="{{item.cardPrice}}">{{item.cardPrice/100}}</text>
+              </view>
+              <view wx:if="{{source == 2}}" class='buy-card flex-al' data-val="{{item}}" catchtap="tapCard">
+                <view class="triangle-flex-box">
+                  <text class="{{item.cardFace ? 'gray333' : 'orange'}} ml6">开卡</text>
+                  <view class="new-triangle {{item.cardFace ? 'gray333' : 'orange'}}"></view>
+                </view>
+              </view>
+              <view wx:if="{{source == 3 && item.isRecharge == 0 && item.expire == '0'}}" class='buy-card flex-al' data-val="{{item}}"
+                catchtap="rechargeCard">
+                <view class="triangle-flex-box">
+                  <text class="{{item.cardFace ? 'gray333' : 'orange'}} ml6">充值</text>
+                  <view class="new-triangle {{item.cardFace ? 'gray333' : 'orange'}}"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view wx:if="{{item.openMinus}}" class='pref-wrap'>
+            <image class='pref-img' src='/image/pref.png'></image>
+          </view>
+        </view>
+        <view wx:if='{{source == 1}}' class='select-wrap' catchtap="tapCard" data-val="{{item}}" data-index="{{index}}">
+          <image wx:if="{{currentIndex == item.cardCode}}" class='selected' src='/image/selected.png'></image>
+          <view wx:else class='no-select'></view>
+        </view>
+      </view>
+      <!-- 权益卡 -->
+      <view wx:if="{{item.cardType == '2'}}" class="card-wrap" catchtap="tapCard" data-val="{{item}}"
+        data-index="{{index}}">
+        <view class="card-face {{item.expire == '0' && !item.cardFace ? 'equity-bg' : ''}}">
+          <image lazy-load="{{true}}" wx:if="{{item.expire == '0' && !item.cardFace}}" class='card-bg'
+            src='http://image.mplus.net.cn/images/equity-card.png'>
+          </image>
+          <image lazy-load="{{true}}" wx:elif="{{item.expire == '0' && item.cardFace}}" class='card-bg'
+            src='{{item.cardFace}}'>
+          </image>
+          <view wx:else>
+            <image lazy-load="{{true}}" class='card-bg' src="http://image.mplus.net.cn/images/overdue-card.png"></image>
+            <image lazy-load="{{true}}" class='over-icon' src="http://image.mplus.net.cn/images/over-icon.png"></image>
+          </view>
+          <view class='card-content'>
+            <view class='vip-wrap flex-al'>
+              <image class='vip-img' src='/image/vip.png'></image>
+              <text class='vip-text'>权益卡</text>
+            </view>
+            <view class='card-text'>{{item.cardName}}</view>
+            <view class='card-date'>
+              <text class="card-date-bd" wx:if="{{(source == 1 || source == 3) && item.expire == '0' && !item.remainingDays}}">有效期至{{item.limitTime}}</text>
+              <text class="card-date-bd" wx:elif="{{(source == 1 || source == 3) && item.expire == '0' && item.remainingDays}}">{{item.remainingDays}}</text>
+            </view>
+            <view wx:if='{{source == 2}}' class="card-price flex">
+              <view>
+                <text class='white fw'>售价：</text>
+                <text class='fz32 bolder'>¥</text>
+                <text wx:if="{{item.openMinus}}" class='sell-price'>{{(item.cardPrice-item.openMinus)/100}}</text>
+                <text wx:else class='sell-price'>{{item.cardPrice/100}}</text>
+              </view>
+              <view class='buy-card blue flex-al' data-val="{{item}}" catchtap="tapCard">
+                <view>
+                  <text class="{{item.cardFace ? 'gray333' : 'blue'}} ml6">开卡</text>
+                  <view class="triangle {{item.cardFace ? 'gray333' : 'blue'}}"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view wx:if="{{item.openMinus}}" class='pref-wrap'>
+            <image class='pref-img' src='/image/pref.png'></image>
+          </view>
+        </view>
+        <view wx:if='{{source == 1}}' class='select-wrap'>
+          <image wx:if="{{currentIndex == item.cardCode}}" class='selected' src='/image/selected.png'></image>
+          <view wx:else class='no-select'></view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view wx:if="{{showUpdatePwd}}">
+    <view catchtouchmove='true' bindtap="hideLayer" class='mask-wrap'></view>
+    <view class="updatePwd-wrap">
+     <view class="flex updatePwd-title">
+       <view>请输入新密码</view>
+       <view class="clear-wrap" bindtap="hideLayer">
+         <image class="clear" src="/image/clear.png"></image>
+       </view>
+     </view>
+      <view class="updatePwd-item">
+        <view class="updatePwd-key">卡号：</view>
+        <view class="updatePwd-val">{{cardVal.noFormat}}</view>
+      </view>
+      <view class="updatePwd-item">
+        <view class="updatePwd-key">有效期：</view>
+        <view class="updatePwd-val">{{cardVal.limitTime}}</view>
+      </view>
+      <view class="updatePwd-item">
+        <view class="updatePwd-key">密码：</view>
+        <view class="updatePwd-val">
+          <input class="updatePwd-input" type="text" password placeholder="请输入密码" focus adjust-position
+                 cursor-spacing="100" value="{{cardPassword}}" bindinput="bindInput"  />
+        </view>
+      </view>
+      <view class="btn-wrap">
+        <view class="view-btn updatePwd-btn {{cardPassword == '' ? 'opacity' : ''}}" bindtap="updatePassword">确定</view>
+      </view>
+    </view>
+  </view>
+</card-list>

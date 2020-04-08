@@ -1,0 +1,294 @@
+<view class="orderDetail" wx:if="{{orderDetail.price != NaN}}">
+  <!-- 影票 -->
+  <view wx:if="{{orderDetail.seatInfo}}">
+    <view class="seat-info">
+      <view class="film-name">{{orderDetail.filmName}}</view>
+      <view class="gray666 mt6">{{orderDetail.cinemaName}}</view>
+      <view class="crimson mt6">
+        <text>{{orderDetail.showTime}}</text>
+        <text>({{orderDetail.filmLang}}{{orderDetail.filmSight}})</text>
+      </view>
+      <view class="gray666 mt6">
+        <text>{{orderDetail.hallName}}</text>
+        <text class="point">·</text>
+        <text>{{orderDetail.seatInfo}}</text>
+      </view>
+      <view class="count-down">
+        <image class="count-img" src='/image/count-img.png'></image>
+        <text class="orange">{{countTime}}</text>
+      </view>
+    </view>
+    <view class="subtotal flex">
+      <view class="gray999">影票小计</view>
+      <view class="orange">
+        <text class="yen">¥</text>
+        <text class="fz34">{{orderDetail.onlyTicketAmount/100}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 卖品 -->
+  <view wx:if="{{orderDetail.goods.length}}">
+    <view wx:if="{{orderDetail.seatInfo}}" class="gaps"></view>
+    <view class="goods-info">
+      <view wx:for="{{orderDetail.goods}}" wx:key="key" class="goods-item flex-al">
+        <image src="{{item.goodsImage}}" class="goods-img"></image>
+        <text wx:if="{{item.isActivity == 1}}" class="discount-icon">特惠</text>
+        <view>
+          <view class="goods-name fz32">{{item.goodsName}}</view>
+          <view class="order-goods">{{item.goodsDesc}}</view>
+          <view class="goods-price">
+            <text class="yen">¥</text>
+            <text class="fz34 ml6">{{item.goodsActualPrice/100}}</text>
+            <text class="gray999 ml10">x{{item.amount}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{orderDetail.goods.length && !orderDetail.type}}" class="subtotal flex">
+    <view class="gray999">卖品小计</view>
+    <view class="orange">
+      <text class="yen">¥</text>
+      <text class="fz34">{{orderDetail.goodsTerraceAmount/100}}</text>
+    </view>
+  </view>
+  <!--  配送 -->
+  <view wx:if="{{!orderDetail.seatInfo &&orderDetail.sendFlag == '1' && goodsType != 1}}">
+    <view class="gaps"></view>
+    <view wx:if="{{isDistribution}}" class="choose-discount">
+      <view class="goods-item flex">
+        <text>
+          <text>配送服务</text>
+          <text class="ml10 orange">{{takeoutFee}}元</text>
+        </text>
+        <view class="flex-al">
+          <switch class="" checked="{{checked}}" type="switch" color="#ff630e" bindchange="setChecked"></switch>
+        </view>
+      </view>
+      <view wx:if="{{checked}}">
+        <view class="goods-item  flex">
+          <text>座位</text>
+          <view class="flex-al">
+            <view class="seat ellipsis" bindtap="selectSeat">{{value}}</view>
+            <view class="arrow gray-arrow right-arrow"></view>
+          </view>
+        </view>
+        <view class="goods-item  flex">
+          <text wx:if="{{!isDate}}">立即送出</text>
+          <text wx:if="{{isDate}}">送达时间</text>
+          <text class="orange" bindtap="selectDate">约{{time}}送达</text>
+        </view>
+        <view class="goods-item flex-single">
+          <text>备注：</text>
+          <view class="des-info ellipsis">
+            <input type="text" placeholder="(选填，暂不支持系统表情及特殊字符)" maxlength='-1' value='{{remarks}}' bindblur="bindBlur"
+                   bindinput='bindInput'/>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--  配货-->
+  <view wx:if="{{showAllot}}">
+    <view class="goods-item fz28 flex">
+      <text>取货时间</text>
+      <view class="flex-al">
+        <view bindtap="showGetGoodTime">{{getGoodsTime}}</view>
+        <view class="arrow gray-arrow right-arrow"></view>
+      </view>
+    </view>
+    <view class="choose-discount">
+      <view class="goods-item flex-single">
+        <text>备注：</text>
+        <view class="des-info ellipsis">
+           <input type="text" placeholder="(选填，暂不支持系统表情及特殊字符)" maxlength='-1' value='{{remarks}}'
+                 bindblur="bindBlur" bindinput='bindInput'/>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 可用券/卡 -->
+  <view class="choose-discount">
+    <view class="gaps"></view>
+    <view class="goods-item coupon flex">
+      <text>优惠券</text>
+      <view class="flex-al max-w330">
+        <view bindtap="chooseCoupon" wx:if="{{usableCoupon > 0 && !couponData.voucherName}}">{{usableCoupon}}张可用</view>
+        <view bindtap="chooseCoupon" wx:if="{{couponData.voucherName && couponData.covTdiscount != 0 && !couponData.minus}}">-¥{{couponData.covTdiscount / 100}}</view>
+        <view bindtap="chooseCoupon" wx:if="{{couponData.voucherName && couponData.covTdiscount != 0 && couponData.minus}}">+￥{{couponData.covTdiscount / 100}}</view>
+        <view bindtap="chooseCoupon" wx:if="{{couponData.voucherName && couponData.covTdiscount == 0}}" class="ellipsis">{{couponData.voucherName}}</view>
+        <view wx:if="{{usableCoupon <= 0}}" bindtap="chooseCoupon" class="gray999">暂无可选</view>
+        <view class="arrow gray-arrow right-arrow"></view>
+      </view>
+    </view>
+    <view class="goods-item coupon flex">
+      <text>会员卡</text>
+      <view class="flex-al max-w330">
+        <view bindtap="chooseCard" wx:if="{{usableCard > 0 && !chooseCardData.cardName}}">{{usableCard}}张可用</view>
+        <view bindtap="chooseCard" wx:if="{{chooseCardData.cardName && chooseCardData.covTdiscount != 0 && !couponData.voucherName && !chooseCardData.minus}}">-¥{{chooseCardData.covTdiscount / 100}}</view>
+        <view bindtap="chooseCard" wx:if="{{chooseCardData.cardName && chooseCardData.covTdiscount != 0 && !couponData.voucherName && chooseCardData.minus}}">+¥{{chooseCardData.covTdiscount / 100}}</view>
+        <view bindtap="chooseCard" wx:if="{{chooseCardData.cardName && chooseCardData.covTdiscount == 0 && !couponData.voucherName}}" class="ellipsis">{{chooseCardData.cardName}}</view>
+        <view bindtap="chooseCard" wx:if="{{chooseCardData.cardName && couponData.voucherName}}" class="ellipsis">{{chooseCardData.cardName}}</view>
+        <view wx:if="{{usableCard <= 0}}" bindtap="chooseCard" class="gray999">暂无可选</view>
+        <view class="arrow gray-arrow right-arrow"></view>
+      </view>
+    </view>
+    <view wx:if="{{orderDetail.ServiceCharge > 0}}" class="goods-item coupon flex">
+      <text>服务费</text>
+      <text>¥{{orderDetail.ServiceCharge}}</text>
+    </view>
+    <view class="goods-item coupon flex">
+      <text>购票手机号</text>
+      <text>{{orderDetail.orderMobile}}</text>
+    </view>
+  </view>
+  <!-- 提交订单 -->
+  <view class="confirm-order-wrap">
+    <view class="confirm-order">
+      <view class="fz24 flex explain">
+        <view wx:if="{{orderDetail.cinemaStatus == 1}}" class="flex-al">
+          <text wx:if="{{!agreement}}" class='need-agree'></text>
+          <image wx:else class="selected-icon" src='/image/selected-icon.png'></image>
+          <text class="agree-des ml10">我已阅读并同意</text>
+          <text bindtap="refundDes" class="blue">退票说明</text>
+          <text bindtap="agreeTouch" class='agree-touch'></text>
+        </view>
+        <view wx:if="{{orderDetail.cinemaStatus == 0}}" class='flex-al'>
+          <icon class="ban-icon" type="cancel" size="14" color="#999"></icon>
+          <text class='ml10'>影院不支持退票</text>
+        </view>
+        <view wx:if="{{orderDetail.type == '2' || orderDetail.type == '4' || orderDetail.type == '5'}}" class='flex-al'></view>
+
+        <view class="total-price flex-al">
+          <text>需支付</text>
+          <view class="orange ml10">
+            <text class="yen">¥</text>
+            <text class="fz34 ml6">{{orderDetail.price / 100}}</text>
+          </view>
+          <!-- <view class="arrow black-arrow ml6 {{priceLayer ? 'up-arrow':'down-arrow'}}"></view> -->
+        </view>
+      </view>
+      <view bindtap="payHint" class="big-btn">提交订单</view>
+    </view>
+  </view>
+</view>
+<!-- 退票说明 -->
+<view wx:if="{{refundLayer}}" class="refund-layer" catchtouchmove='true'>
+  <view class='layer-center'>
+    <view class='layer-head'>
+      <view class='head-wrap'>
+        <text class='head-title flex-center'>退票说明</text>
+      </view>
+    </view>
+    <view class='layer-detail'>
+      <view class='use-des'>退票规则:</view>
+      <view class='flex-single'>
+        <text class='text-indent'>1.</text>
+        <text class='text-des'>未取票的订单可退票，退票时间以影院 公示时间为准</text>
+      </view>
+      <view class='flex-single'>
+        <text class='text-indent'>2.</text>
+        <text class='text-des'>含卖品的订单不支持退票</text>
+      </view>
+      <view class='flex-single'>
+        <text class='text-indent'>3.</text>
+        <text class='text-des'>特价或使用券的订单不支持退票</text>
+      </view>
+      <view class='flex-single'>
+        <text class='text-indent'>4.</text>
+        <text class='text-des'>仅支持整笔订单退票，不支持单个座位退票</text>
+      </view>
+    </view>
+    <view class='layer-detail'>
+      <view class='use-des refund-des'>退票流程:</view>
+      <view class='flex-single'>
+        <text class='text-indent'>第1步.</text>
+        <text class='text-des'>在“我的-影票订单”中找到要退的电影票</text>
+      </view>
+      <view class='flex-single'>
+        <text class='text-indent'>第2步</text>
+        <text class='text-des'>进入订单详情，在底部点击“申请退票”按钮</text>
+      </view>
+      <view class='flex-single'>
+        <text class='text-indent'>第3步</text>
+        <text class='text-des'>申请成功后，退款金额将在7个工作日内返还</text>
+      </view>
+    </view>
+    <view class="refund-rule flex-center">
+      <text wx:if="{{!agreement}}" class='need-agree'></text>
+      <icon wx:else type="success" size="12"></icon>
+      <text class="agree-des ml10">我已阅读并同意退票说明</text>
+      <text bindtap="agreeTouch" class='agree-touch'></text>
+    </view>
+  </view>
+</view>
+
+<!-- 遮罩-->
+<view class="mask-wrap {{inputPsd ? 'high-index' : ''}}" catchtouchmove="true" wx:if="{{showMark}}"
+      bindtap="hideMark"></view>
+
+<!-- 座位选择 -->
+<view class="picker-wrap" wx:if="{{showSeat}}">
+  <view class="confirm">
+    <text class="confirm-text" bindtap="confirm">确定</text>
+  </view>
+  <picker-view class="picker" bindchange="changePicker" bindpickstart="pickStart" bindpickend="pickEnd">
+    <picker-view-column class="picker-option hall">
+      <view class="ellipsis" wx:for="{{multiArray[0]}}" wx:key="index">{{item.name}}</view>
+    </picker-view-column>
+    <picker-view-column class="picker-option">
+      <view class="flex-center" wx:for="{{multiArray[1]}}" wx:key="index">{{item.name}}</view>
+    </picker-view-column>
+    <picker-view-column class="picker-option">
+      <view class="flex-center" wx:for="{{multiArray[2]}}" wx:key="index">{{item.name}}</view>
+    </picker-view-column>
+
+  </picker-view>
+</view>
+
+<!-- 配送时间选择 -->
+<view class="picker-wrap date-wrap" wx:if="{{showDate}}">
+  <view class="confirm">
+    <text class="confirm-text" bindtap="confirmDate">确定</text>
+  </view>
+  <view class="flex-single">
+    <view class="day">
+      <block wx:for="{{timeInfo}}" wx:for-index="index" wx:key="index">
+        <view class="day-item {{dayIndex == index ? 'on' : ''}}" data-index="{{index}}" bindtap="selectDay">
+          {{item.name}}
+        </view>
+      </block>
+    </view>
+    <view class="time">
+      <scroll-view scroll-y style="height: 740rpx;">
+        <block wx:for="{{items}}" wx:for-index="index" wx:key="index">
+          <view class="time-item" data-index="{{index}}" data-val="{{item}}" bindtap="selectItem">
+            <view class="item-name">{{item.name}}</view>
+            <view class="item-icon">
+              <icon wx:if="{{itemIndex == index}}" type="success" size="16"></icon>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+<!-- 取餐时间选择 -->
+<view class="picker-wrap" wx:if="{{goodsDate}}">
+  <view class="confirm">
+    <text class="confirm-text" bindtap="confirmGetTime">确定</text>
+  </view>
+  <picker-view class="picker" bindchange="pickGoods" bindpickstart="pickStart" bindpickend="pickEnd">
+    <picker-view-column class="picker-option">
+      <view class="ellipsis flex-center" wx:for="{{hour}}" wx:key="index">{{item}}小时</view>
+    </picker-view-column>
+    <picker-view-column class="picker-option">
+      <view class="ellipsis flex-center" wx:for="{{minute}}" wx:key="index">{{item}}分钟</view>
+    </picker-view-column>
+  </picker-view>
+</view>
+<!-- 会员卡支付 -->
+<view class="mask-wrap {{inputPsd ? 'high-index' : ''}}" catchtouchmove="true" wx:if="{{payMark}}"
+      bindtap="hidePayMark"></view>
+<input-six wx:if="{{inputPsd}}" source="1" isBack="1" orderType="{{type}}" orderNo="{{orderNo}}" cardType="{{cardType}}"
+           payType="{{cardType}}" bind:confirmPassword="confirmPassword"></input-six>

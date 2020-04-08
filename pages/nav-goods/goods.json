@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "card-list": "/component/card-list/card-list",
+    "buy-card": "/component/buy-card/buy-card",
+    "default": "/component/default/default"
+  },
+  "enablePullDownRefresh": true
+}

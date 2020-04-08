@@ -1,0 +1,194 @@
+/* 首页 */
+@import '../../../style/style.wxss';
+
+page {
+  font-size: 24rpx;
+}
+
+.fw {
+  font-weight: bolder;
+}
+
+.mt30 {
+  margin-top: 30rpx;
+}
+
+.fixed-scroll {
+  padding: 20rpx 30rpx;
+  /* border-bottom: 0.8px solid #eee; */
+}
+
+.label {
+  color: #fff;
+  font-size: 20rpx;
+  padding: 4rpx 8rpx;
+  margin-right: 14rpx;
+}
+
+.rp-text {
+  background-color: #feac0f;
+}
+
+.red-package {
+  color: #feac0f;
+  background-color: #fffaef;
+}
+
+.notice {
+  background-color: #fff9f5;
+}
+
+.location-adr {
+  height: 88rpx;
+  line-height: 88rpx;
+  border-top: 0.76px solid #eee;
+  border-bottom: 0.8px solid #eee;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+  position: relative;
+}
+
+.lociton-adr {
+  width: 24rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
+}
+
+.swiper-wrap,
+.slide-image {
+  width: 750rpx;
+  height: 248rpx;
+}
+
+.hot-change {
+  color: #8d8d8d;
+  flex: 1;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.selected-hot {
+  color: #ff630e;
+  position: relative;
+}
+
+.selected-hot::after {
+  content: '';
+  display: block;
+  width: 56rpx;
+  height: 4rpx;
+  background-color: #ff630e;
+  border-radius: 4rpx;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 0);
+}
+
+.release-date {
+  margin-top: 30rpx;
+}
+
+.come-release {
+  padding: 30rpx 30rpx 30rpx 0;
+  position: relative;
+}
+
+.come-item {
+  color: #666;
+  margin-left: 30rpx;
+}
+
+.gaps:last-child {
+  height: 0;
+}
+
+.layer-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(37, 35, 29, 0.9);
+  z-index: 1;
+}
+
+.eject-wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.ad-eject {
+  border-radius: 10rpx;
+  margin-bottom: 90rpx;
+}
+
+.label-icon {
+  color: #fff;
+  background: #ff630e;
+  display: inline-block;
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size: 20rpx;
+  text-align: center;
+  border-radius: 4rpx;
+  margin: 4rpx 10rpx 0 0;
+  padding: 0 4rpx;
+}
+
+.rose-red {
+  background: #ff3787;
+}
+
+.red-package-eject {
+  width: 610rpx;
+  height: 619rpx;
+  margin-bottom: 20rpx;
+}
+
+.touch-grab {
+  width: 200rpx;
+  height: 200rpx;
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.redict-package {
+  width: 690rpx;
+  height: 690rpx;
+  background-image: url(http://image.mplus.net.cn/images/red-pack.png);
+  background-size: 100% 100%;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+.coupon-list {
+  max-height: 280rpx;
+  width: 600rpx;
+  position: absolute;
+  left: 50rpx;
+  top: 150rpx;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.use-it {
+  width: 500rpx;
+  height: 80rpx;
+  z-index: 5;
+  position: absolute;
+  left: 50%;
+  bottom: 150rpx;
+  transform: translate(-50%, 0);
+}

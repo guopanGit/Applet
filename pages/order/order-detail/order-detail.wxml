@@ -1,0 +1,323 @@
+<!-- 影票/卖品/订单详情 -->
+<view wx:if="{{type != '3' && (mixtureDetil.isParkingVoucher || common.orderType)}}" class='ticket-order'>
+  <view class='order-detail' wx:if="{{mixtureDetil.isParkingVoucher == '1'}}">
+    <view class='space flex'>
+      <view class='flex-al'>
+        <image class='car-icon' src='/image/car-icon.png'></image>
+        <view>
+          <view class='fz28'>恭喜获得停车券</view>
+          <view class='gray999 fz20'>观影当天可享免费停车{{mixtureDetil.parkingTime}}小时</view>
+        </view>
+      </view>
+      <view class='use-btn' bindtap="goUse">去使用</view>
+    </view>
+  </view>
+  <view class='order-detail' wx:if="{{common.orderType == '4'}}">
+    <view class='info-wrap'>
+      <view class='ticket-goods flex'>
+        <view>
+          <view class='fz34' wx:if="{{goodsDetil.orderState == '1000'}}">请尽快完成支付</view>
+          <view class='fz34' wx:if="{{goodsDetil.orderState == '1001' && goodsDetil.deliveryStatus == '1'}}">支付完成,待接单
+          </view>
+          <view class='fz34' wx:if="{{goodsDetil.orderState == '1001' && goodsDetil.deliveryStatus == '2'}}">商家已接单
+          </view>
+          <view class='fz34' wx:if="{{goodsDetil.orderState == '1401' && goodsDetil.deliveryStatus == '4'}}">配送中,请耐心等待
+          </view>
+          <view class='fz34' wx:if="{{goodsDetil.orderState == '1402' && goodsDetil.deliveryStatus == '3'}}">
+            配送完成,期待再次光临
+          </view>
+          <view class='fz34'
+                wx:if="{{goodsDetil.orderState == '1501' || goodsDetil.orderState == '1502' || goodsDetil.orderState == '1503' || goodsDetil.orderState == '1504'|| goodsDetil.orderState == '1302'}}"
+          >由于库存不足,订单退款
+          </view>
+          <view class='orange' wx:if="{{goodsDetil.orderState == '1001'&& goodsDetil.deliveryStatus == '1'}}"
+          >若长时间未接单请联系影城
+          </view>
+          <view class='orange'
+                wx:if="{{(goodsDetil.orderState == '1001' || goodsDetil.orderState == '1401' || goodsDetil.orderState == '1402') && goodsDetil.deliveryStatus == '4'}}"
+          >约{{goodsDetil.sendTime}}送达
+          </view>
+          <view class='orange' wx:if="{{goodsDetil.orderState == '1504'|| goodsDetil.orderState == '1503'}}">
+            金额将退回原支付账户
+          </view>
+          <view class='orange'
+                wx:if="{{goodsDetil.orderState == '1501' || goodsDetil.orderState == '1502'|| goodsDetil.orderState == '1302'}}">
+            金额已退回原支付账户
+          </view>
+          <view class='orange' wx:if="{{goodsDetil.orderState == '1402'}}">已送达</view>
+          <view class='orange' wx:if="{{goodsDetil.orderState == '1000'}}">待支付</view>
+        </view>
+        <view class='call-phone'>
+          <image class='phone' src='/image/phone.png'></image>
+          <text bindtap="contact">联系影城</text>
+        </view>
+      </view>
+      <view class='ticket-goods place flex-al'>
+        <image class='detail-icon' src='/image/seatinfo-icon.png'></image>
+        <view class='gray666'>
+          <view class='fz28 black'>
+            <text>{{goodsDetil.sendAddress}}</text>
+          </view>
+          <view class='fz24 phone'>{{goodsDetil.phone}}</view>
+        </view>
+      </view>
+      <view class='ticket-goods flex-al' wx:if="{{goodsDetil.remarks}}">
+        <text>备注：</text>
+        <text class='gray999 ellipsis des'>{{goodsDetil.remarks}}</text>
+      </view>
+    </view>
+  </view>
+  <view class='order-detail'>
+    <view class='info-wrap circular'>
+      <view class="{{common.goodsNo.length ? 'ticket-good' : 'ticket-goods'}}" wx:if="{{mixtureDetil}}">
+        <view class="{{mixtureDetil.orderState == 1000 ? 'film-name' : 'fw fz32'}}">{{mixtureDetil.filmName}}</view>
+        <view class='gray666 mt20'>
+          <text wx:if="{{mixtureDetil.showStartTime}}">{{mixtureDetil.showStartTime}}</text>
+          ({{mixtureDetil.filmLang}}{{mixtureDetil.filmSight}})
+        </view>
+        <view class='gray666 mt20'>
+          <text>{{mixtureDetil.hallName}}</text>
+          <text class='point'>·</text>
+          <text>{{mixtureDetil.seatInfo}}</text>
+        </view>
+        <view wx:if="{{mixtureDetil.orderState == 1000}}" class="count-down">
+          <image class="count-img" src='/image/count-img.png'></image>
+          <text class="orange">{{countTime}}</text>
+        </view>
+      </view>
+
+      <view class="{{goodsDetil.sellRecords.length >  2 &&  !switch ? 'goods-wrap': ''}}"
+            wx:if="{{goodsDetil.sellRecords}}">
+        <block wx:for="{{goodsDetil.sellRecords}}" wx:key="index">
+          <view class=" ticket-good">
+            <view class='fz32 fw'>{{item.sellName}}</view>
+            <view class='gray666 mt20'></view>
+            <view class='gray666 mt20'>数量：{{item.sellCount}}份</view>
+          </view>
+        </block>
+      </view>
+      <view class="{{mixtureDetil.goods.length > 2  &&  !switch ? 'goods-wrap':''}}" wx:if="{{mixtureDetil.goods}}">
+        <block wx:for="{{mixtureDetil.goods}}" wx:key="index">
+          <view class="{{mixtureDetil.goods.length > 2 ? 'ticket-good' : 'ticket-goods'}}">
+            <view class='fz32 fw'>{{item.goodsName}}</view>
+            <view class='gray666 mt20'></view>
+            <view class='gray666 mt20'>数量：{{item.amount}}份</view>
+          </view>
+        </block>
+      </view>
+      <!-- wx:if="{{goodsList.length > 2}}" -->
+      <view class='tc mt20' bindtap="switch" wx:if="{{mixtureDetil.goods &&  mixtureDetil.goods.length  > 2}}">
+        <image class="open-up {{switch ? 'inversion' : ''}}" src='/image/open-up.png'></image>
+      </view>
+      <view class='tc mt20' bindtap="switch" wx:if="{{goodsDetil.sellRecords && goodsDetil.sellRecords.length > 2}}">
+        <image class="open-up {{switch ? 'inversion' : ''}}" src='/image/open-up.png'></image>
+      </view>
+    </view>
+    <view class='info-wrap tc circular' wx:if="{{common.orderState != '1000' && type == 1}}">
+      <view class='get-ticket fw'>取电影票</view>
+      <view class='code-wrap'>
+        <image wx:if="{{mixtureDetil.qrCode}}"
+               class="code {{(common.orderState == 1501 || common.orderState == 1502 || common.orderState == 1503 || common.orderState == 1504 || common.orderState == 1302 || orderS == 1) && mixtureDetil.ticketNo ? 'opa' : ''}}"
+               src="{{qrcode}}{{mixtureDetil.tickeQrCode}}"></image>
+        <image wx:else class="code opa" src="{{common.refundDefaultImage}}"></image>
+        <image class='state-icon'
+               wx:if="{{common.orderState == '1501' ||  common.orderState == '1502' || common.orderState == '1302'}}"
+               src='/image/refunded.png'></image>
+        <image class='state-icon'
+               wx:elif="{{common.orderState == '1503' || common.orderState == '1504'|| common.orderState == '1302'}}"
+               src='/image/refunding.png'></image>
+        <image class='state-icon' wx:elif="{{common.orderState == '1001' && orderS == 1}}"
+               src='/image/watch-over.png'></image>
+      </view>
+      <view wx:if="{{mixtureDetil.ticketNo}}"
+            class="{{(common.orderState == 1501 || common.orderState == 1502 || common.orderState == 1503 || common.orderState == 1504 || common.orderState == 1302 || orderS == 1) && mixtureDetil.ticketNo ? 'opa' : ''}}">
+        <view class='security'>
+          <text>取票码：</text>
+          <text class='orange fw'>{{mixtureDetil.ticketNo[0]}}</text>
+        </view>
+        <view wx:if="{{mixtureDetil.ticketNo[1]}}" class='security'>
+          <text>验证码：</text>
+          <text class='orange fw'>{{mixtureDetil.ticketNo[1]}}</text>
+        </view>
+        <view class="take" wx:if="{{common.orderState == '1001'}}" class="use-des fz24 mt20">请到自助取票机扫码或输入取票码领取电影票</view>
+      </view>
+      <view wx:if="{{common.orderState == '1501' || common.orderState == '1502'}}" class="use-des">退款成功，退款已退回原支付账户
+      </view>
+      <view wx:if="{{common.orderState == '1503' || common.orderState == '1504' || common.orderState == '1302'}}"
+            class="use-des">金额将在7个工作日内退还至您支付账户内，请耐心等待
+      </view>
+      <view class='scan-ticket' wx:if="{{mixtureDetil.ticketInfos && orderS != 1}}">
+        <view class='get-ticket fw'>扫码进场</view>
+        <view class='scan'>
+          <view class="view-btn gradient fictitious" bindtap="goTicket">查看电子影票码</view>
+        </view>
+        <view class='fictitious-hint use-des'>若当前影院不支持电子影票进场,请到自助取票机扫码或输入取票码领取电影票</view>
+      </view>
+    </view>
+    <view
+            wx:if="{{(mixtureDetil.goods.length > 0 && type =='1' && common.orderState != '1000') || ((common.orderType == '2'|| common.orderType == '3' || common.orderType == '5') && common.orderState != '1000')}}">
+      <view class='info-wrap circular tc'>
+        <view class='get-ticket fw'>取卖品</view>
+        <view class='code-wrap'>
+          <image wx:if="{{common.goodsNo}}"
+                 class="code {{(common.orderState == 1501 || common.orderState == 1502 || common.orderState == 1503 || common.orderState == 1504 || common.orderState == 1302) && common.goodsNo  ? 'opa' : ''}}"
+                 src="{{qrcode}}{{common.goodsQrCode}}"></image>
+          <image wx:else class="code opa}}" src="{{common.refundDefaultImage}}"></image>
+          <image class='state-icon' wx:if="{{common.orderState == '1501' || common.orderState == '1502'}}"
+                 src='/image/refunded.png'></image>
+          <image class='state-icon'
+                 wx:if="{{common.orderState == '1503' || common.orderState == '1504' || common.orderState == '1302'}}"
+                 src='/image/refunding.png'></image>
+        </view>
+        <view class="{{(common.orderState == 1501 || common.orderState == 1502|| common.orderState == 1503 || common.orderState == 1504 || common.orderState == 1302) ? 'opa' : ''}}">
+          <view wx:if="{{common.goodsNo.length > 0}}">
+            <view class='security'>
+              <text>取货码：</text>
+              <text class='orange fw'>{{common.goodsNo[0]}}</text>
+            </view>
+            <view class='security' wx:if="{{common.goodsNo[1]}}">
+              <text>验证码：</text>
+              <text class='orange fw'>{{common.goodsNo[1]}}</text>
+            </view>
+            <view wx:if="{{common.orderState == '1001'}}" class='use-des fz24 mt20'>请凭取货码至前台领取卖品</view>
+          </view>
+          <view wx:if="{{common.orderState == '1501' || common.orderState == '1502' || common.orderState == '1302'}}"
+                class="use-des">退款成功，退款已退回原支付账户
+          </view>
+          <view wx:if="{{common.orderState == '1503' || common.orderState == '1504'}}" class="use-des">
+            金额将在7个工作日内退还至您支付账户内，请耐心等待
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{common.posType == '2'}}" class='bar-wrap tc circular'>
+        <view class='bar-code'>
+          <image class="bar-icon {{(common.orderState == 1501 || common.orderState == 1502) ? 'opa' : ''}}"
+                 src="{{barcode}}{{common.goodsQrCode}}" data-src="{{barcode}}?content={{common.goodsNo}}"
+                 bindtap="magnify"></image>
+          <image class='state-icon code-icon' wx:if="{{common.orderState == '1501' || common.orderState == '1502'}}"
+                 src='/image/refunded.png'></image>
+          <image class='state-icon code-icon'
+                 wx:if="{{common.orderState == '1503' || common.orderState == '1504'|| common.orderState == '1302'}}"
+                 src='/image/refunding.png'></image>
+          <view>{{common.goodsNo}}</view>
+        </view>
+      </view>
+    </view>
+    <view class='info-wrap order-info'>
+      <view class='fz28 black figure' wx:if="{{common.orderState != '1000'}}">实付金额：¥{{common.actualPrice}}</view>
+      <view class='fz28 black figure' wx:if="{{common.orderState == '1000'}}">应付金额：¥{{common.totalPrice}}</view>
+      <view class='mt20'>售卖影院：{{common.cinemaName}}</view>
+      <view class='mt20' wx:if="{{common.prefType == '1' && common.orderState == '1000'}}">会员卡：{{common.prefAccount}}
+      </view>
+      <view class='mt20' wx:if="{{common.prefType == '2' && common.orderState == '1000'}}">优惠券：{{common.prefAccount}}
+      </view>
+      <view class='mt20' wx:if="{{common.prefType == '0' && common.orderState == '1000'}}">会员卡：未使用</view>
+      <view class='mt20' wx:if="{{common.prefType == '0' && common.orderState == '1000'}}">优惠券：未使用</view>
+      <view class='mt20'>手机号：{{common.orderMobile}}</view>
+      <view class='mt20'>订单号：{{common.orderNo}}</view>
+      <view class='mt20'>下单时间：{{common.orderTime}}</view>
+      <view wx:if="{{common.orderState == '1503' || common.orderState == '1504'}}" class='mt20'>退款中...</view>
+      <view wx:if="{{common.applyRefundTime}}" class='mt20'>退款时间：{{common.applyRefundTime}}</view>
+    </view>
+    <view class='info-wrap whether tr' wx:if="{{common.orderState == '1000'}}">
+      <view class='order-btn line-btn' bindtap="cancel">取消订单</view>
+      <view class='order-btn gradient' bindtap="orderPay">付款</view>
+    </view>
+    <view class='info-wrap tr'
+          wx:if="{{common.orderState == '1001' && common.cinemaStatus == '1' &&common.refundStatus == '1'}}">
+      <view class='order-btn line-btn' bindtap="refund">退款</view>
+    </view>
+  </view>
+</view>
+<!-- 商品订单性情 -->
+<view class='card-detail' wx:if="{{type == '3'}}">
+  <view class='card-info flex' style="height: 160rpx;">
+    <view class='flex-al'>
+      <image wx:if="{{cardDetil.orderState == '1000'}}" class='detail-icon' src='/image/wait-pay.png'></image>
+      <image wx:if="{{cardDetil.orderState == '1001'}}" class='detail-icon' src='/image/card-done.png'></image>
+      <image
+              wx:if="{{cardDetil.orderState == '1501' || cardDetil.orderState == '1502' || cardDetil.orderState == '1503' || cardDetil.orderState == '1302' || cardDetil.orderState == '1504'}}"
+              class='detail-icon' src='/image/refund.png'></image>
+      <view class="felx1">
+        <view class='fz34' wx:if="{{cardDetil.orderState == '1000'}}">等待付款</view>
+        <view class='fz34' wx:if="{{cardDetil.orderState == '1001'}}">支付成功</view>
+        <view class='fz34' wx:if="{{cardDetil.orderState == '1503'|| cardDetil.orderState == '1504'}}">
+          退款中
+        </view>
+        <view class='fz34'
+              wx:if="{{cardDetil.orderState == '1501'|| cardDetil.orderState == '1502' || cardDetil.orderState == '1302'}}">
+          退款成功
+        </view>
+        <view style="line-height:34rpx" class='fz24 gray666 mt12' wx:if="{{cardDetil.orderState == '1000'}}">
+          {{cardDetil.orderTimeOut}}前未支付订单将取消
+        </view>
+        <view style="line-height:34rpx" class='fz24 gray666 mt12' wx:if="{{cardDetil.orderState == '1001'}}">
+          感谢你对{{cardDetil.cinemaName}}的支持
+        </view>
+        <view style="line-height:34rpx" class='fz24 gray666 mt12'
+              wx:if="{{cardDetil.orderState == '1501'|| cardDetil.orderState == '1502' || cardDetil.orderState == '1302'}}">
+          金额已退回原支付账户
+        </view>
+        <view style="line-height:34rpx" class='fz24 gray666 mt12' wx:if="{{cardDetil.orderState == '1503'|| cardDetil.orderState == '1504'}}">
+          退款金额预计7个工作日到账
+        </view>
+      </view>
+    </view>
+    <view   class="ml34">
+      <text class='yen fz30 fw'>¥</text>
+      <text wx:if="{{cardDetil.payAmount}}" class='card-price fw'>{{cardDetil.payAmount/100}}</text>
+    </view>
+  </view>
+  <block wx:if="{{cardDetil.packageType == 'CARD'}}">
+    <view class="card-info flex">
+      <view class="card-face">
+        <image class='card-bg' src='{{cardDetil.packagePicUrl}}'></image>
+        <view class="cardType">{{cardDetil.cardTypeDesc}}</view>
+        <image class='card-vip' src='/image/vip.png'></image>
+        <view class='card-content'>
+          <view class='card-text'>{{cardDetil.packageName}}</view>
+          <view class='card-num'>卡号：{{cardDetil.noFormat}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <block wx:if="{{cardDetil.packageType == 'PACKAGE' || cardDetil.packageType == 'VOUCHER'}}">
+    <view style="padding-bottom:30rpx" class="card-info flex-single {{cardDetil.packageType == 'PACKAGE' ? 'border-none' : ''}}">
+      <image wx:if="{{cardDetil.packageType == 'VOUCHER'}}" class="img-bg coupon-bg"
+             src='{{cardDetil.packagePicUrl}}'></image>
+      <image wx:if="{{cardDetil.packageType == 'PACKAGE'}}" class="img-bg gift-bg"
+             src='{{cardDetil.packagePicUrl}}'></image>
+      <view class="details">
+        <view class="fw details-name">{{cardDetil.packageName}}</view>
+        <view wx:if="{{cardDetil.packageDesc}}" class="details-type">{{cardDetil.packageDesc}}</view>
+        <view wx:if="{{cardDetil.voucherDesc}}" class="details-type">{{cardDetil.voucherDesc}}</view>
+      </view>
+    </view>
+    <view wx:if="{{cardDetil.packageType == 'PACKAGE'}}" class="gift-details">
+      <view class="gift-details-content">
+        <view class="gray999">商品包含：</view>
+        <block wx:for="{{cardDetil.packageList}}" wx:key="index">
+          <view class="flex gift-item">
+            <text>{{item.name}}</text>
+            <text>x{{item.num}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+  </block>
+  <view class="card-info gray999 fz24">
+    <view>售卖影院：{{cardDetil.cinemaName}}</view>
+    <view class='mt20'>手机号：{{cardDetil.orderMobile}}</view>
+    <view class='mt20'>订单号：{{cardDetil.orderNo}}</view>
+    <view wx:if="{{cardDetil.orderPayTime}}" class='mt20'>交易时间：{{cardDetil.orderPayTime}}</view>
+    <view wx:if="{{cardDetil.refundOrderTime}}" class='mt20'>退款时间：{{cardDetil.refundOrderTime}}</view>
+  </view>
+  <view class='card-info whether tr' wx:if="{{cardDetil.orderState == '1000'}}">
+    <view class='order-btn line-btn' bindtap="cancelCard">取消订单</view>
+    <view class='order-btn gradient' bindtap="orderPay">付款</view>
+  </view>
+</view>
+<view wx:if="{{inputPsd}}" class="mask-wrap" bindtap="hideInput"></view>
+<input-six wx:if="{{inputPsd}}" source="1" orderNo="{{orderNo}}" cardType="{{common.payType}}"
+           payType="{{common.payType}}"
+           bind:confirmPassword="confirmPassword"></input-six>

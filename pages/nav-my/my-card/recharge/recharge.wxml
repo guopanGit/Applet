@@ -1,0 +1,23 @@
+<!-- 充值.wxml-->
+<view class='card-warp'>
+  <view class='card-top'>
+    <view class='cardCode'>{{cardCode}}</view>
+    <view class='cardName'>{{cardName}}</view>
+  </view>
+  <view>
+    <view class='sum-warp'>
+      <view class='sum'>充值金额</view>
+      <view class='recharge-amount'>
+        <block wx:for="{{moneys}}" wx:for-item="time" wx:for-index="index" wx:key="key">
+          <view class="sum-time  {{(catHighLightIndex == index) ? 'Checked':''}}" bindtap='select' data-time='{{time}}'
+            data-index='{{index}}'>{{time}}元</view>
+        </block>
+      </view>
+      <input class='sum-time other' type='number' maxlength='4' placeholder="{{placeholder}}" bindblur='overFn'
+        placeholder-style='color: #ff630e;' bindinput='bindKeyInput' bindfocus='focusFn' value='{{val}}'/>
+    </view>
+  </view>
+  <view class='btn-warp'>
+    <view class='login-btn gradient' bindtap='rechargeCard'>充值</view>
+  </view>
+</view>

@@ -1,0 +1,88 @@
+/* pages/nav-my/my/my.wxss */
+@import "/app.wxss";
+
+.content {
+  padding-bottom: 30rpx;
+  font-size: 28rpx;
+  overflow-x: hidden;
+}
+
+.my-bg {
+  width: 750rpx;
+  height: 320rpx;
+  position: absolute;
+  top: -2px;
+  background-image: url("http://image.mplus.net.cn/images/my-bg.png");
+  background-size: 100% 100%;
+  z-index: -1;
+}
+
+.user-warp {
+  width: 750rpx;
+  height: 166rpx;
+  padding: 0 0 0 34rpx;
+  margin-top: 40rpx;
+  box-sizing: border-box;
+}
+
+.head-img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.member-name {
+  margin-left: 30rpx;
+  font-size: 46rpx;
+  color: #ffffff;
+}
+
+.primary {
+  width: 690rpx;
+  padding: 25rpx 0 40rpx 0;
+  margin: 0 auto 30rpx;
+  background-color: #ffffff;
+  border-radius: 20rpx;
+  box-shadow: 0 6rpx 25rpx 0 rgba(192, 192, 192, 0.15);
+}
+
+.primary-item {
+  flex: 1;
+  text-align: center;
+  font-size: 0;
+}
+
+.entrance {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+}
+
+.tap-nav{
+  font-size: 24rpx;
+}
+
+.setting {
+  height: 100rpx;
+  padding: 0 32rpx;
+  font-size: 28rpx;
+}
+
+.deal {
+  border-top: 0.8px solid #eee;
+}
+
+.my-icon {
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 30rpx;
+}
+
+
+.head-wrap{
+  display: inline-block;
+  padding: 5rpx;
+  background-color: rgba(255,255,255,.5);
+  border-radius: 50%;
+}

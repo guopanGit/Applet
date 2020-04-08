@@ -1,0 +1,114 @@
+/* 影片详情 */
+
+page {
+  font-size: 28rpx;
+  overflow-x: hidden;
+}
+
+.detail-wrap {
+  padding-bottom: 96rpx;
+}
+
+.film-poster {
+  width: 750rpx;
+  height: 580rpx;
+  background-color: #000;
+  text-align: center;
+}
+
+.film-image {
+  width: 410rpx;
+  height: 580rpx;
+}
+
+.film-name {
+  padding: 20rpx 24rpx;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 32rpx;
+}
+
+.has-bb {
+  border-bottom: 0.8px solid #eee;
+}
+
+.film-details {
+  background-color: #f8f8f8;
+}
+
+.film-wrap {
+  padding: 30rpx;
+  position: relative;
+}
+
+.is-love, .is-loved {
+  width: 160rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  border-radius: 56rpx;
+  font-size: 26rpx;
+  position: absolute;
+  right: 30rpx;
+  top: 30rpx;
+  text-align: center;
+}
+
+.love-img {
+  width: 31rpx;
+  height: 26rpx;
+  vertical-align: middle;
+  margin-right: 10rpx;
+}
+
+.is-love {
+  color: #fff;
+  background: linear-gradient(to right, #ffae00, #ffc600);
+}
+
+.is-loved {
+  color: #ff7800;
+  background-color: #ffefb6;
+}
+
+.film-lh {
+  line-height: 46rpx;
+}
+
+.main-act {
+  display: flex;
+}
+
+.flex-eight {
+  flex: 8;
+}
+
+.play-photo {
+  color: #999;
+  padding: 24rpx 30rpx;
+  background-color: #fff;
+}
+
+.item-img {
+  display: flex;
+  width: 240rpx;
+  height: 180rpx;
+  margin-right: 10rpx;
+}
+
+.photo-wrap {
+  display: -webkit-box;
+  height: 180rpx;
+  margin-top: 20rpx;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+  -moz-overflow-scrolling: touch;
+}
+
+.select-scene {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 11;
+}

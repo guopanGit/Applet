@@ -1,0 +1,74 @@
+<!-- 订单列表 -->
+<view class="content">
+  <view class="order-tap">
+    <view class="flex">
+      <view class="tap-item" data-page="1" bindtap="switcher">
+        <view class="tap-name {{page === '1' ? 'active' : ''}}">影票与卖品</view>
+        <view class="underline" wx:if="{{page === '1'}}"></view>
+      </view>
+      <view class="tap-item" data-page="2" bindtap="switcher">
+        <view class="tap-name {{page === '2' ? 'active' : ''}}">卡券</view>
+        <view class="underline" wx:if="{{page === '2'}}"></view>
+      </view>
+    </view>
+    <view wx:if="{{list.length <= 0}}" class="gaps"></view>
+  </view>
+  <view class="order-list" wx:if='{{list.length > 0}}'>
+    <block wx:for="{{list}}" wx:key="index">
+      <view class="gaps"></view>
+      <view class="ordinary-item" wx:if="{{page === '1'}}" data-id="{{item.orderNo}}" data-tag="{{item.confirmFlag}}"
+        data-type="{{item.orderType}}" data-orderS="{{item.orderS}}" bindtap="orderDetail">
+        <view class="item-title flex">
+          <view wx:if='{{!item.payTime && index == listIndex}}' class="fz24">剩余: {{item.countTime}}</view>
+          <view wx:elif="{{item.orderState == '1001' || item.orderState == '1401' || item.orderState == '1402'}}" class="fz24">付款时间: {{item.payTime}}</view>
+          <view wx:elif="{{item.orderState == '1000' && (item.orderType == '2' || item.orderType == '4' || item.orderType == '5')}}" class="fz24">请于 {{item.orderTimeOutDate}} 前完成支付</view>
+           <view wx:elif="{{item.orderState == '1501' || item.orderState == '1502'}}" class="fz24">退款时间: {{item.payTime}}</view>
+           <view wx:eles></view>
+          <view class="fz24">{{item.orderS}}</view>
+        </view>
+        <view class="item-detail">
+          <image class="ordinary-img" lazy-load src="{{item.poster}}"
+            wx:if="{{item.orderType == '1'|| item.orderType == '3'}}"></image>
+          <image class="goods-img" lazy-load src="{{item.poster}}"
+            wx:if="{{item.orderType == '4' || item.orderType == '2'|| item.orderType == '5'}}"></image>
+          <view class="order-detail flex">
+            <view class="detail-wrap">
+              <view class="fz34 movie-name ellipsis">{{item.orderName}}</view>
+              <view class="show-date" wx:if="{{item.showStartTime}}">放映时间：{{item.showStartTime}}</view>
+              <view>
+                <text class="sign fw">¥</text><text class="money">{{item.orderPrice/100}}</text><text class="quantity">共{{item.count}}</text>
+                <text class="quantity" wx:if="{{item.sellCount != 0 && item.orderType == '3'}}"> ,含卖品</text>
+              </view>
+            </view>
+            <view class="gradient-btn" wx:if="{{item.orderState == '1000'}}">付款</view>
+          </view>
+        </view>
+      </view>
+      <view class="membership-item" wx:if="{{page === '2'}}" data-id="{{item.orderNo}}" data-tag="3" data-type="{{item.orderType}}"
+            data-orderS="{{item.orderS}}" bindtap="orderDetail">
+        <view class="item-title flex">
+          <view wx:if='{{!item.payTime && index == listIndex}}'>剩余:{{item.countTime}}</view>
+          <view wx:elif="{{item.payTime}}">付款时间: {{item.payTime}}</view>
+          <view wx:elif="{{item.refundTime}}">退款时间: {{item.refundTime}}</view>
+          <view>{{item.orderS}}</view>
+        </view>
+        <view class="item-detail">
+          <image class="membership-img" lazy-load src="/image/min-profit.png" wx:if="{{item.packageType == 'CARD_EQUITY'}}"></image>
+          <image class="membership-img" lazy-load src="/image/min-store.png" wx:elif="{{item.packageType == 'CARD_STORE'}}"></image>
+          <image class="membership-img" lazy-load src="/image/min-coupon.png" wx:elif="{{item.packageType == 'VOUCHER'}}"></image>
+          <image class="membership-img" lazy-load src="/image/min-gift.png" wx:elif="{{item.packageType == 'PACKAGE'}}"></image>
+          <view class="order-detail flex">
+            <view>
+              <view class="cardName ellipsis">{{item.packageName}}</view>
+              <view class="mt20">
+                <text class="sign fw">¥</text><text class="money">{{item.payAmount/100}}</text>
+              </view>
+            </view>
+            <view class="gradient-btn" wx:if="{{item.orderS == '待付款'}}">付款</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+<default id="default" type="{{type}}" bind:clickBtn="clickBtn"></default>

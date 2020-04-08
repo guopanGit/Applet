@@ -1,0 +1,30 @@
+<!--电子影票.wxml-->
+<view class="content">
+  <view class="card">
+    <view class="film-intro">
+      <view class="film-name">{{detail.filmName}}</view>
+      <view class="film-date">{{detail.showTime}} ({{detail.filmLang}}{{detail.filmSight}})</view>
+      <view class="film-hall">{{detail.hallName}}</view>
+    </view>
+    <view class="code">
+      <view class="title">
+        <view class="title-sigh"></view>
+        <text>电子影票码({{current + 1}}/{{list.length}})</text>
+      </view>
+      <swiper class="seat-swiper" current="{{current}}" bindchange='switch'>
+        <block wx:for="{{list}}" wx:key="index">
+          <swiper-item>
+            <view>
+              <view class="seat">{{item.seatNo}}</view>
+              <image class="seat-code" src="{{http}}?content={{item.ticketInfoCode}}"></image>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="indicator">
+        <view class="indicator-item {{index == current ? 'blue' : ''}}" wx:for="{{list}}" wx:key="index"></view>
+      </view>
+      <view class="hint">将二维码对准闸机扫描口刷码进场</view>
+    </view>
+  </view>
+</view>

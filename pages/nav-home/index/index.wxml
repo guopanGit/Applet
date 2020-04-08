@@ -1,0 +1,150 @@
+<view>
+  <!-- 首页 -->
+  <view bindtap='changeCinema' class='location-adr flex-al'>
+    <image class='lociton-adr' src='../../../image/address.png'></image>
+    <text>{{cityName}}</text>
+  </view>
+
+  <!-- 广告轮播 -->
+  <swiper wx:if='{{bannerArr.length}}' class="swiper-wrap" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}"
+          interval="{{interval}}" duration="{{duration}}" indicator-color="{{dotColor}}"
+          indicator-active-color="{{dotCurColor}}" circular="{{circular}}">
+    <block wx:for="{{bannerArr}}" wx:index="{{index}}" wx:key="key">
+      <swiper-item data-ads="{{item}}" bindtap='bannerJump'>
+        <image src="{{item.adImg}}" class="slide-image"/>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <!-- 限量红包-->
+  <view wx:if='{{limitRedPackage}}' class='fixed-scroll flex red-package' bindtap="checkRedPackage">
+    <view class="flex-al">
+      <view class="label rp-text">限量领红包</view>
+      <view>限量红包，先抢先得</view>
+    </view>
+    <view class="arrow right-arrow gold-arrow"></view>
+  </view>
+
+  <!-- 卡推荐组件 -->
+  <buy-card id='cardRecommend' source="1" renderData="{{renderData}}" recommendCard="{{recommendCard}}"
+            cardTitle="{{cardTitle}}" renderShow="{{renderShow}}"></buy-card>
+
+  <!-- 购票须知 -->
+  <view class="notice-wrap">
+    <view class="notice-content flex-single" wx:if='{{noticeContent}}' bindtap="showNotice">
+      <view class="prompt-wrap">
+        <image class='prompt-img' src='../../../image/prompt.png'></image>
+      </view>
+      <view class="{{notice ? 'notice-text' : ''}}">{{noticeContent}}</view>
+    </view>
+  </view>
+
+  <!-- 影片列表 -->
+  <view class='film-list'>
+    <view class='hot-wrap flex-al'>
+      <view bindtap='changeFilmList' data-type='0' class="hot-change {{queryType == 0 ? 'selected-hot' : ''}}">正在热映
+      </view>
+      <view bindtap='changeFilmList' data-type='1' class="hot-change {{queryType == 1 ? 'selected-hot' : ''}}">即将上映
+      </view>
+    </view>
+    <view class='gaps'></view>
+    <!-- 正在热映 -->
+    <block wx:if='{{queryType == 0}}' wx:for='{{hotFilmArr}}' wx:index='{{index}}' wx:key='key'>
+      <view class='list-item'>
+        <view class='flex'>
+          <view class='flex-al' data-id='{{item.film_key}}' data-type='{{item}}' bindtap='goDetail'>
+            <image wx:if="{{item.film_poster}}" class='film-img' src='{{item.film_poster}}'></image>
+            <view>
+              <view class='film-title  flex-al'>
+                <text wx:if="{{item.isActivity == '1' && item.tagName}}" class='label-icon rose-red'>{{item.tagName}}
+                </text>
+                <text wx:elif="{{(item.isActivity == '2' || item.isActivity == '3') && item.tagName}}"
+                      class='label-icon'>{{item.tagName}}</text>
+                <text class='max400 ellipsis fw'>{{item.film_name}}</text>
+              </view>
+              <view class='film-info ellipsis'>导演: {{item.film_regisseur ? item.film_regisseur : ''}}</view>
+              <view class='film-info ellipsis'>主演: {{item.film_leading ? item.film_leading : ''}}</view>
+              <view class='flex-al lately-wrap'>
+                <image class='lately-icon' src='../../../image/lately.png'></image>
+                <text class='fz28 ellipsis'>
+                  <text>{{item.movieShow}}:</text>
+                  <block wx:for='{{item.movieShowTime}}' wx:index='{{index}}' wx:key='key'>
+                    <text>{{item}} \t</text>
+                  </block>
+                </text>
+              </view>
+            </view>
+          </view>
+          <view wx:if='{{item.isSale == 1}}' data-key='{{item.film_key}}' class='default-btn advance-btn'
+                bindtap='goScene'>预售
+          </view>
+          <view wx:else class='default-btn buy-btn' data-key='{{item.film_key}}' bindtap='goScene'>购票</view>
+        </view>
+        <view class='line'></view>
+      </view>
+    </block>
+    <!-- 即将上映 -->
+    <block wx:if='{{queryType == 1}}' wx:for='{{hotFilmArr}}' wx:index='{{index}}' wx:key='key'>
+      <view class='come-item'>
+        <view class='release-date'>{{item.date}}</view>
+        <block wx:for='{{item.lists}}' wx:index='{{index}}' wx:key='key'>
+          <view class='come-release'>
+            <view class='flex'>
+              <view class='flex-al' data-id='{{item.film_key}}' data-type='{{item}}' bindtap='goDetail'>
+                <image wx:if="{{item.film_poster}}" class='film-img' src='{{item.film_poster}}'></image>
+                <view>
+                  <view class='film-title fw'>{{item.film_name}}</view>
+                  <view class='film-info ellipsis mt30'>导演: {{item.film_regisseur ? item.film_regisseur : ''}}</view>
+                  <view class='film-info ellipsis mt30'>主演: {{item.film_leading ? item.film_leading : ''}}</view>
+                </view>
+              </view>
+              <view wx:if='{{item.isSale == 1}}' class='default-btn advance-btn' data-key='{{item.film_key}}'
+                    bindtap='goScene'>预售
+              </view>
+
+              <view wx:elif='{{item.isCare == 1 || item.isCare == null}}' class='default-btn want'
+                    data-index='{{index}}' data-flag='{{0}}' data-item='{{item}}' bindtap='isWanted'>想看
+              </view>
+              <view wx:elif='{{item.isCare == 0}}' class='default-btn i-want' data-index='{{index}}' data-flag='{{1}}'
+                    data-item='{{item}}' bindtap='isWanted'>已想看
+              </view>
+            </view>
+            <view class='line'></view>
+          </view>
+        </block>
+      </view>
+      <view class='gaps'></view>
+    </block>
+  </view>
+</view>
+
+<!-- 广告层 -->
+<view wx:if='{{isEject}}' class='layer-wrap' catchtouchmove="true">
+  <view class='eject-wrap'>
+    <image bindtap='ejectJump' class="{{isSpecial ? '' : 'ad-eject'}}" style="width: {{adWidth}}rpx; height: {{adHigh}}rpx;" mode="widthFix" src='{{layerAdImg}}'></image>
+    <icon bindtap='closeLayer' type='cancel' size='40' color='#fff'></icon>
+  </view>
+</view>
+
+<!-- 限量红包层 -->
+<view wx:if='{{package}}' class='layer-wrap'>
+  <view class='eject-wrap'>
+    <view bindtap="grabRed" class="touch-grab"></view>
+    <image class='red-package-eject' mode="widthFix" src='/image/red-layer.png'></image>
+    <icon bindtap='closePackage' type='cancel' size='40' color='#fff'></icon>
+  </view>
+</view>
+
+<!-- 定向红包层 -->
+<view wx:if="{{redictPackage}}" class='layer-wrap'>
+  <view class='eject-wrap'>
+    <view class="redict-package">
+      <view class="coupon-list">
+        <coupon-list list="{{redictCouponList}}" source="{{source}}"></coupon-list>
+      </view>
+      <!--   <view class="dashed-line"></view>-->
+      <view class="use-it" bindtap='closeRedictPackage'></view>
+    </view>
+    <icon bindtap='closeRedictPackage' type='cancel' size='40' color='#fff'></icon>
+  </view>
+</view>

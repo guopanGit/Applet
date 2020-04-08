@@ -1,0 +1,6 @@
+<!--pages/nav-my/agreement/agreement.wxml-->
+<view class="content">
+  <scroll-view enable-back-to-top>
+    <rich-text nodes="{{dateil}}"></rich-text>
+  </scroll-view>
+</view>

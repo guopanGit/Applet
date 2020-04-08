@@ -1,0 +1,32 @@
+/* 个人资料 */
+
+.info-detail {
+  font-size: 28rpx;
+}
+
+.avatar {
+  width: 46rpx;
+  height: 46rpx;
+  border-radius: 50%;
+}
+
+.item-info {
+  padding: 0 30rpx;
+  height: 100rpx;
+  border-bottom: 2rpx solid #eee;
+}
+
+.item-info:first {
+  border-top: 0.8px solid #eee;
+}
+
+.info-arrow {
+  content: '';
+  display: block;
+  width: 10rpx;
+  height: 10rpx;
+  border-top: 0.8px solid #656565;
+  border-right: 0.8px solid #656565;
+  transform: rotate(45deg);
+  margin-left: 10rpx;
+}

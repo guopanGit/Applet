@@ -1,0 +1,12 @@
+<!-- pages/nav-my/my-coupon/my-coupon.wxml -->
+<view class="content" wx:if='{{list.length > 0}}'>
+  <view class="add-coupon flex-center" bindtap="bindCoupon">
+    <icon class="bind-icon" type="clear" size="14" color="#999"></icon>
+    <text class="ml10">绑定优惠券</text>
+  </view>
+  <!-- 券列表 -->
+  <coupon-list bind:coupon="coupon" bind:service="service" list='{{list}}'></coupon-list>
+  <!-- 弹层 -->
+  <buy-card showDetail="{{showDetail}}" fromMyCard="{{false}}" showDetail="{{coupon}}"></buy-card>
+</view>
+<default id="default" type="9" bind:clickBtn="bindCoupon"></default>

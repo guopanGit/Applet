@@ -1,0 +1,115 @@
+<view class='luck-draw'>
+
+  <view bindtap="activityRules" class='rules-text flex-center'>
+    <view>
+      <view>活动</view>
+      <view>规则</view>
+    </view>
+  </view>
+
+  <image class='activity-title' src="http://image.mplus.net.cn/images/draw-title.png"></image>
+
+  <view class='activity-machine'>
+
+    <!-- 中奖记录 -->
+    <view wx:if="{{winPrizeName.length}}" class='luck-man'>
+      <swiper class="tab-right" vertical="true" autoplay="true" circular="true" interval="2000"
+              display-multiple-items='1'>
+        <block wx:for='{{winPrizeName}}' wx:key="key">
+          <swiper-item>
+            <view class="time">{{item}}</view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+
+    <!-- 抽奖区 -->
+    <view class='lucky-draw'>
+      <view  class='trans-list'>
+        <swiper class="prize-swiper" autoplay="{{prizeL}}" current="{{prizeLC}}" interval="{{prizeLI}}" duration="{{prizeLD}}"
+                easing-function="linear" previous-margin="60rpx" next-margin="60rpx" circular vertical>
+          <swiper-item class="swiper-item" wx:for="{{prizeArr}}" wx:key="index" >
+            <image class="prize-item" mode="widthFix" src='{{item.prizeImgLink}}' ></image>
+          </swiper-item>
+        </swiper>
+      </view>
+      <view class='trans-list'>
+        <swiper class="prize-swiper" autoplay="{{prizeM}}" current="{{prizeMC}}" interval="{{prizeMI}}" duration="{{prizeMD}}"
+                easing-function="linear" previous-margin="60rpx" next-margin="60rpx" circular vertical>
+          <swiper-item class="swiper-item" wx:for="{{prizeArr}}" wx:key="index">
+            <image class="prize-item" mode="widthFix" src='{{item.prizeImgLink}}' ></image>
+          </swiper-item>
+        </swiper>
+      </view>
+      <view class='trans-list'>
+        <swiper class="prize-swiper" autoplay="{{prizeR}}" current="{{prizeRC}}" interval="{{prizeRI}}" duration="{{prizeRD}}"
+                easing-function="linear" previous-margin="60rpx" next-margin="60rpx" circular vertical>
+          <swiper-item class="swiper-item" wx:for="{{prizeArr}}" wx:key="index">
+            <image class="prize-item" mode="widthFix" src='{{item.prizeImgLink}}' ></image>
+          </swiper-item>
+        </swiper>
+      </view>
+      <view class="trans-mark"></view>
+    </view>
+
+    <view class='luck-chance'>
+      您有
+      <text class='fz36'>{{winPrizeNum}}</text>
+      次抽奖机会
+    </view>
+
+    <view bindtap="startAnmiation" class='luck-btn'></view>
+
+    <!-- 历史奖品 -->
+    <view wx:if="{{myPrize.length}}" class="luck-prize">
+      <block wx:for="{{myPrize}}" wx:key="key">
+        <view class='prize-content flex-single'>
+          <image class='prize-img' mode="aspectFill" src='{{item.prizeImgLink}}'></image>
+          <view class='prize-name'>
+            <view>{{item.prizeName}}</view>
+            <view bindtap="useing" class='to-use'>去使用</view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+  </view>
+
+</view>
+
+<!-- 活动规则 -->
+<view wx:if="{{showRules}}">
+  <view bindtap="hideRules" catchtouchmove='true' class="mask-wrap"></view>
+  <view class='activity-rules' catchtouchmove='true'>
+    <view class='rule-title'>活动规则</view>
+    <view class='rule-content'>
+      <view class='brown-title'>活动时间：</view>
+      <view>{{startTime}}-{{endTime}}</view>
+      <!-- <view class='brown-title'>活动规则：</view> -->
+      <!-- <view>1.点击“开始抽奖”按钮进行抽奖，当三个图案相同时，即可获得图案上的奖品</view> -->
+      <!-- <view>2.每个用户有1次抽奖机会</view> -->
+      <view class='brown-title'>活动说明：</view>
+      <view>
+        <block wx:for="{{rules.description}}" wx:key="key">
+          <text class=''>{{item}}</text>
+        </block>
+      </view>
+      <view class='brown-title'>* 最终解释权归活动影院所有</view>
+    </view>
+  </view>
+</view>
+
+<!-- 中奖弹窗 -->
+<view wx:if="{{isPrize}}">
+  <view bindtap="hideRules" catchtouchmove='true' class="mask-wrap"></view>
+  <view class='activity-prize' catchtouchmove='true'>
+    <view class='prize-layer flex-single'>
+      <image class='prize-img' mode="aspectFill" src='{{prizeArr[prizeRC].prizeImgLink}}'></image>
+      <view class='prize-name'>
+        <view>{{prize.prizeName}}</view>
+        <view bindtap="useing" class='to-use'>去使用</view>
+      </view>
+    </view>
+    <view bindtap="useing" class='useing'></view>
+  </view>
+</view>

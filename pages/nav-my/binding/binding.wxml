@@ -1,0 +1,55 @@
+<!--绑卡券.wxml-->
+<view class="content">
+  <view class="flex-center nav">
+    <text class="nav-item {{id == '1' ? 'navCur' : 'no-boeder'}}" data-id="1" bindtap="changeNav">绑券</text>
+    <text class="nav-item {{id == '2' ? 'navCur' : 'no-boeder'}}" data-id="2" bindtap="changeNav">绑卡</text>
+  </view>
+  <view class="input-wrap">
+    <input type="number" class="input-text" placeholder="{{num}}" value="{{number}}" bindinput="setNum"/>
+  </view>
+  <view class="input-wrap">
+    <input type="text" class="input-text" placeholder="{{pwd}}" value="{{password}}" bindinput="setPwd"/>
+  </view>
+  <view class="invitation">邀请码</view>
+
+  <view class="input-wrap">
+    <input type="number" class="input-text" placeholder="请输入邀请码(选填)" value="{{invite}}" bindinput="setInvite"/>
+  </view>
+  <view wx:if='{{id == "1"}}'>
+    <view class="hintInfo">
+      <image class="notice" src="/image/notice.png"></image>
+      <view class="hintTxt">1.优惠券可在app/小程序-我的-优惠券-查看。</view>
+      <view class="hintTxt">2、优惠券需在有效期限内使用,过期作废。</view>
+      <view class="hintTxt">3、已绑定的优惠券不支持解除绑定,一旦绑定不可解绑及转让(只限本人使用)。</view>
+      <view class="hintTxt">4、一张订单只能使用一张优惠券(免费兑换券除外)。</view>
+      <view class="hintTxt">5、优惠券仅限在影核app/小程序使用。</view>
+      <view class="hintTxt">6、优惠券只能在适用范围内使用，具体可查看优惠券的说明,详情可咨询影院工作人员。</view>
+    </view>
+  </view>
+  <view wx:if='{{id == "2"}}'>
+    <view class="hintInfo">
+      <image class="notice" src="/image/notice.png"></image>
+      <view class="hintTxt">1.已绑定的会员卡暂不支持解除绑定。</view>
+      <view class="hintTxt">2、会员卡一经购买,不支持退换。</view>
+      <view class="hintTxt">3、部分线下卡不支持绑定,详情请咨询影城工作人员。</view>
+      <view class="hintTxt">4、由于会员账户与金额绑定，仅会员本人享有会员专属优惠。</view>
+      <view class="hintTxt">5、受不同影片和优惠活动的影响,同一影院的权益价有可能发生变动,票价以实际购票时票价为准。</view>
+      <view class="hintTxt">6、严禁使用会员卡进行倒卖影票等违反影院规章活动，一经发现，影院有权终止倒卖者所持会员卡的使用权。</view>
+    </view>
+  </view>
+
+  <view class="flex btn-wrap mt100">
+    <view class="bind-wrap">
+      <view class="view-btn gradient w320 {{isScan ? 'opa' : ''}}" bindtap="scan">
+        <image class="code-img" src="/image/bind-code.png"></image>
+        <view>扫码识别</view>
+      </view>
+    </view>
+    <view class="bind-wrap">
+      <view class="view-btn gradient w320 {{isOpa ? '' : 'opa'}}" bindtap="binding">
+        <image class="bind-img" src="/image/bind-bind.png"></image>
+        <view>绑定</view>
+      </view>
+    </view>
+  </view>
+</view>

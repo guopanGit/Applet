@@ -1,0 +1,43 @@
+/* 我的会员卡 */
+
+page{
+  background: #f1f1f1 !important;
+}
+
+.bind-card-wrap {
+  background-color: #f1f1f1;
+  padding-top: 20rpx;
+}
+
+.bind-card {
+  background-color: #fff;
+  height: 80rpx;
+  color: #999;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  margin: 0 30rpx 30rpx 30rpx;
+}
+
+.check-detail {
+  margin-bottom: 30rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #ff630e;
+  margin-top: 10rpx;
+}
+
+.match,
+.match-item {
+  margin-top: 10rpx;
+}
+
+.my-card .layer-detail {
+  line-height: 36rpx;
+  max-height: 500rpx;
+  overflow-y: auto;
+}
+
+.my-card .touch-agree {
+  bottom: 10rpx;
+  right: 260rpx;
+}

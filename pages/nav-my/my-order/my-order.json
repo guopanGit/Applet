@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "default": "/component/default/default"
+  },
+  "component": true
+}

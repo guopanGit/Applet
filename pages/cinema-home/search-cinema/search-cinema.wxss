@@ -1,0 +1,49 @@
+/* 搜索影院 */
+@import '../../cinema/cinema.wxss';
+
+page {
+  font-size: 28rpx;
+}
+
+.search-cinema-wrap {
+  height: 110rpx;
+}
+
+.search-cinema {
+  padding: 20rpx 30rpx;
+  border-bottom: 0.8px solid #eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.search-cinema .search-wrap {
+  width: 600rpx;
+  padding-right: 56rpx;
+}
+
+.clear-icon {
+  position: absolute;
+  right: 20rpx;
+  top: 22rpx;
+}
+
+.search-none {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.none-img {
+  width: 459rpx;
+  height: 200rpx;
+}
+
+.none-text {
+  margin-top: 40rpx;
+  font-size: 28rpx;
+}

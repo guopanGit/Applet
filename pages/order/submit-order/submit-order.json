@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "input-six": "/component/input-six/input-six"
+  }
+}

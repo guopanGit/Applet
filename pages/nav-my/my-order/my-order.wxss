@@ -1,0 +1,143 @@
+/* 订单列表 */
+@import '/style/style.wxss';
+@import '/app.wxss';
+
+.order-tap {
+  height: 90rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 28rpx;
+  color: #999;
+  background-color: #fff;
+  z-index: 10;
+}
+
+.order-list {
+  padding-top: 90rpx;
+  line-height: 1;
+}
+
+.tap-item {
+  flex: 1;
+  height: 90rpx;
+  text-align: center;
+}
+
+.tap-name {
+  height: 86rpx;
+  line-height: 86rpx;
+  color:#757575 ;
+}
+
+.active {
+  color: #ff630e;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.underline {
+  width: 68rpx;
+  height: 4rpx;
+  border-radius: 2rpx;
+  margin: 0 auto;
+  background-color: #ff630e;
+}
+
+.item-title {
+  display: flex;
+  font-size: 24rpx;
+  color: #999;
+  margin: 24rpx 0 34rpx;
+}
+
+.item-detail {
+  display: flex;
+  padding: 0 0 20rpx 0;
+}
+
+.gradient-btn {
+  width: 100rpx;
+  height: 54rpx;
+  line-height: 54rpx;
+  border-radius: 54rpx;
+  font-size: 24rpx;
+   box-shadow: 0 6rpx 10rpx 0 rgba(250, 94, 72, 0.2);
+}
+
+.order-detail {
+  flex: 1;
+  padding-left: 32rpx;
+}
+
+/* 影票与卖品 */
+
+.detail-wrap{
+  transform: translateY(-10rpx);
+}
+
+.ordinary-item {
+  padding: 0rpx 30rpx;
+}
+
+.ordinary-img {
+  width: 120rpx;
+  height: 160rpx;
+  border-radius: 4rpx;
+}
+
+.goods-img {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.movie-name {
+  font-weight: 700;
+  margin-bottom: 20rpx;
+  width: 400rpx;
+}
+
+.cardName{
+  width: 442rpx;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.show-date {
+  margin-bottom: 20rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.sign {
+  font-size: 22rpx;
+  color: #fe681d;
+}
+
+.money {
+  font-weight: 700;
+  font-size: 34rpx;
+  color: #fe681d;
+  margin: 0 10rpx;
+}
+
+.quantity {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 会员卡 */
+
+.membership-item {
+  padding: 0 30rpx 0 30rpx;
+}
+
+.membership-img {
+  width: 108rpx;
+  height: 108rpx;
+}
+
+.mt20{
+  margin-top: 20rpx;
+}

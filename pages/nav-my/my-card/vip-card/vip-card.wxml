@@ -1,0 +1,21 @@
+<!-- 我的会员卡 -->
+<view wx:if='{{list.length}}' class='bind-card-wrap'>
+  <view class='bind-card flex-center' bindtap="bindCard">
+    <icon class="bind-icon" type="clear" size="14" color="#999999"></icon>
+    <text class='ml10'>绑定会员卡</text>
+  </view>
+  <card-list bind:tapCard="showDetail"  bind:refresh="refresh" source="{{source}}" bind:updatePassword="updatePassword" chooseCardData="{{list}}"></card-list>
+</view>
+
+<!-- 卡详情 -->
+<buy-card wx:if='{{cardDetail}}' showCardDetail="{{renderDetail}}" fromMyCard="{{false}}"></buy-card>
+
+<!-- 输入框 -->
+<view wx:if='{{inputPsd}}' catchtouchmove='true' bindtap="closeInput" class='mask-wrap'></view>
+
+<input-six wx:if='{{inputPsd}}' bind:confirmPassword="confirmPassword" bind:closeInput="closeInput"
+           cardNo="{{cardNo}}" source="0">
+</input-six>
+
+<!-- 暂无数据 -->
+<default id="default" type="8" bind:clickBtn="bindCard"></default>

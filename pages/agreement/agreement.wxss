@@ -1,0 +1,7 @@
+/* pages/nav-my/agreement/agreement.wxss */
+
+.content{
+  padding: 30rpx;
+  font-size: 26rpx;
+  line-height: 50rpx;
+}

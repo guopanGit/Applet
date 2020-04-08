@@ -1,0 +1,459 @@
+/* 订单详情 */
+@import "../../../app.wxss";
+
+page {
+  background-color: #f5f5f5 !important;
+  box-sizing: border-box;
+}
+
+.ticket-order, .card-detail {
+  margin-bottom: 50rpx;
+}
+
+.order-detail {
+  margin: 30rpx 20rpx;
+  border-radius: 20rpx;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.car-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+
+.use-btn {
+  color: #7ebefd;
+  width: 150rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 26rpx;
+  box-sizing: border-box;
+  border-radius: 30px;
+  border: solid 0.8px #7ebefd;
+}
+
+.call-phone {
+  width: 170rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  border: solid 0.8px #eee;
+  border-radius: 10rpx;
+}
+
+.phone {
+  width: 24rpx;
+  height: 23rpx;
+  margin-right: 10rpx;
+}
+
+.detail-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+
+.info-wrap {
+  padding: 30rpx;
+  font-size: 24rpx;
+  position: relative;
+}
+
+.film-name{
+  width: 480rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.circular {
+  border-bottom: 0.8px dashed #eee;
+}
+
+.circular::before, .circular::after {
+  content: '';
+  display: block;
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 30rpx;
+  background-color: #f5f5f5;
+  position: absolute;
+  bottom: -14rpx;
+}
+
+.circular::before {
+  left: -14rpx;
+}
+
+.circular::after {
+  right: -14rpx;
+}
+
+.ticket-goods, .ticket-good {
+  /* margin: 0rpx 0 0 30rpx; */
+  border-bottom: 0.8px solid #eee;
+}
+
+.ticket-good{
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+}
+
+.open-up {
+  width: 35rpx;
+  height: 32rpx;
+}
+
+.ticket-good:first-child{
+  padding-top: 0;
+}
+
+.ticket-good:nth-last-child(1) {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ticket-goods:nth-last-child(2) {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ticket-goods:first-child {
+  padding-top: 0;
+  padding-bottom: 30rpx;
+}
+
+.ticket-goods:last-child {
+  border-bottom: 0;
+}
+
+.ticket-goods .des {
+  flex: 1;
+}
+
+.get-ticket {
+  margin-top: 10rpx;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+}
+
+.get-ticket::before {
+  content: '';
+  display: block;
+  width: 4rpx;
+  height: 24rpx;
+  background-color: #ff630e;
+  border-radius: 4px;
+  margin-right: 10rpx;
+}
+
+.code-wrap, .ticket-code, .code {
+  width: 300rpx;
+  height: 300rpx;
+}
+
+.take {
+  margin-top: 20rpx;
+}
+
+.code-wrap {
+  margin: 20rpx auto 10rpx;
+  position: relative;
+}
+
+.state-icon {
+  width: 122rpx;
+  height: 92rpx;
+  position: absolute;
+  right: -50rpx;
+  top: -4rpx;
+}
+
+.code-icon {
+  right: 100rpx;
+  top: 10rpx;
+}
+
+.ticket-code {
+  border: 2rpx solid #ccc;
+}
+
+.tc {
+  text-align: center;
+}
+
+.tr {
+  text-align: right;
+}
+
+.place {
+  width: 700rpx;
+  margin-left: -30rpx;
+  padding-top: 30rpx;
+  padding-left: 30rpx;
+  border-top: 0.8px solid #eee;
+}
+
+.phone{
+  margin-top: 10rpx;
+}
+
+.bar-wrap {
+  font-size: 24rpx;
+  padding-bottom: 30rpx;
+}
+
+.bar-code {
+  width: 600rpx;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 20rpx;
+  border: 2rpx solid #eee;
+  box-sizing: border-box;
+}
+
+.bar-icon {
+  width: 580rpx;
+  height: 130rpx;
+  margin: 20rpx 0;
+}
+
+.order-info {
+  color: #999;
+  font-size: 24rpx;
+  border-bottom: 0.8px solid #eee;
+  padding-bottom: 30rpx;
+}
+
+.order-info:last-child {
+  border-bottom: none;
+}
+
+.order-btn {
+  color: #fff;
+  display: inline-block;
+  width: 150rpx;
+  padding: 12rpx 0;
+  text-align: center;
+  box-sizing: border-box;
+  font-size: 26rpx;
+  border-radius: 60rpx;
+  margin-left: 30rpx;
+}
+
+.line-btn {
+  color: #333;
+  border: 2rpx solid #ccc;
+}
+
+.card-detail {
+  margin-top: 20rpx;
+}
+
+.card-info {
+  padding: 40rpx;
+  background-color: #fff;
+  border-bottom: 0.8px solid #eee;
+  line-height: 1;
+  box-sizing:border-box;
+}
+
+.card-price {
+  color: #ff630e;
+  font-size: 42rpx;
+  margin-left: 8rpx;
+}
+
+.card-face, .card-bg {
+  width: 100%;
+  height: 398rpx;
+  position: relative;
+  border-radius: 20rpx;
+}
+
+.card-content {
+  position: absolute;
+  top: 110rpx;
+  left: 38rpx;
+}
+
+.card-text {
+  color: #fff;
+  font-size: 42rpx;
+  font-weight: 700;
+  margin-bottom: 20rpx;
+}
+
+.card-num {
+  font-size: 30rpx;
+  color: #fff;
+  opacity: 0.5;
+  margin-top: 60rpx;
+}
+
+.card-info:last-child {
+  border-bottom: none;
+}
+
+.opa {
+  opacity: 0.5;
+}
+
+.security{
+  padding-left: 170rpx;
+  text-align: left;
+  font-size: 36rpx;
+}
+
+.cardType, .card-vip {
+  position: absolute;
+  top: 50rpx;
+  left: 130rpx;
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.card-vip {
+  width: 74rpx;
+  height: 28rpx;
+  top: 54rpx;
+  left: 40rpx;
+}
+
+.cardType {
+  opacity: 0.5;
+}
+
+.goods-wrap {
+  height: 260rpx;
+  overflow: hidden;
+}
+
+.scan {
+  margin: 30rpx auto;
+  width: 240rpx;
+}
+
+.figure {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+}
+
+/* 倒计时 */
+
+.count-down {
+  width: 174rpx;
+  position: absolute;
+  right: 0;
+  top: 30rpx;
+  background-color: #ffefe6;
+  border-radius: 30px 0px 0px 30px;
+  font-size: 32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14rpx 0;
+}
+
+.count-img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
+}
+
+.inversion {
+  transform: rotate(180deg);
+}
+
+.whether{
+  box-sizing: border-box;
+}
+
+.scan-ticket{
+  padding:10rpx 30rpx 10rpx 30rpx;
+  text-align: center;
+}
+
+.fictitious{
+  font-size: 26rpx;
+}
+
+.fictitious-hint{
+  color: #999;
+  font-size: 24rpx;
+}
+
+.img-bg{
+  height: 186rpx;
+  border-radius: 20rpx;
+}
+
+.coupon-bg{
+  width: 240rpx;
+}
+
+.gift-bg{
+  width: 330rpx;
+}
+
+.details{
+  padding: 30rpx 0 0 30rpx;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.details-name{
+  max-width: 400rpx;
+}
+
+.details-type{
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.gift-details{
+  padding-bottom: 40rpx;
+  font-size: 24rpx;
+  background-color: #fff;
+  border-bottom: 0.8px solid #eee;
+}
+
+.gift-details-content{
+  margin-left: 40rpx;
+  padding: 20rpx 34rpx 0 0;
+  border-top: 0.8px solid #eee;
+}
+
+.gift-item{
+  margin-top: 6rpx;
+  color: #333;
+}
+
+.border-none{
+  border: none;
+}
+
+.max500{
+  max-width: 500rpx;
+}
+
+.felx1{
+  flex:1
+}
+
+.mt12{
+  margin-top: 12rpx;
+}
+
+.ml34{
+  margin-left: 34rpx;
+}
