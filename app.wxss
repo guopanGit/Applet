@@ -7,6 +7,13 @@ page {
   overflow-x: hidden;
 }
 
+/*隐藏滚动条*/
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
 .yen {
   color: #ff630e;
   font-size: 22rpx;
@@ -142,11 +149,6 @@ page {
   align-items: center;
 }
 
-.flex-space {
-  display: flex;
-  justify-content: space-between;
-}
-
 .flex-single {
   display: flex;
 }
@@ -176,6 +178,10 @@ page {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+}
+
+.flex1{
+  flex: 1;
 }
 
 /* 间隙 */
@@ -263,6 +269,17 @@ page {
   font-size: 32rpx;
   height: 60rpx;
   border-radius: 60rpx;
+  box-sizing: border-box;
+}
+
+.carved-btn{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #ff630e;
+  border:1px solid #FF630E;
+  box-sizing: border-box;
 }
 
 .send-verify {
@@ -380,7 +397,6 @@ page {
   padding: 20rpx 30rpx;
   border-bottom: 0.8px solid #ffe6e6;
   border-top: 0.8px solid #ffe6e6;
-  margin-bottom: 40rpx;
 }
 
 .notice-text {
@@ -425,7 +441,6 @@ page {
   max-height: 330rpx;
   line-height: 40rpx;
   overflow-y: auto;
-  word-break: break-all;
 }
 
 .max-w330{
@@ -589,6 +604,7 @@ page {
 .card-number {
   color: #999;
   font-size: 30rpx;
+  margin-top: 10rpx;
 }
 
 .card-sell {

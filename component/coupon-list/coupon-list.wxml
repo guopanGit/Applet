@@ -4,7 +4,7 @@
     <!-- 影票兑换券 -->
     <block wx:if="{{item.voucherType == 2 || item.voucherType == 4}}">
       <view wx:if="{{index != 0}}" class="gaps"></view>
-      <view class="flex {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+      <view class="flex {{item.clickYn == 1 ? 'opacity' :'bs'}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
         <view class="discounts-wrap">
           <view class="discounts-type {{item.clickYn == 1 ? 'overdue':'light-red'}}">
             <view class="frame {{item.clickYn == 1 ? 'overdue-before':'light-red-before'}}">
@@ -44,7 +44,7 @@
     <!-- 代金券 -->
     <block wx:if="{{item.voucherType == 0 || item.voucherType == 5}}">
       <view wx:if="{{index != 0}}" class="gaps"></view>
-      <view class="flex {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+      <view class="flex {{item.clickYn == 1 ? 'opacity' :'bs'}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
         <view class="discounts-wrap">
           <view class="discounts-type {{item.clickYn == 1 ? 'overdue' :'light-pink'}}">
             <view class="frame {{item.clickYn == 1 ? 'overdue-before' :'light-pink-before'}}">
@@ -93,7 +93,7 @@
     <!-- 商家券 -->
     <block wx:if="{{item.voucherType == 7}}">
       <view wx:if="{{index != 0}}" class="gaps"></view>
-      <view class="discounts-wrap {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+      <view class="discounts-wrap {{item.clickYn == 1 ? 'opacity' :'bs'}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
         <view class="discounts-type {{item.clickYn == 1 ? 'overdue':'light-yellow'}}">
           <view class="frame {{item.clickYn == 1 ? 'overdue-before':'light-yellow-before'}}">
             <view class="center-coupon">
@@ -121,7 +121,7 @@
     <!-- 停车券 -->
     <block wx:if="{{item.voucherType == 8 && !item.voucherFace}}">
       <view wx:if="{{index != 0}}" class="gaps"></view>
-      <view class="discounts-wrap {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+      <view class="discounts-wrap {{item.clickYn == 1 ? 'opacity' :'bs'}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
         <view class="discounts-type {{item.clickYn == 1 ? 'overdue' :'light-blue'}}">
           <view class="frame {{item.clickYn == 1 ? 'overdue-before' :'light-blue-before'}}">
             <view class="center-coupon">
@@ -145,7 +145,7 @@
     </block>
     <block wx:if="{{item.voucherType == 8 && item.voucherFace}}">
       <view wx:if="{{index != 0}}" class="gaps"></view>
-      <view class="discounts-wrap park {{item.clickYn == 1 ? 'opacity' :' '}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
+      <view class="discounts-wrap park {{item.clickYn == 1 ? 'opacity' :'bs'}}" data-val="{{item}}" data-index="{{index}}" bindtap="coupon">
         <image class='park-img' src='{{prefixImg}}{{item.voucherFace}}'></image>
         <view class="park-wrap">
           <view class="park-type">

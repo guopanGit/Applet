@@ -1,0 +1,122 @@
+<!-- 助力详情 -->
+<!-- <view> -->
+
+  <view class='wrapper'>
+    <view class="banner">
+      <image class="banner-bg" src="{{activityDesc.activityPicUrl||'/image/friend-help/banner.png'}}" />
+      <view class="nav" bindtap="goHelpList">
+        <image class="nav-img" src="/image/friend-help/my-active.png" />
+      </view>
+      <view class="barrage-box">
+        <!-- <view style="opacity:0.4;" class="barrage-item" wx:for="{{barrageList}}" wx:for-index="index" wx:key="key">
+          <view class="barrage-item-bg"></view>
+          <view class="barrage-item-cont">
+            <image class="barrage-user" src="{{item.userIcon}}" />
+            <text class="barrage-text">Eamm获得免费观影券</text>
+            <text class="barrage-time">刚刚</text>
+          </view>
+          
+        </view> -->
+        <view class="barrage-item" wx:for="{{powerWinList}}" wx:for-index="index" wx:key="key">
+          <view class="barrage-item-bg"></view>
+          <view class="barrage-item-cont">
+            <image class="barrage-user" src="{{item.wechatImage}}" />
+            <view class="barrage-text-box">
+              <text class="barrage-text-name">{{item.wechatName}}</text>
+              <text class="barrage-text">获得了{{item.prizeName}}</text>
+            </view>
+            <text class="barrage-time">{{item.createTime}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="positon-box">
+      <view class="info-box">
+        <view class="info-tit-box">
+          <text class="info-tit">助力玩法</text>
+          <!-- <text class="info-rule" >活动规则</text> -->
+          <image class="info-rule-icon" bindtap="openModal" src="/image/friend-help/rule-icon.png" />
+        </view>
+        <view class="step-box">
+          <view wx:for="{{stepList}}" wx:for-index="index" wx:key="key" class="step-cont">
+            <image class="step-icon" src="/image/friend-help/step{{index+1}}.png" />
+            <text class="step-text">{{item}}</text>
+            <image wx:if="{{index!=stepList.length-1}}" class="step-after" src="/image/friend-help/transition.png" />
+          </view>
+        </view>
+        <view class="gift-box">
+          <image class="gift-bg" src="/image/friend-help/info-bg.png" />
+          <text class="gift-tit">免费观影券</text>
+          <text class="gift-text">1.这里是奖品介绍，可兑换任意时间段任意影片\n 2.不超过100字，这里是奖品介绍\n 3.可兑换任意时间段任意影片，不超过100字</text>
+          <image class="gift-icon" src="/image/friend-help/gift.png" />
+        </view>
+      </view>
+      <view class="fixed-box" style="position:{{positionStyle}}">
+        <view class="fixed-cont">
+          <image class="shadow-left" src="/image/friend-help/shadow-left.png" />
+          <image class="shadow-right" src="/image/friend-help/shadow-right.png" />
+          <view class="count-down" wx:if="{{true}}">
+            <text class="time-span shadow-{{countDownTime[3]}}" style="margin-right: 4rpx">{{countDownTime[3]}}</text>
+            <text class="time-span shadow-{{countDownTime[4]}}">{{countDownTime[4]}}</text>
+            <text class="time-label">时</text>
+            <text class="time-span shadow-{{countDownTime[6]}}" style="margin-right: 4rpx">{{countDownTime[6]}}</text>
+            <text class="time-span shadow-{{countDownTime[7]}}">{{countDownTime[7]}}</text>
+            <text class="time-label">分</text>
+            <text class="time-span shadow-{{countDownTime[9]}}" style="margin-right: 4rpx">{{countDownTime[9]}}</text>
+            <text class="time-span shadow-{{countDownTime[10]}}">{{countDownTime[10]}}</text>
+            <text class="time-label">秒后开始</text>
+          </view>
+          <view class="count-down2" wx:if="{{false}}">
+            <text class="count-label">距活动开始还有<text class="time-day">3</text>天</text>
+          </view>
+          <image bindtap="getGift" class="gift-get" src="/image/friend-help/get-gift.png" />
+        </view>
+      </view>
+    </view>
+    <view class="martet-box">
+      <text class="film-tit">近期热映</text>
+      <scroll-view class="scroll-cont" scorll-x>
+        <view class="film-box">
+          <view class="film-list" wx:for="{{filmList}}" wx:for-index="index" wx:key="key">
+            <image class="film-img" src="{{item.imgUrl}}" />
+            <text class="film-name">{{item.filmName}}</text>
+            <image class="film-buy" src="/image/friend-help/buy.png" />
+          </view>
+        </view>
+      </scroll-view>
+      <text class="goods-tit">热销商品</text>
+      <scroll-view class="scroll-cont2" scorll-x>
+        <view class="film-box">
+          <view class="film-list" wx:for="{{sellProductList}}" wx:if="{{index<8}}" wx:for-index="index" wx:key="key">
+            <image class="goods-list-img" src="{{item.images}}" />
+            <text class="goods-name">{{item.sellName}}</text>
+            <text class="goods-price">
+              <text class="goods-currency">¥</text>{{item.singePrice}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view wx:if="{{showRuleModal}}" class="modal-box" catchtouchmove='stopIncident'>
+    <view class="model-cont" catchtouchmove='stopIncident' bindtap="closeModal"></view>
+    <view class="rule-box" catchtouchmove='stopIncident'>
+      <image class="rule-bg-img" src="/image/friend-help/rule-bg.png" />
+      <image class="rule-bg-tit" src="/image/friend-help/rule-tit.png" />
+      <scroll-view class="scroll-y" scorll-y>
+        <view class="rule-txt">
+          <text>1.活动时间：2020.03.30-04.30</text>
+          <text>2.用户发起活动后，仅限新/老用户帮忙助力，若已存在助力中的活动则不可重复发起</text>
+          <text>3.活动期内，每用户/账号/手机号最多帮忙助力n次，超过则助力失效</text>
+          <text>4.公平起见，已助力成功的用户不可重复发起活动，感谢您的理解</text>
+          <text>5.公平起见，已助力成功的用户不可重复发起活动，感谢您的理解</text>
+          <text>6.活动过程中利用非法手段，不限于作弊领取、虚假套现、虚假交易，影院将取消您的活动规则，并有权撤销违规交易，收回奖励</text>
+        </view>
+      </scroll-view>
+      <view class="close" bindtap="closeModal">
+        <!-- <text class="close-text">x</text> -->
+        <image class="close-img" src="/image/friend-help/close-icon.png" />
+      </view>
+
+    </view>
+  </view>
+<!-- </view> -->

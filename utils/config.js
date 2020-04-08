@@ -248,4 +248,13 @@ export const URL = {
   getPhoneCode: PREFIXGW + '/app/member/getUpdatePhoneCode', // 修改手机号获取验证码
   updatePhone: PREFIXGW + '/app/member/updatePhoneAndCheck', // 修改手机号
   scanCard: PREFIXGW + '/app/card/scanCardQrCode', // 扫码绑卡
+  getFriendFilmInfo: PREFIXGW + '/app/Friend/getFriendFilmInfo', // 近期热映接口
+  getFriendSellProduct: PREFIXGW + '/app/Friend/getFriendSellProduct', // 热销卖品接口
+  createFriendActivity: PREFIXGW + '/app/Friend/createFriendActivity', // 免费拿好礼发起接口
+  getActivityDesc: PREFIXGW + '/app/Friend/getActivityDesc', // 助力活动详情接口
+  getPowerMemberJoinList: PREFIXGW + '/app/Friend/getPowerMemberJoinList', // 用户参与的助力活动列表接口
+  getMyPowerWin: PREFIXGW + '/app/Friend/getMyPowerWin', // 我的奖品
+  getFriendPowerWin: PREFIXGW + '/app/Friend/getFriendPowerWin', // 助力活动中奖记录接口
+  getPowerRecord: PREFIXGW + '/app/Friend/getPowerRecord', // 获取助力记录接口
+  giveHimAHand: PREFIXGW + '/app/Friend/giveHimAHand', // 帮他一把接口
 }

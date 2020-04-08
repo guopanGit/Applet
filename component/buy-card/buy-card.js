@@ -88,13 +88,10 @@ Component({
       observer(showGift) {
         if (showGift && showGift.goodsDetail) {
           showGift.goodsDetail.forEach(element => {
-          	if(element){
-	            element.showRule = false;
-	            element.showList = false;
-	            element.codeCinemaMsg.forEach(ele => {
-		            ele && (ele.cinemaName = ele.cinemaName.split(','));
-	            })
-            }
+            element.showList = false;
+            element.codeCinemaMsg.forEach(ele => {
+              ele.cinemaName = ele.cinemaName.split(',');
+            })
           });
           const query = this.createSelectorQuery();
           query.selectAll('.textBox').boundingClientRect();
@@ -111,13 +108,11 @@ Component({
                 }
               })
             })
-	        this.setData({
-              showGift
-            })
           })
-          // this.setData({
-          //   showGift
-          // })
+          this.setData({
+            showGift
+          })
+          console.log(showGift);
         }
       }
     },
@@ -215,10 +210,9 @@ Component({
     // 关闭弹层
     hideLayer() {
       this.setData({
-        showCardDetail: {},
-        showDetail: {},
-        showGift: {},
-        isSelected:false
+        showCardDetail: false,
+        showDetail: false,
+        showGift: false
       })
     },
     // 购卡
@@ -229,9 +223,9 @@ Component({
       if (!isSelected) {
         let type = e.currentTarget.dataset.type;
         let text = '请您阅读并同意《购卡协议》及《购券协议》';
-        if (type == '2') {
+        if (type == 'VOUCHER') {
           text = '请您阅读并同意《购券协议》'
-        } else if (type == '1') {
+        } else if (type == 'CARD') {
           text = '请您阅读并同意《购卡协议》'
         }
         showToast(text);
@@ -374,32 +368,23 @@ Component({
 
     // 显示隐藏影院列表
     showCinemaList(e) {
-      const showGift = this.data.showGift;
-      const index = e.currentTarget.dataset.index || 0;
-      const key = `showGift.goodsDetail[${index}].showList`;
-      const value = !!showGift && !!showGift.goodsDetail[index] && showGift.goodsDetail[index].showList || false;
+      let showGift = this.data.showGift;
+      let index = e.currentTarget.dataset.index;
+      let key = `showGift.goodsDetail[${index}].showList`;
       this.setData({
-        [key]: !value
+        [key]: !showGift.goodsDetail[index].showList
       })
     },
 
     // 更多
     unfold(e) {
-	    const showGift = this.data.showGift;
-	    const index = e.currentTarget.dataset.index || 0;
-	    if (!showGift.goodsDetail[index].showIcon) return;
-	    const foldKey = `showGift.goodsDetail[${index}].fold`;
-	    const unfoldKey = `showGift.goodsDetail[${index}].unfold`;
-	    const foldValue = !!showGift && !!showGift.goodsDetail[index] && showGift.goodsDetail[index].fold || false;
-	    this.setData({
-		    [foldKey]: !foldValue,
-		    [unfoldKey]: foldValue
-	    })
+      let showGift = this.data.showGift;
+      let index = e.currentTarget.dataset.index;
+      if (!showGift.goodsDetail[index].showIcon) return;
+      let key = `showGift.goodsDetail[${index}].unfold`;
+      this.setData({
+        [key]: !showGift.goodsDetail[index].unfold
+      })
     },
-
-    // 防止穿透
-    stopIncident(){
-      return false
-    }
   }
 })

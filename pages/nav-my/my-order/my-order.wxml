@@ -32,7 +32,7 @@
           <image class="goods-img" lazy-load src="{{item.poster}}"
             wx:if="{{item.orderType == '4' || item.orderType == '2'|| item.orderType == '5'}}"></image>
           <view class="order-detail flex">
-            <view class="detail-wrap">
+            <view>
               <view class="fz34 movie-name ellipsis">{{item.orderName}}</view>
               <view class="show-date" wx:if="{{item.showStartTime}}">放映时间：{{item.showStartTime}}</view>
               <view>

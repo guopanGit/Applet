@@ -1,0 +1,115 @@
+/* 我的活动 */
+page{
+  background-color: #f8f8f8;
+  line-height: 1;
+}
+
+.help-list{
+  padding-top: 30rpx;
+}
+
+.help-item{
+  width: 698rpx;
+  height: 266rpx;
+  margin: 0 auto 30rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.item-title{
+  height: 86rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+  color: #000;
+  border-bottom: 1px solid rgba(151,151,151,.1);
+  box-sizing: border-box;
+}
+.item-title text{
+  font-weight: 500;
+}
+
+.state-img{
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 18rpx;
+}
+
+.help-content{
+  padding: 40rpx 30rpx 0;
+}
+
+.item-name{
+  font-size: 37rpx;
+  font-weight: 700;
+  margin-bottom: 30rpx;
+}
+
+.initiate-time{
+  font-size: 28rpx;
+  color: #999999;
+}
+
+.invite-btn{
+  width: 180rpx;
+  height: 64rpx;
+  border-radius: 64rpx;
+  font-size: 27rpx;
+  font-weight: 500;
+  background: linear-gradient(to right, #fd8e47, #f35643);
+}
+
+.carved-btn{
+  width: 180rpx;
+  height: 64rpx;
+  border-radius: 64rpx;
+  font-size: 27rpx;
+  font-weight: 500;
+}
+
+/* 缺省 */
+
+.default{
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align: center;
+}
+
+.default-img{
+  width: 177rpx;
+  height: 177rpx;
+  margin: 240rpx 0 60rpx;
+}
+
+.default-text{
+  font-size: 28rpx;
+  color: #333;
+}
+
+.btn-wrap{
+  padding-top: 126rpx;
+}
+
+.start-btn{
+  width: 420rpx;
+  height: 88rpx;
+  margin: 0 auto;
+  font-size: 35rpx;
+  background: linear-gradient(to right, #F87C2F, #FC2A1A);
+}
+
+.help-triangle{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10rpx 0 10rpx 14rpx;
+  border-color: transparent transparent transparent #fff;
+  display: inline-block;
+  margin-left: 14rpx;
+}
+.go-triangle-img{
+  margin-left: 14rpx;
+  width: 14rpx;
+  height: 20rpx;
+}

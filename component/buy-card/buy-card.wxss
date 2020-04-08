@@ -33,7 +33,6 @@
 }
 
 .match-item {
-  line-height: 1;
   margin-bottom: 16rpx;
 }
 
@@ -173,7 +172,6 @@
 }
 
 .city-name {
-  line-height: 1;
   color: #ff630e;
 }
 
@@ -343,7 +341,4 @@
   display: block;
 }
 
-.mb20{
-  margin-bottom: 20rpx;
-}
 

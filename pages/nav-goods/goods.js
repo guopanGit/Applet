@@ -29,26 +29,6 @@ let {
 
 const app = getApp();
 
-const getTabbarHeight = () => {
-	const systemInfo = wx.getSystemInfoSync()
-	// px转换到rpx的比例
-	const pxToRpxScale = 750 / systemInfo.windowWidth;
-	// 状态栏的高度
-	const ktxStatusHeight = systemInfo.statusBarHeight * pxToRpxScale
-	// 导航栏的高度
-	const navigationHeight = 44 * pxToRpxScale
-	// window的宽度
-	let ktxWindowWidth = systemInfo.windowWidth * pxToRpxScale
-	// window的高度
-	const ktxWindowHeight = systemInfo.windowHeight * pxToRpxScale
-	// 屏幕的高度
-	const ktxScreentHeight = systemInfo.screenHeight * pxToRpxScale
-	// 底部tabBar的高度
-	const tabBarHeight = ktxScreentHeight - ktxStatusHeight - navigationHeight - ktxWindowHeight;
-
-	return tabBarHeight;
-};
-
 Page({
 
   /**
@@ -311,10 +291,12 @@ Page({
       return
     }
     let navList = res.resultData.typeList;
-    let cardList = res.resultData.CARD || '';
-    let couponList = res.resultData.VOUCHER || '';
-    let giftList = res.resultData.PACKAGE || '';
-
+    let cardList = res.resultData.CARD;
+    let couponList = res.resultData.VOUCHER;
+    let giftList = res.resultData.PACKAGE;
+    // cardList.length=1
+    // couponList.length=0
+    // giftList.length=3
     if (couponList.length) {
       couponList.forEach(element => {
         switch (element.targetType) {
@@ -342,7 +324,6 @@ Page({
         }
       })
     }
-
     if (cardList.length) {
       cardList.forEach(i => {
         i.expire = 0;
@@ -358,9 +339,7 @@ Page({
         }
       });
       this.selectComponent("#default").hide();
-    }
-
-    if (couponList.length < 1 || giftList.length < 1 && cardList.length < 1) {
+    } else if (couponList.length < 1 || giftList.length < 1) {
       this.setData({
         type: '1'
       })
@@ -728,7 +707,7 @@ Page({
    *
    * @param {} 传入当前加载的页码
    */
-  _requestData(page, state) {
+  _requestData(page) {
     if (page == 0) {
       // 卖品列表
       let goodsType = wx.getStorageSync('type');
@@ -749,9 +728,6 @@ Page({
       ajaxPromise(this.isFirst, sellGoodsList, params)
         .then((res) => {
           this.sellGoodsListCall(res)
-          if (state) {
-            wx.stopPullDownRefresh()
-          }
         })
         .catch(() => {
           this.setData({
@@ -782,9 +758,6 @@ Page({
       ajaxPromise(this.isFirst, sellCardList, {}, 'POST')
         .then((res) => {
           this.sellCardListCall(res)
-          if (state) {
-            wx.stopPullDownRefresh()
-          }
         })
         .catch(() => {
           this.setData({
@@ -971,7 +944,7 @@ Page({
         rect: true,
         scrollOffset: true
       });
-      query.select('.underLine').fields({
+      query.select('.under-line').fields({
         dataset: true,
         size: true,
         rect: true,
@@ -1028,7 +1001,9 @@ Page({
   },
 
 
-
+  /**
+   * 切换卡券分类
+   */
   clickTab(e) {
     const {tab} = e.currentTarget.dataset
     const {titleXArr, underLineWidth, titleIdArr} = this.data
@@ -1042,6 +1017,9 @@ Page({
     })
   },
 
+  /**
+   * 卡券滚动
+   */
   cardScroll(e) {
     if (this.data.titleIdArr.length == 1) {
       return
@@ -1074,71 +1052,42 @@ Page({
   scrollFn(e) {
     const {scrollTopArr, toView, titleIdArr} = this.data
     const {scrollTop} = e.detail
-    // const side1 = scrollTop < scrollTopArr[0]
-	  // const side2 = scrollTopArr[1]
-    //   ? scrollTopArr[1] < scrollTopArr[0]
-    //     ? scrollTopArr[1] < scrollTop
-    //     : (scrollTopArr[0] < scrollTop) && (scrollTop < scrollTopArr[1])
-    //   : scrollTopArr[0] < scrollTop
-    // const side3 = scrollTopArr[2]
-    //   ? (scrollTopArr[1] < scrollTop) && (scrollTop < scrollTopArr[2])
-    //   : scrollTopArr[1] < scrollTop
+    // console.log(scrollTop,'scrollTop')
+    const side1 = scrollTop < scrollTopArr[0]
+    const side2 = scrollTopArr[1]
+      ? scrollTopArr[1] < scrollTopArr[0]
+        ? scrollTopArr[1] < scrollTop
+        : (scrollTopArr[0] < scrollTop) && (scrollTop < scrollTopArr[1])
+      : scrollTopArr[0] < scrollTop
+    const side3 = scrollTopArr[2]
+      ? (scrollTopArr[1] < scrollTop) && (scrollTop < scrollTopArr[2])
+      : scrollTopArr[1] < scrollTop
 
-    // if (side3 && scrollTopArr[1] > scrollTopArr[0]) {
-    //   if (titleIdArr[2] && (titleIdArr[2] != toView)) {
-    //     this.setData({
-    //       toView: titleIdArr[2],
-    //       autoScroll: false,
-    //       underlineX: this.getUnderlineXNow(titleIdArr[2])
-    //     })
-    //   }
-    // } else if (side2) {
-    //   if (titleIdArr[1] && (titleIdArr[1] != toView)) {
-    //     this.setData({
-    //       toView: titleIdArr[1],
-    //       autoScroll: false,
-    //       underlineX: this.getUnderlineXNow(titleIdArr[1])
-    //     })
-    //   }
-    // } else if (side1) {
-    //   if (titleIdArr[0] != toView) {
-    //     this.setData({
-    //       toView: titleIdArr[0],
-    //       autoScroll: false,
-    //       underlineX: this.getUnderlineXNow(titleIdArr[0])
-    //     })
-    //   }
-    // }
-	  const side1 = scrollTop < scrollTopArr[0];
-	  const side2 = scrollTop >= scrollTopArr[0] && scrollTop < scrollTopArr[1];
-	  const side3 = scrollTop >= scrollTopArr[1] && scrollTop < scrollTopArr[2];
-	  if(side1 && toView!==titleIdArr[0]){
-		  // console.log('会员卡范围',{scrollTop, scrollTopArr});
-	      this.setData({
-	        toView: titleIdArr[0],
-	        autoScroll: false,
-	        underlineX: this.getUnderlineXNow(titleIdArr[0])
-	      });
-		  return;
-	  }
-	  if(side2 && toView!==titleIdArr[1]){
-		  // console.log('优惠券范围',{scrollTop, scrollTopArr});
-		  this.setData({
-			  toView: titleIdArr[1],
-			  autoScroll: false,
-			  underlineX: this.getUnderlineXNow(titleIdArr[1])
-		  });
-		  return;
-	  }
-	  if(side3 && toView!==titleIdArr[2]){
-		  // console.log('礼包范围',{scrollTop, scrollTopArr});
-		  this.setData({
-			  toView: titleIdArr[2],
-			  autoScroll: false,
-			  underlineX: this.getUnderlineXNow(titleIdArr[2])
-		  });
-		  return;
-	  }
+    if (side3 && scrollTopArr[1] > scrollTopArr[0]) {
+      if (titleIdArr[2] && (titleIdArr[2] != toView)) {
+        this.setData({
+          toView: titleIdArr[2],
+          autoScroll: false,
+          underlineX: this.getUnderlineXNow(titleIdArr[2])
+        })
+      }
+    } else if (side2) {
+      if (titleIdArr[1] && (titleIdArr[1] != toView)) {
+        this.setData({
+          toView: titleIdArr[1],
+          autoScroll: false,
+          underlineX: this.getUnderlineXNow(titleIdArr[1])
+        })
+      }
+    } else if (side1) {
+      if (titleIdArr[0] != toView) {
+        this.setData({
+          toView: titleIdArr[0],
+          autoScroll: false,
+          underlineX: this.getUnderlineXNow(titleIdArr[0])
+        })
+      }
+    }
   },
   /**
    * @description 获取每个锚点的高度
@@ -1158,8 +1107,8 @@ Page({
       scrollOffset: true,
     })
     query.exec((res) => {
-      const initTop = res[0][0].bottom-getTabbarHeight();
-	    let scrollTopArr = [initTop];
+      let scrollTopArr = []
+      const initTop = res[0][0].top
       res[0].forEach((element, index) => {
         // if(index==0){
         //   if (res[0][index + 1]) {
@@ -1169,13 +1118,14 @@ Page({
         if (index != res[0].length - 1) {
           if (res[0][index + 1]) {
 
-            const lastGps = res[0][index + 1].bottom-getTabbarHeight();
+            const lastGps = Math.min(res[1].scrollHeight - res[1].height, res[0][index + 1].top - initTop)
             scrollTopArr.push(lastGps)
           }
         } else {
           return
         }
       })
+      // console.log(scrollTopArr,'scrollTopArr')
       this.setData({
         scrollTopArr,
         hasScroll: true
@@ -1188,9 +1138,9 @@ Page({
   lowerScrollFn(e) {
     const {titleXArr, underLineWidth, titleIdArr, scrollTopArr} = this.data
     const toView = titleIdArr[titleIdArr.length - 1]
-    const index = titleIdArr.indexOf(toView) || 0;
+    const index = titleIdArr.indexOf(toView)
     const tabAc = titleXArr[index]
-    const underlineX = tabAc && ((tabAc.width - underLineWidth) / 2 + tabAc.left) || 0
+    const underlineX = (tabAc.width - underLineWidth) / 2 + tabAc.left
     if (titleIdArr.length == 1) {
       return
     }
@@ -1317,12 +1267,15 @@ Page({
       })
   },
 
-  // 下拉刷新
-  onPullDownRefresh() {
-    let tabIndex = this.data.tabIndex;
-    this._requestData(tabIndex, true)
-  },
 
+  /**
+   * 隐藏
+   */
+  onHide() {
+    this.setData({
+      cardDetail: false
+    })
+  },
   /**
    * 用户点击右上角分享
    */

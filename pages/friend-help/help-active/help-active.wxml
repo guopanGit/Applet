@@ -1,0 +1,126 @@
+<!-- 好友助力 -->
+<view class='wrapper'>
+  <view class="top-bg">
+    <image class="top-bg-img" src="/image/friend-help/detail-bg.png" />
+  </view>
+  <view class="nav" bindtap="goHelpList">
+    <image class="nav-img" src="/image/friend-help/my-active.png" />
+  </view>
+  <view class="info-box">
+    <view class="user-wrap">
+      <view class="img-wrap">
+        <image class="user-img" src="{{userInfo.userIcon}}" />
+      </view>
+      <view class="user-name">{{userInfo.userName}}</view>
+    </view>
+    <view class="activity-detail-bg">
+      <view class="help-name">免费观影券</view>
+      <image class="surplus-img" src="/image/friend-help/surplus-rare.png" />
+      <view class="flex">
+        <view class="help-explain">
+          <text>1.这里是奖品介绍，可兑换任意时间段任意影片 2.不超过100字，这里是奖品介绍 3.可兑换任意时间段任意影片，不超过100字
+          </text>
+        </view>
+        <image class="gift-icon" src="/image/friend-help/gift.png" />
+      </view>
+    </view>
+    <view wx:if="{{false}}" class="help-plan">
+      <view>累计已助力
+        <text class="help-num">7</text>
+        次，还剩
+        <text class="help-num">3</text>
+        人
+      </view>
+      <view class="mt15">快去召集好友吧!</view>
+    </view>
+    <view wx:if="{{true}}" class="help-plan">
+      <view>助力成功，你的好友太给力啦</view>
+      <view class="mt15">奖品已发放至您的账户</view>
+    </view>
+    <view wx:if="{{false}}" class="help-plan">
+      <view>很遗憾，活动已超时</view>
+      <view class="mt15">只差一点点，再接再厉吧！</view>
+    </view>
+    <view wx:if="{{false}}" class="help-plan">
+      <view>很遗憾，活动已结束</view>
+      <view class="mt15">别气馁～精彩活动下次还有！</view>
+    </view>
+    <view class="progress-wrap">
+      <view class="flex flex1">
+        <block wx:for="{{10}}" wx:key="index">
+          <view class="dot"></view>
+        </block>
+      </view>
+      <view class="progress-box">
+        <view class="progress-img-box" style="width:100%">
+          <image class="progress-img" src="/image/friend-help/progress.png" />
+        </view>
+        <view class="progress-gift-box" style="left: 100%;">
+          <image class="progress-gift" src="/image/friend-help/progress-gift.png" />
+          <text class="progress-text-last">10/10</text>
+        </view>
+      </view>
+    </view>
+    <view class="count-down">
+      <text class="time-down">倒计时:</text>
+      <!-- <text class="time-span"style="margin-right: 4rpx">{{countDownTime[0]}}</text>
+      <text class="time-span" >{{countDownTime[1]}}</text>
+      <text class="time-label">天</text> -->
+      <text class="time-span shadow-{{countDownTime[3]}}" style="margin-right: 4rpx">{{countDownTime[3]}}</text>
+      <text class="time-span shadow-{{countDownTime[4]}}">{{countDownTime[4]}}</text>
+      <text class="time-label">时</text>
+      <text class="time-span shadow-{{countDownTime[6]}}" style="margin-right: 4rpx">{{countDownTime[6]}}</text>
+      <text class="time-span shadow-{{countDownTime[7]}}">{{countDownTime[7]}}</text>
+      <text class="time-label">分</text>
+      <text class="time-span shadow-{{countDownTime[9]}}" style="margin-right: 4rpx">{{countDownTime[9]}}</text>
+      <text class="time-span shadow-{{countDownTime[10]}}">{{countDownTime[10]}}</text>
+      <!-- <text class="time-label">秒后开始</text> -->
+      <text class="time-label">秒</text>
+    </view>
+    <view>
+      <view class="btn-box">
+        <!-- <text class="help-btn-text">邀请好友帮忙</text> -->
+        <text class="help-btn-text">查看我的奖品</text>
+        <!-- <text class="help-triangle"></text> -->
+        <image class="help-triangle-img" src="/image/friend-help/min-triangle.png" />
+      </view>
+      <view class="help-btn2" bindtap="getDetail">
+        <text class="help-btn2-text">查看活动详情</text>
+      </view>
+    </view>
+  </view>
+  <view class="help-list-box" wx:if="{{false}}">
+    <view class="help-list-tit">
+      <image class="help-tit-left" src="/image/friend-help/tit-left.png" />
+      <text class="help-tit-text">助力记录</text>
+      <image class="help-tit-right" src="/image/friend-help/tit-right.png" />
+    </view>
+    <view class="help-list-cont">
+      <view wx:if="{{false}}" class="help-list-item" wx:for="{{helpList}}" wx:for-index="index" wx:key="key">
+        <view class="list-info">
+          <image class="list-img" src="{{item.userIcon}}" />
+          <text class="list-name">{{item.userName}}</text>
+        </view>
+        <text class="list-time">{{item.time}}</text>
+      </view>
+      <view wx:if="{{false}}" class="no-list-box">
+        <image class="no-list-img" src="/image/friend-help/no-list.png" />
+        <text class="no-list-text">您还没有助力记录</text>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{true}}" class="gift-package">
+    <image class="gift-package-img" src="/image/friend-help/enter.png" />
+    <view class="gift-package-cont">
+      <text class="gift-package-tit">好友助力大礼免费领取活动</text>
+      <view class="go-detail" bindtap="getDetail">
+        <text class="go-btn-text">活动详情</text>
+        <!-- <text class="go-triangle"></text> -->
+        <image class="go-triangle-img" src="/image/friend-help/min-triangle.png" />
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{true}}" class="register"  bindtap="getRegister">
+    <image class="register-img" src="/image/friend-help/register.png" />
+  </view>
+</view>

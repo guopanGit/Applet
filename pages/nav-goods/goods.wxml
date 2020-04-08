@@ -208,105 +208,88 @@
 
 <!-- 会员卡组件 -->
 <view wx:if='{{tabIndex == 1 && (cardList.length || couponList.length || giftList.length)}}' class="bg-gray">
-  <view wx:if='{{titleXArr.length>0 || titleIdArr.length>1}}' class="gift-tab">
+  <view wx:if='{{titleXArr.length>0?titleIdArr.length>1:true}}' class="gift-tab">
     <view class="tab-wrap">
-	    <view class="tabItemContainer">
-		    <text wx:if="{{cardList.length}}" class="tab-item {{toView=='tabs0' ? 'active':''}}" data-tab="tabs0" bindtap="clickTab">会员卡</text>
-		    <view class="underLine" style="opacity: {{toView=='tabs0'?1:0}}"/>
-	    </view>
-	    <view class="tabItemContainer" style="margin: 0 90rpx">
-            <text wx:if="{{couponList.length}}" class="tab-item {{toView=='tabs1' ? 'active':''}}" data-tab="tabs1" bindtap="clickTab">优惠券</text>
-		    <view class="underLine" style="opacity: {{toView=='tabs1'?1:0}}"/>
-	    </view>
-	    <view class="tabItemContainer">
-            <text wx:if="{{giftList.length}}" class="tab-item {{toView=='tabs2' ? 'active':''}}" data-tab="tabs2" bindtap="clickTab">礼包</text>
-		    <view class="underLine" style="opacity: {{toView=='tabs2'?1:0}}"/>
-	    </view>
+        <text wx:if="{{cardList.length}}" class="tab-item {{toView=='tabs0' ? 'active':''}}" data-tab="tabs0" bindtap="clickTab">会员卡</text>
+        <text wx:if="{{couponList.length}}" class="tab-item {{toView=='tabs1' ? 'active':''}}" data-tab="tabs1" bindtap="clickTab">优惠券</text>
+        <text wx:if="{{giftList.length}}" class="tab-item {{toView=='tabs2' ? 'active':''}}" data-tab="tabs2" bindtap="clickTab">礼包</text>
     </view>
-    <!--<view class="under-line" style="transform:translateX({{underlineX}}px);opacity:{{underlineX?1:0}}"></view>-->
+    <view class="under-line" style="transform:translateX({{underlineX}}px);opacity:{{underlineX?1:0}}"></view>
   </view>
-
-    <scroll-view style="padding-top:{{titleIdArr.length>1?'200rpx':'100rpx'}}"
-                 id="scroll-conent" bindscrolltolower="lowerScrollFn"
-                 scroll-into-view="{{autoScroll?toView:''}}" class="from-sell" scroll-y="true"
-                 bindscroll="cardScroll">
-      <!-- 会员卡 -->
-      <view id="tabs0" class="view-top" wx:if="{{cardList.length}}">
-        <view class="gaps"></view>
-        <view class="list-title" data-name="会员卡">会员卡</view>
-        <block wx:for="{{cardList}}" wx:key="index">
-          <view class="card-item" data-id="{{item.id}}" bindtap="cardDetails">
-            <image wx:if="{{item.promotePrice}}" class='pref-icon' src='/image/pref.png'></image>
-            <image lazy-load="{{true}}" mode="aspectFill" class='card-img' src="{{item.picurl}}"></image>
-            <view class="card-item-content">
-              <view class='vip-wrap flex-al'>
-                <image class='vip-img' src='/image/vip.png'></image>
-                <text wx:if="{{item.targetType == '1'}}" class='vip-text'>储值卡</text>
-                <text wx:if="{{item.targetType == '2'}}" class='vip-text'>权益卡</text>
+  <scroll-view style="padding-top:{{titleIdArr.length>1?'200rpx':'100rpx'}}" id="scroll-conent" bindscrolltolower="lowerScrollFn" scroll-with-animation='true' scroll-into-view="{{autoScroll?toView:''}}" class="from-sell" scroll-y="true"  bindscroll="cardScroll">
+    <!-- 会员卡 -->
+    <view id="tabs0" class="view-top" wx:if="{{cardList.length}}">
+      <view class="gaps"></view>
+      <view class="list-title" data-name="会员卡">会员卡</view>
+      <block wx:for="{{cardList}}" wx:key="index">
+        <view class="card-item" data-id="{{item.id}}" bindtap="cardDetails">
+          <image lazy-load="{{true}}" mode="aspectFill" class='card-img' src="{{item.picurl}}"></image>
+          <view class="card-item-content">
+            <view class='vip-wrap flex-al'>
+              <image class='vip-img' src='/image/vip.png'></image>
+              <text wx:if="{{item.targetType == '1'}}" class='vip-text'>储值卡</text>
+              <text wx:if="{{item.targetType == '2'}}" class='vip-text'>权益卡</text>
+            </view>
+            <view class='card-name'>{{item.name}}</view>
+            <view class="money-warp">
+              <view class=""><text class="sell">售价：</text><text class="cny">¥</text><text class="money">{{item.price / 100}}</text></view>
+              <view  class='buy-card flex-al'>
+                <view class="triangle-flex-box">
+                  <text class="{{item.targetType == '2' ? 'blue':'orange'}} {{item.pictureisNull == 1 ? 'gray333' : ''}} ml6">开卡</text>
+                  <view class="new-triangle {{item.targetType == '2' ? 'blue':'orange'}} {{item.pictureisNull == 1 ? 'gray333' : ''}}"></view>
+                </view>
               </view>
-              <view class='card-name'>{{item.name}}</view>
-              <view class="money-warp">
-                <view class=""><text class="sell">售价：</text><text class="cny">¥</text><text class="money">{{item.promotePrice / 100 || item.price / 100}}</text></view>
-                <view  class='buy-card flex-al'>
-                  <view class="triangle-flex-box">
-                    <text class="{{item.targetType == '2' ? 'blue':'orange'}} {{item.pictureisNull == 1 ? 'gray333' : ''}} ml6">开卡</text>
-                    <view class="new-triangle {{item.targetType == '2' ? 'blue':'orange'}} {{item.pictureisNull == 1 ? 'gray333' : ''}}"></view>
-                  </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!-- 优惠券 -->
+    <view wx:if="{{couponList.length}}" id="tabs1" class="view-top">
+      <view class="gaps"></view>
+      <view class="list-title" data-name="优惠券">优惠券</view>
+      <view class="coupon-list">
+        <block wx:for="{{couponList}}" wx:key="index">
+          <view class="coupon-item" data-id="{{item.id}}" bindtap="couponDetails">
+            <view class="coupon-item-img-box">
+              <image class="coupon-item-img" mode="aspectFill" src="{{item.picurl}}"></image>
+            </view>
+            <view class="coupon-item-wrap">
+              <view class="coupon-item-detail">
+                <view class="fw coupon-item-tit ellipsis">{{item.name}}</view>
+                <view class="coupon-item-detail-describe ellipsis">{{item.genre}}</view>
+                <view class="fw orange price flex">
+                  <text class="digit">¥{{item.price / 100}}</text>
+                  <view class="view-btn buy-btn">立即购买</view>
                 </view>
               </view>
             </view>
           </view>
         </block>
       </view>
-      <!-- 优惠券 -->
-      <view wx:if="{{couponList.length}}" id="tabs1" class="view-top">
-        <view class="gaps"></view>
-        <view class="list-title" data-name="优惠券">优惠券</view>
-        <view class="coupon-list">
-          <block wx:for="{{couponList}}" wx:key="index">
-            <view class="coupon-item" data-id="{{item.id}}" bindtap="couponDetails">
-              <view class="coupon-item-img-box">
-                <image class="coupon-item-img" mode="aspectFill" src="{{item.picurl}}"></image>
+    </view>
+    <!-- 礼包 -->
+    <view wx:if="{{giftList.length}}" id="tabs2" class="view-top">
+      <view class="gaps"></view>
+      <view class="list-title" data-name="礼包">礼包</view>
+      <view class="gift-list">
+        <block wx:for="{{giftList}}" wx:key="index">
+          <view class="gift-item" data-id="{{item.id}}" bindtap="giftDetails">
+            <view class="gift-item-wrap">
+              <view class="gift-item-img-wrap">
+                <image class="gift-item-img" mode="aspectFill" src="{{item.picurl}}"></image>
+                <view class="gift-item-intro">内含<text wx:if="{{item.cardNum}}">{{item.cardNum}}卡</text><texte wx:if="{{item.voucherNum}}">{{item.voucherNum}}券</texte></view>
               </view>
-              <view class="coupon-item-wrap">
-                <view class="coupon-item-detail">
-                  <view class="fw coupon-item-tit ellipsis">{{item.name}}</view>
-                  <view class="coupon-item-detail-describe ellipsis">{{item.genre}}</view>
-                  <view class="fw orange price flex">
-                    <text class="digit">¥{{item.price / 100}}</text>
-                    <view class="view-btn buy-btn">立即购买</view>
-                  </view>
-                </view>
-              </view>
+              <view class="fw gift-item-name">{{item.name}}</view>
+              <view class="fw orange gift-item-price">
+                <view class="gift-item-price-fen">¥</view>
+                <view class="digit">{{item.price / 100}}</view></view>
             </view>
-          </block>
-        </view>
+          </view>
+        </block>
       </view>
-      <!-- 礼包 -->
-      <view wx:if="{{giftList.length}}" id="tabs2" class="view-top">
-        <view class="gaps"></view>
-        <view class="list-title" data-name="礼包">礼包</view>
-        <view class="gift-list">
-          <block wx:for="{{giftList}}" wx:key="index">
-            <view class="gift-item" data-id="{{item.id}}" bindtap="giftDetails">
-              <view class="gift-item-wrap">
-                <view class="gift-item-img-wrap">
-                  <image class="gift-item-img" mode="aspectFill" src="{{item.picurl}}"></image>
-                  <view class="gift-item-intro" wx:if="{{item.cardNum && item.voucherNum}}">内含{{item.cardNum}}卡{{item.voucherNum}}券</view>
-                  <view class="gift-item-intro" wx:if="{{item.cardNum && !item.voucherNum}}">内含{{item.cardNum}}张卡</view>
-                  <view class="gift-item-intro" wx:if="{{!item.cardNum && item.voucherNum}}">内含{{item.voucherNum}}张券</view>
-                </view>
-                <view class="fw gift-item-name">{{item.name}}</view>
-                <view class="fw orange gift-item-price">
-                  <view class="gift-item-price-fen">¥</view>
-                  <view class="digit">{{item.price / 100}}</view></view>
-              </view>
-            </view>
-          </block>
-        </view>
-      </view>
-    </scroll-view>
-
+    </view>
+  </scroll-view>
 </view>
 
 <!-- 卡详情 -->

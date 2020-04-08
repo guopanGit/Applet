@@ -29,7 +29,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.10.2",
 	"appid": "wx6e30c4fee25d8aac",
-	"projectname": "%E5%95%86%E5%93%81%E4%B8%AD%E5%BF%83",
+	"projectname": "%E5%A5%BD%E5%8F%8B%E5%8A%A9%E5%8A%9B",
 	"cloudfunctionTemplateRoot": "",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -75,6 +75,27 @@
 					"id": -1,
 					"name": "我的",
 					"pathName": "pages/nav-my/my/my",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "活动落地页",
+					"pathName": "pages/friend-help/help-detail/help-detail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的活动",
+					"pathName": "pages/friend-help/help-list/help-list",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "好友助力",
+					"pathName": "pages/friend-help/help-active/help-active",
 					"query": "",
 					"scene": null
 				}

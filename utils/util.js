@@ -7,6 +7,8 @@ import {
   CINEMA
 } from './config.js';
 
+import MockAPI from './mockAPI'
+
 // 请求头
 const header = {
   "Content-Type": "application/x-www-form-urlencoded",
@@ -56,9 +58,11 @@ export function formatNumber(n) {
  * @url 请求地址
  * @data 请求参数
  * @method 请求类型
+ * @modal 是否显示出错后的提示
+ * @isMock 是否是测试数据
  */
 
-export function ajaxPromise(isLoading, url, data, method, modal) {
+export function ajaxPromise(isLoading, url, data, method, modal, isMock) {
   // 请求判断类型
   if (method) {
     method = 'POST'
@@ -83,48 +87,52 @@ export function ajaxPromise(isLoading, url, data, method, modal) {
 
   // 请求封装
   return new Promise((resolve, rejected) => {
-    wx.request({
-      url,
-      data,
-      header,
-      method,
-      success: (res) => {
-        if (isLoading) {
-          wx.hideLoading();
-        }
-        if (res.data.resultCode === '0') { // 成功
-          resolve(res.data)
-        } else if (res.data.resultDesc == "TOKEN_INVALID") { //TOKEN 失效
-          wx.showModal({
-            content: '为了您的账号安全，请登录',
-            showCancel: false,
-            confirmText: '知道了',
-            success: (res) => {
-              wx.removeStorageSync('member')
-              wx.navigateTo({
-                url: '/pages/sign-in/authorize/authorize'
-              })
-            }
-          })
-        } else if (res.data.resultCode == '2202') { // 未绑定手机
-          wx.navigateTo({
-            url: `/pages/sign-in/bind-phone/bind-phone`,
-          });
-        } else {
-          rejected(res.data)
-          if (!modal) {
-            showToast(res.data.resultDesc || '网络开小差了，请稍后重试')
+    if (isMock) {
+      resolve(MockAPI[url])
+    } else {
+      wx.request({
+        url,
+        data,
+        header,
+        method,
+        success: (res) => {
+          if (isLoading) {
+            wx.hideLoading();
           }
+          if (res.data.resultCode === '0') { // 成功
+            resolve(res.data)
+          } else if (res.data.resultDesc == "TOKEN_INVALID") { //TOKEN 失效
+            wx.showModal({
+              content: '为了您的账号安全，请登录',
+              showCancel: false,
+              confirmText: '知道了',
+              success: (res) => {
+                wx.removeStorageSync('member')
+                wx.navigateTo({
+                  url: '/pages/sign-in/authorize/authorize'
+                })
+              }
+            })
+          } else if (res.data.resultCode == '2202') { // 未绑定手机
+            wx.navigateTo({
+              url: `/pages/sign-in/bind-phone/bind-phone`,
+            });
+          } else {
+            rejected(res.data)
+            if (!modal) {
+              showToast(res.data.resultDesc || '网络开小差了，请稍后重试')
+            }
+          }
+        },
+        fail: (res) => {
+          rejected(res)
+          if (isLoading) {
+            wx.hideLoading();
+          }
+          showToast('请求超时')
         }
-      },
-      fail: (res) => {
-        rejected(res)
-        if (isLoading) {
-          wx.hideLoading();
-        }
-        showToast('请求超时')
-      }
-    })
+      })
+    }
   })
 }
 
@@ -215,8 +223,8 @@ export function creatOrder(type, code, successCall, seatParams, failCall) {
   } else if (type == 3) { // 购卡订单
     let inviteCode = '';
     let scene = wx.getStorageSync('scene');
-    let invite= wx.getStorageSync('inviteCode') || '';
-    if(scene == 1011 && invite){
+    let invite = wx.getStorageSync('inviteCode') || '';
+    if (scene == 1011 && invite) {
       inviteCode = invite
     }
     params.goodsCode = code;
@@ -340,3 +348,6 @@ export function uuid() {
 
   return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }
+
+
+//时间格式化文本

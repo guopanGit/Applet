@@ -343,12 +343,7 @@ Page({
    */
   cancelCardCall(res) {
     if (res.resultCode == '0') {
-      wx.showToast({
-        title: '订单已取消',
-        icon: 'none',
-        duration: 2000,
-        mask: true
-      })
+      showToast('订单已取消')
       setTimeout(() => {
         wx.navigateBack({
           delta: 1, // 回退前 delta(默认为1) 页面

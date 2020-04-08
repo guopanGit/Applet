@@ -1,0 +1,40 @@
+<!-- 我的活动 -->
+<view wx:if="{{list.length}}" class="help-list">
+    <block wx:for="{{list}}" wx:key="index">
+      <view class="help-item">
+        <view class="item-title flex">
+          <view wx:if="{{item.state == 1}}" class="flex-al">
+            <image class="state-img" src="/image/help-underway.png" />
+            <text>助力中</text>
+          </view>
+          <view wx:if="{{item.state == 2}}" class="flex-al">
+            <image class="state-img" src="/image/help-succeed.png" />
+            <text>助力成功</text>
+          </view>
+          <view wx:if="{{item.state == 3}}" class="flex-al">
+            <image class="state-img" src="/image/help-defeated.png" />
+            <text>助力失败</text>
+          </view>
+          <view style="font-weight: 500" wx:if="{{item.showTime}}">倒计时：24:59:32</view>
+        </view>
+        <view class="help-content flex">
+          <view>
+            <view class="item-name">{{item.name}}</view>
+            <view class="initiate-time">{{item.date}}发起</view>
+          </view>
+          <view wx:if="{{item.state == 1}}" class="view-btn invite-btn">邀请助力</view>
+          <view wx:if="{{item.state == 2}}" class="carved-btn">查看奖品</view>
+          <view wx:if="{{item.state == 3}}" class="carved-btn" bindtap="anewStart">重新发起</view>
+        </view>
+      </view>
+    </block>
+</view>
+<view wx:else class="default">
+  <image class="default-img" src="/image/friend-help/no-list.png" />
+  <view class="default-text">您还没有发起助力活动喔～</view>
+  <view class="btn-wrap">
+    <view class="view-btn start-btn" bindtap="startActivity">发起我的活动
+      <image class="go-triangle-img" src="/image/friend-help/min-triangle.png" />
+    </view>
+  </view>
+</view>

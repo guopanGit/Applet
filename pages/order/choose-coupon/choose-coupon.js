@@ -127,7 +127,7 @@ Page({
         setTimeout(() => {
           let id = this.data.id;
           let restsNum = res.resultData.totalCount;
-          let restsList = res.resultData.vouchers || 0;
+          let restsList = res.resultData.vouchers;
           if (id == 2) {
             if (restsList.length < 1) {
               this.selectComponent("#default").show();
@@ -196,7 +196,7 @@ Page({
         checked: []
       })
     } else {
-      let restsList = this.data.restsList || [];
+      let restsList = this.data.restsList;
       if (restsList.length < 1) {
         this.selectComponent("#default").show();
       } else {
@@ -365,7 +365,7 @@ Page({
         .catch(() => {
         })
     } else {
-      let freeList = this.data.freeList || [];
+      let freeList = this.data.freeList;
       let restsList = this.data.restsList;
       let filmCount = this.filmCount;
       let pages = getCurrentPages();

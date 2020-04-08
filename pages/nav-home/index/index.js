@@ -189,19 +189,17 @@ Page({
       let cardTitle = [];
       if (recommendCard.pType == 1) { // 显示卡推荐
         if (recommendCard.minPrice > 0) {
-          cardTitle.push('持卡享特惠，购票');
-          cardTitle.push('元起');
+          cardTitle.push('持卡享特惠，');
+          cardTitle.push('起');
           cardTitle.push(recommendCard.minPrice)
         } else {
           cardTitle.push('持卡享特惠')
         }
       } else {// 显示首单立减
+        cardTitle.push('持卡享特惠，');
         if (recommendCard.number > 0){
-          cardTitle.push('持卡享特惠，首单立减');
-          cardTitle.push(`元起`);
-          cardTitle.push(recommendCard.promotionFirstPrice);
-        }else {
-          cardTitle.push('持卡享特惠');
+          let num = Number(recommendCard.promotionFirstPrice) * Number(recommendCard.number);
+          cardTitle.push(`首单${recommendCard.number}张立减${num}元`);
         }
       }
       this.setData({

@@ -1,6 +1,5 @@
 import {
   ajaxPromise,
-  formatTime
 } from "../../../utils/util";
 
 import {
@@ -157,28 +156,13 @@ Page({
         .catch(() => {
         })
     } else {
-      console.log(val);
-      let present = formatTime(new Date(), false,'.');
+
       val.goodsId = true;
       val.goodsName = val.voucherName;
       val.goodsTypeName = val.title;
-      let validity = `有效期至${val.endTime}`;
-      if(val.startTime > present){
-        validity = `有效期至${val.startTime} - ${val.endTime}`;
-      } else if(val.startTime <= present && val.leftDays && val.leftDays > 1 && val.leftDays >= 10){
-        validity = `有效期至${val.endTime}`;
-      } else if(val.leftDays && val.leftDays > 1 && val.leftDays < 10){
-        validity = `还剩${val.leftDays}天有效`;
-      } else if (val.leftDays && val.leftDays === 1 && val.clickYn === 0){
-        validity = `明天过期`;
-      } else if (val.leftDays && val.leftDays === 0 && val.clickYn === 0){
-        validity = `今天过期`;
-      } else if (val.leftDays && val.leftDays < 0 && val.clickYn === 1){
-        validity = `已过期`;
-      }
       val.useInfo = [];
       val.useInfo.push(`本券为(${val.type})`);
-      val.useInfo.push(validity);
+      val.useInfo.push(`有效期至${val.endTime}`);
       val.ruleContent = val.voucherLimitContent;
       val.codeCinemaMsg = val.cityList;
       this.setData({

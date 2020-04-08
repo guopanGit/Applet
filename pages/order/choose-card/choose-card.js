@@ -77,7 +77,6 @@ Page({
     })
       .then((res) => {
         let orders = res.resultData.orders.length || 0;
-        let isCoupon = this.data.isCoupon;
         if (orders <= 0) {
           this.selectComponent("#default").show();
         } else {
@@ -85,17 +84,12 @@ Page({
           this.setData({
             chooseCardData: res.resultData
           })
-          if (isCoupon == 1) {
+          if (options.isCoupon == 1) {
             this.cardClassify(res.resultData.orders)
           }
         }
       })
       .catch(() => {
-        let {chooseCardData} = this.data || '';
-        let list = chooseCardData.orders || 0;
-        if (list) {
-          return false;
-        }
         this.selectComponent("#default").show();
       })
   },
@@ -186,7 +180,7 @@ Page({
       .then((res) => {
         let chooseCardData = res.resultData;
         chooseCardData.bindType = params.bindType;
-        if (chooseCardData.cardType == '10' || chooseCardData.cardType == '11') {
+        if(chooseCardData.cardType == '10' || chooseCardData.cardType == '11'){
           chooseCardData.cardName = '实体卡'
         }
         if (res.resultCode == '0') {
@@ -197,7 +191,7 @@ Page({
           prevPage.options.bindType = params.bindType;
           app.globalData.cardIndex = this.data.currentIndex;
           app.globalData.cardType = cardType;
-          if (cardType != 1) {
+          if(cardType != 1){
             prevPage.options.couponData = '';
             app.globalData.couponIndex = [];
           }
@@ -269,7 +263,7 @@ Page({
    * 刷新
    */
 
-  refresh() {
+  refresh(){
     this.getList(this.data.orderNo)
   },
 

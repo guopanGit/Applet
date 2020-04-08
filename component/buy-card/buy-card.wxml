@@ -11,10 +11,10 @@
 <view wx:if="{{recommend}}" bindtap="showLayer" class="store-referrals">
   <view class="flex-single">
     <image class="add-vip" src="/image/add-vip.png"></image>
-    <view wx:if="{{discounts <= 0 && initiate > 0}}" class="fw">开卡享优惠，卖品<text class="orange">{{initiate}}</text>元起</view>
+    <view wx:if="{{discounts <= 0 && initiate > 0}}" class="fw">开卡享优惠，卖品<text class="orange">¥{{initiate}}</text>起</view>
     <view wx:elif="{{discounts <= 0 && initiate <= 0}}" class="fw">开卡享优惠</view>
-    <view wx:else class="fw">开通会员卡，本单可省
-      <text class="orange">{{discounts}}</text>元
+    <view wx:else class="fw">开通会员卡，本单可
+      <text class="orange">省¥{{discounts}}</text>
     </view>
   </view>
   <view class="instant">
@@ -30,7 +30,7 @@
     <image class="add-vip" src="/image/add-vip.png"></image>
     <view class="fw">
       <text wx:if="{{cardTitle[0]}}">{{cardTitle[0]}}</text>
-      <text wx:if="{{cardTitle[2]}}" class="orange">{{cardTitle[2]}}</text>
+      <text wx:if="{{cardTitle[2]}}" class="orange">¥{{cardTitle[2]}}</text>
       <text wx:if="{{cardTitle[1]}}">{{cardTitle[1]}}</text>
     </view>
   </view>
@@ -45,20 +45,20 @@
 
   <!-- 卡详情 -->
   <view wx:if="{{showCardDetail.goodsId}}">
-    <view bindtap="hideLayer" class='mask-wrap' catchtouchmove='stopIncident'></view>
+    <view catchtouchmove='true' bindtap="hideLayer" class='mask-wrap'></view>
     <view class='layer-center'>
       <view class='layer-head'>
         <view class='head-wrap'>
           <text class='head-title ellipsis'>{{showCardDetail.goodsName}}</text>
           <icon class="icon"  bindtap="hideLayer" type="clear" size="24" color="#e5e5e5"></icon>
         </view>
-        <view wx:if='{{showCardDetail.noFormat}}' class="card-number {{showCardDetail.cardType == 2 ? '' : 'mb20'}}">卡号：{{showCardDetail.noFormat}}</view>
+        <view wx:if='{{showCardDetail.noFormat}}' class='card-number'>卡号：{{showCardDetail.noFormat}}</view>
         <view class="flex-single">
           <view wx:if="{{showCardDetail.promotionPrice}}" class="rose-red">
             特惠：
             <text class='fz32 fw'>¥ </text>
             <text class='fz48 fw lh1'>{{showCardDetail.promotionPrice}}</text>
-            <text class='through gray999'>¥{{showCardDetail.goodsprice}}</text>
+            <text class='through gray999'>¥{{showCardDetail.promotionPrice}}</text>
           </view>
           <view wx:elif="{{fromMyCard}}">
             售价：
@@ -73,16 +73,19 @@
         </view>
       </view>
       <view class='layer-card-content'>
-        <view wx:if="{{fromMyCard && showCardDetail.cardType != '2'}}" class="detail-item">
+        <view wx:if="{{!fromMyCard && showCardDetail.cardType != '2'}}" class="detail-item">
           <view wx:if="{{showCardDetail.cardAmount}}" class='text-des'>
             <text class='gray999'>卡额度：</text>
-            <text>¥ {{showCardDetail.cardAmount}}</text>
+            <text>¥</text>
+            {{showCardDetail.cardAmount}}
           </view>
           <view wx:if="{{showCardDetail.costFee}}" class='text-des'>
             <text class='gray999'>工本费：</text>
-            <text>¥  {{showCardDetail.promotionCostFee || showCardDetail.costFee}}</text>
-            <text wx:if="{{showCardDetail.promotionCostFee}}"
-                  class="through gray999 fz18 ml0"><text>¥</text>{{showCardDetail.costFee}}</text>
+            <text>¥{{showCardDetail.costFee}}</text>
+            <text wx:if="{{showCardDetail.promotionCostFee}}" class="through gray999 fz18 ml0">
+              <text>¥</text>
+              {{showCardDetail.promotionCostFee}}
+            </text>
           </view>
         </view>
         <view wx:if="{{!(showCardDetail.cardType == '11' || showCardDetail.cardType == '10')}}" class='detail-item'>
@@ -98,8 +101,7 @@
           <view wx:if="{{renderData.cardType == '11' || renderData.cardType == '10'}}" class='use-des'>使用说明:</view>
           <view wx:else class='use-des lh1'>规则说明:</view>
           <view class='text-des'>
-            <view wx:if="{{showCardDetail.ruleContent}}">{{showCardDetail.ruleContent}}</view>
-            <view wx:if="{{showCardDetail.limitContent}}">{{showCardDetail.limitContent}}</view>
+            <text>{{showCardDetail.ruleContent}}</text>
           </view>
         </view>
         <view wx:if="{{!(showCardDetail.cardType == '11' || showCardDetail.cardType == '10')}}" class='detail-item'>
@@ -122,7 +124,7 @@
         <view class='touch-agree' data-item="{{showCardDetail}}" bindtap="particulars"></view>
       </view>
       <view wx:else class="open-card">
-        <view class="card-btn {{isSelected ? ' ' : 'opacity' }}" data-type="{{showCardDetail.dealType}}" data-val="{{showCardDetail.goodsIncrId}}"
+        <view class="card-btn {{isSelected ? ' ' : 'opacity' }}" data-type="{{showCardDetail.goodsType}}" data-val="{{showCardDetail.goodsIncrId}}"
               bindtap="openCard">我要开卡
         </view>
         <view class='card-agreement'>
@@ -139,9 +141,9 @@
 
   <!-- 券详情 -->
   <view wx:if="{{showDetail.goodsId}}">
-    <view class='mask-wrap' bindtap="hideLayer" catchtouchmove='stopIncident'></view>
+    <view class='mask-wrap' bindtap="hideLayer" catchtouchmove='true'></view>
     <view class='layer-center'>
-      <view class='layer-head'>
+      <view class='layer-head' catchtouchmove='true'>
         <view class='head-wrap'>
           <text class='head-title voucherName'>{{showDetail.goodsName}}</text>
           <icon class="icon" type="clear" size="24" color="#e5e5e5" bindtap="hideLayer"></icon>
@@ -180,8 +182,7 @@
         <view class="detail-item">
           <view class='use-des'>规则说明:</view>
           <view class='text-des rule'>
-            <view wx:if="{{showDetail.ruleContent}}">{{showDetail.ruleContent}}</view>
-            <view wx:if="{{showDetail.limitContent}}">{{showDetail.limitContent}}</view>
+            <text>{{showDetail.ruleContent}}</text>
           </view>
         </view>
         <view wx:if="{{showDetail.voucherType != 7}}" class="detail-item">
@@ -210,7 +211,7 @@
         </view>
       </view>
       <view wx:if="{{fromMyCard}}" class="open-card">
-        <view class="card-btn {{isSelected ? ' ' : 'opacity' }}" data-type="{{showDetail.dealType}}" data-val="{{showDetail.goodsIncrId}}" bindtap="openCard">
+        <view class="card-btn {{isSelected ? ' ' : 'opacity' }}" data-type="{{showDetail.goodsType}}" data-val="{{showDetail.goodsIncrId}}" bindtap="openCard">
           立即购买
         </view>
         <view class='card-agreement'>
@@ -227,9 +228,9 @@
 
   <!-- 礼包详情 -->
   <view wx:if="{{showGift.goodsId}}">
-    <view class='mask-wrap' bindtap="hideLayer" catchtouchmove='stopIncident'></view>
+    <view class='mask-wrap' bindtap="hideLayer" catchtouchmove='true'></view>
     <view class='layer-center'>
-      <view class='layer-head lh1'>
+      <view class='layer-head lh1' catchtouchmove='true'>
         <view class='head-wrap'>
           <text class='head-title voucherName'>{{showGift.goodsName}}</text>
           <icon class="icon" type="clear" size="24" color="#e5e5e5" bindtap="hideLayer"></icon>
@@ -253,15 +254,17 @@
               <view class="">
                 <view class="gift-item-content">
                   <view class="textBox">
-                    <view class="gray999  wxc-elip elip--multiple {{item.unfold ? 'line2' : '' }}"  data-index="{{index}}" catchtap="unfold">
-                      <text>{{(item.ruleContent||'')+(!!item.limitContent?('\n'+item.limitContent):'')+(!!item.indate?('\n'+item.indate):'')}}</text>
+                    <view class="gray999  wxc-elip elip--multiple {{item.unfold ? 'line2' : '' }}">
+                      <view class="inline {{item.fold ? 'block' : ''}}">{{item.ruleContent}}</view>
+                      <view class="inline {{item.fold ? 'block' : ''}}">{{item.limitContent}}</view>
+                      <view class="inline {{item.fold ? 'block' : ''}}">{{item.indate}}</view>
                     </view>
                     <view data-index="{{index}}" bindtap="unfold" class="unfold">
                       <view wx:if="{{item.showIcon}}" class="arrow gray-arrow {{item.unfold ? '' : 'rotate'}}"></view>
                     </view>
                   </view>
                   <view class="apply" data-index="{{index}}" catchtap="showCinemaList">
-                    <view>适用影院</view>
+                    <view>使用影院{{item.codeCinemaMsgCount}}家</view>
                     <view class="arrow gray-arrow {{item.showList ? 'rotate' : ''}}"></view>
                   </view>
                   <view wx:if="{{item.showList}}" class="pt20">
@@ -276,27 +279,27 @@
               </view>
             </view>
           </block>
-          <view wx:if="{{showGift.byInfo}}" class="explain-wrap">
+          <view class="explain-wrap">
             <view class="gray999 fz24">购买说明：</view>
             <view class="pt20">
-                <text class="byInfo">{{showGift.byInfo}}</text>
+              <block wx:for="{{showGift.byInfo}}" wx:key="index">
+                <view class="byInfo">{{item}}</view>
+              </block>
             </view>
           </view>
 
         </view>
       </view>
       <view class="open-card">
-            <view class="card-btn {{isSelected ? ' ' : 'opacity' }}" data-type="{{showGift.dealType}}" data-val="{{showGift.goodsIncrId}}"
+            <view class="card-btn {{isSelected ? ' ' : 'opacity' }}" data-val="{{showGift.goodsIncrId}}"
                   bindtap="openCard">立即购买
             </view>
             <view class="card-agreement w600">
-              <text class="touch-agree uncheck-agree {{showGift.dealType == 3 ? 'gift-btn' : ''}}" bindtap="uncheck"></text>
+              <text class='touch-agree uncheck-agree  gift-btn' bindtap="uncheck"></text>
               <image wx:if="{{isSelected}}" class="option" src="/image/selected.png"></image>
               <image wx:if="{{!isSelected}}" class="option" src="/image/uncheck.png"></image>
               <text>我已阅读并同意</text>
-              <text wx:if="{{showGift.dealType == 2 || showGift.dealType == 3}}" class='blue' bindtap="goCoupon">《购券协议》</text>
-              <text wx:if="{{showGift.dealType == 3}}">及</text>
-              <text wx:if="{{showGift.dealType == 1 || showGift.dealType == 3}}" class='blue' bindtap="goCard">《购卡协议》</text>
+              <text class='blue' bindtap="goCoupon">《购券协议》</text>及<text class='blue' bindtap="goCard">《购卡协议》</text>
               <!-- <text class='touch-agree' bindtap="agreement"></text>-->
             </view>
           </view>
