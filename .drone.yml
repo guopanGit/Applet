@@ -1,0 +1,95 @@
+---
+kind: pipeline
+type: docker
+name: yh-mini
+
+steps:
+- name: pack-npm
+  image: 10.20.119.151:5000/miniprogram-ci
+  settings:
+    action: pack-npm
+    pp: ./
+    pkp: /pkp/yh-mini
+    appid: 
+      from_secret: appid
+  volumes:
+   - name: pkp
+     path: /pkp
+
+- name: preview
+  image: 10.20.119.151:5000/miniprogram-ci
+  settings:
+    action: preview
+    pp: ./
+    pkp: /pkp/yh-mini
+    appid: 
+      from_secret: appid
+    uv: preview
+    ud: ${DRONE_COMMIT_MESSAGE}
+    r: 3
+    enable_es6: true
+    enable_es7: true
+    enable_autoprefixwxss: true
+    enable_minify: true
+    enable_code_protect: true
+  volumes:
+   - name: pkp
+     path: /pkp
+
+- name: upload-staging
+  image: 10.20.119.151:5000/miniprogram-ci
+  settings:
+    action: upload
+    pp: ./
+    pkp: /pkp/yh-mini
+    appid: 
+      from_secret: appid
+    uv: ${DRONE_BRANCH:9}
+    ud: ${DRONE_COMMIT_MESSAGE}
+    r: 2
+    enable_es6: true
+    enable_es7: true
+    enable_autoprefixwxss: true
+    enable_minify: true
+    enable_code_protect: true
+  volumes:
+   - name: pkp
+     path: /pkp
+  when:
+     branch:
+      - release-v*
+
+- name: upload
+  image: 10.20.119.151:5000/miniprogram-ci
+  settings:
+    action: upload
+    pp: ./
+    pkp: /pkp/yh-mini
+    appid: 
+      from_secret: appid
+    uv: stable
+    ud: ${DRONE_COMMIT_MESSAGE}
+    enable_es6: true
+    enable_es7: true
+    enable_autoprefixwxss: true
+    enable_minify: true
+    enable_code_protect: true
+  volumes:
+   - name: pkp
+     path: /pkp
+  when:
+    branch:
+     - master
+      
+volumes:
+- name: pkp
+  host:
+    path: /data/pkp
+
+node:
+  group: ingcore
+---
+kind: signature
+hmac: 9ea347c4a03819776a3b7472aca78ffc022b805fec13291963e36477caf74c89
+
+...
